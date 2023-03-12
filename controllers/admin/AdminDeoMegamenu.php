@@ -562,8 +562,8 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 		$this->context->controller->addCSS(__PS_BASE_URI__.$media_dir.'css/megamenu/admin/admin.css');
 		$this->context->controller->addJS(__PS_BASE_URI__.$media_dir.'js/megamenu/admin/show.js');
 
-		if (file_exists(_PS_THEME_DIR_.'/'.DeoHelper::getCssDir().'megamenu/typo.css')) {
-			$this->context->controller->addCSS(_PS_THEME_DIR_.'/'.DeoHelper::getCssDir().'megamenu/typo.css');
+		if (file_exists(_PS_THEME_DIR_.DeoHelper::getCssDir().'megamenu/typo.css')) {
+			$this->context->controller->addCSS(_THEME_DIR_.DeoHelper::getCssDir().'megamenu/typo.css');
 		}
 
 		// show modal select image
