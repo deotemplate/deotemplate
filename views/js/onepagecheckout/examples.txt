@@ -1,0 +1,59 @@
+// Example 1: Make 'dni' field required only for Italy - add this Custom JS:
+
+deo_confirmOrderValidations['dni_required_for_italy'] = function () {
+  var italyCountryId = 2;
+  var errorMsg = 'Required field';
+  $('#deoonepagecheckout-address-invoice input[name=dni]').removeClass('-error');
+  removeError('#deoonepagecheckout-address-invoice .error-msg');
+  if (
+    italyCountryId == $('#deoonepagecheckout-address-invoice select[name=id_country]').val() && 
+    $('#deoonepagecheckout-address-invoice input[name=dni]').is(':visible') &&
+    '' == jQuery.trim($('#deoonepagecheckout-address-invoice input[name=dni]').val())
+  ) {
+    $('#deoonepagecheckout-address-invoice input[name=dni]').addClass('-error');
+    $('#deoonepagecheckout-address-invoice input[name=dni]').after('<div class="field error-msg">' + errorMsg + '</div>');
+    scrollToError();
+    return false;
+  } else {
+    return true;
+  }
+};
+
+// Example 2: Make 'dni' field required only for Italy and only when 'I am a business customer' is *unticked*,
+// including *-mark next to field - add this Custom JS:
+
+deo_confirmOrderValidations['dni_required_for_italy_non_business'] = function () {
+  var italyCountryId = 2;
+  var errorMsg = 'Required field';
+  $('#deoonepagecheckout-address-invoice input[name=dni]').removeClass('-error');
+  removeError('#deoonepagecheckout-address-invoice .error-msg');
+  if (
+    italyCountryId == $('#deoonepagecheckout-address-invoice select[name=id_country]').val() &&
+    $('#deoonepagecheckout-address-invoice input[name=dni]').is(':visible') &&
+    '' == jQuery.trim($('#deoonepagecheckout-address-invoice input[name=dni]').val()) &&
+    !$('#i_am_business').is(':checked')
+  ) {
+    $('#deoonepagecheckout-address-invoice input[name=dni]').addClass('-error');
+    $('#deoonepagecheckout-address-invoice input[name=dni]').after('<div class="field error-msg">' + errorMsg + '</div>');
+    scrollToError();
+    return false;
+  } else {
+    return true;
+  }
+};
+
+$('body').on('change', '[data-link-action=deo-i-am-business]', function () {
+  let dniLabelEl = $('#deoonepagecheckout-address-invoice input[name=dni]').closest('label');
+  if ($(this).prop('checked')) {
+      dniLabelEl.removeClass('required');
+  } else {
+      dniLabelEl.addClass('required');
+  }
+
+  return false;
+});
+
+$(document).ready(function() {
+  // Initial setup - set field required (visually) when above conditions are met
+  $('[data-link-action=deo-i-am-business]').trigger('change');
+});

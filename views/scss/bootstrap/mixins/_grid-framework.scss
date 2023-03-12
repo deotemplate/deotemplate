@@ -1,0 +1,119 @@
+// Framework grid generation
+//
+// Used only by Bootstrap to generate the correct number of grid classes given
+// any value of `$grid-columns`.
+
+@mixin make-grid-columns($columns: $grid-columns, $gutters: $grid-gutter-widths, $breakpoints: $grid-breakpoints) {
+  // Common properties for all breakpoints
+  %grid-column {
+    position: relative;
+    // Prevent columns from collapsing when empty
+    min-height: 1px;
+
+    @if $enable-flex {
+      width: 100%;
+    }
+
+    @include make-gutters($gutters);
+  }
+
+  $breakpoint-counter: 0;
+  @each $breakpoint in map-keys($breakpoints) {
+    $breakpoint-counter: ($breakpoint-counter + 1);
+
+    // Allow columns to stretch full width below their breakpoints
+    .col-#{$breakpoint} {
+      @extend %grid-column;
+    }
+    // Override Leotheme
+    .col-#{$breakpoint}-2-4{
+      @extend %grid-column;
+    }
+    .col-#{$breakpoint}-4-8{
+      @extend %grid-column;
+    }
+    .col-#{$breakpoint}-7-2{
+      @extend %grid-column;
+    }
+    .col-#{$breakpoint}-9-6{
+      @extend %grid-column;
+    }
+    @for $i from 1 through $columns {
+      .col-#{$breakpoint}-#{$i} {
+        @extend %grid-column;
+      }
+    }
+
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      // Provide basic `.col-{bp}` classes for equal-width flexbox columns
+      @if $enable-flex {
+        .col-#{$breakpoint} {
+          flex-basis: 0;
+          flex-grow: 1;
+          max-width: 100%;
+        }
+      }
+
+      @for $i from 1 through $columns {
+        .col-#{$breakpoint}-#{$i} {
+          @include make-col($i, $columns);
+        }
+      }
+      // Override Leotheme
+      .col-#{$breakpoint}-2-4 {
+        @include make-col(2.4);
+      }
+      .col-#{$breakpoint}-4-8 {
+        @include make-col(4.8);
+      }
+      .col-#{$breakpoint}-7-2 {
+        @include make-col(7.2);
+      }
+      .col-#{$breakpoint}-9-6 {
+        @include make-col(9.6);
+      }
+      @each $modifier in (pull, push) {
+        @for $i from 0 through $columns {
+          .#{$modifier}-#{$breakpoint}-#{$i} {
+            @include make-col-modifier($modifier, $i, $columns)
+          }
+        }
+        // Override Leotheme
+        .#{$modifier}-#{$breakpoint}-2-4 {
+          @include make-col-modifier($modifier, 2.4, 12);
+        }
+        .#{$modifier}-#{$breakpoint}-4-8 {
+          @include make-col-modifier($modifier, 4.8, 12);
+        }
+        .#{$modifier}-#{$breakpoint}-7-2 {
+          @include make-col-modifier($modifier, 7.2, 12);
+        }
+        .#{$modifier}-#{$breakpoint}-9-6 {
+          @include make-col-modifier($modifier, 9.6, 12);
+        }
+      }
+
+      // `$columns - 1` because offsetting by the width of an entire row isn't possible
+      @for $i from 0 through ($columns - 1) {
+        @if $breakpoint-counter != 1 or $i != 0 { // Avoid emitting useless .offset-xs-0
+          .offset-#{$breakpoint}-#{$i} {
+            @include make-col-modifier(offset, $i, $columns)
+          }
+        }
+        // Override Leotheme
+        .offset-#{$breakpoint}-2-4 {
+          @include make-col-modifier(offset, 2.4, 12);
+        }
+        .offset-#{$breakpoint}-4-8 {
+          @include make-col-modifier(offset, 4.8, 12);
+        }
+        .offset-#{$breakpoint}-7-2 {
+          @include make-col-modifier(offset, 7.2, 12);
+        }
+        .offset-#{$breakpoint}-9-6 {
+          @include make-col-modifier(offset, 9.6, 12);
+        }
+      }
+    }
+  }
+}

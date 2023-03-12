@@ -1,0 +1,62 @@
+/** search ***/
+/** end search ***/
+/** newlestter ***/
+/** End newlestter ***/
+/***************************************************
+	Mixins Themes 
+/***************************************************/
+/* Mixin Normal*/
+/* Mixin Clear */
+/* Mixin Border */
+/*background RGBA
+============================================*/
+/***************************************************
+	Mixins RTL Themes 
+/***************************************************/
+/************************************ 
+	Override Bootstrap 
+*************************************/
+/**
+ * Web Application Prefix Apply For Making Owner Styles
+ */
+/**
+ *   Blocks Layout Selectors 
+ */
+/***********************************************************************/
+.deo-infinite-load-more {
+  text-align: center; }
+  .deo-infinite-load-more a {
+    color: #FFFFFF;
+    display: block;
+    padding: 8px 15px;
+    text-transform: uppercase;
+    background: #1bbc9b; }
+    .deo-infinite-load-more a:hover {
+      color: #FFFFFF; }
+      @media (min-width: 992px) {
+        .deo-infinite-load-more a:hover {
+          background: #169a7f; } }
+
+.deo-message-when-end-page {
+  font-weight: 600;
+  text-align: center;
+  padding: 8px 15px;
+  text-transform: uppercase; }
+  .deo-message-when-end-page a {
+    text-decoration: underline; }
+
+.deo-infinitescroll-loading {
+  display: none;
+  text-align: center; }
+  .deo-infinitescroll-loading i {
+    font-style: normal; }
+    .deo-infinitescroll-loading i:before {
+      content: "\ea42";
+      font-size: 25px;
+      display: inline-block;
+      font-family: "deo-custom-icons";
+      -webkit-animation: cssload-spin 1s infinite steps(8);
+      -moz-animation: cssload-spin 1s infinite steps(8);
+      animation: cssload-spin 1s infinite steps(8); }
+
+/*# sourceMappingURL=deo_infinite_scroll.css.map */

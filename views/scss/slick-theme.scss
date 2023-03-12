@@ -1,0 +1,350 @@
+/**
+ *  @author    DeoTemplate <deotemplate@gmail.com>
+ *  @copyright by DeoTemplate
+ *  @license   http://deotemplate.com - prestashop template provider
+ */
+
+@import "bourbon/_bourbon";
+@import "partials/_bootstrap";
+@import "partials/_variables";
+@import "partials/_theme_variables";
+@import "partials/_mixins";
+
+
+/* Arrows */
+.slick-arrows{
+	width: $carousel-control-width-total;
+	position: absolute;
+	top: $carousel-control-position-top;
+	@include rtl-right($carousel-control-position-right);
+	.slick-arrow{
+		position: relative;
+		height: $carousel-control-height-size;
+		width: $carousel-control-width-size;
+		line-height: $carousel-control-line-height;
+		font-size: 0px;
+		z-index: 9;
+		cursor: pointer;
+		border: $carousel-control-border;
+		background: $carousel-control-background;
+		color: transparent;
+		top: 50%;
+		padding: 0;
+		outline: none;
+		text-indent: 99px;
+		@include transition(all 0.3s ease);
+		@include border-radius($carousel-control-border-radius);
+		&:hover, &:focus {
+			outline: none;
+			&:before {
+				@include opacity(1);
+			}
+		}
+		&.slick-disabled{
+			cursor: not-allowed;
+			@include opacity(0.5);
+		}
+		&:before {
+			font-size: 14px;
+			display: block;
+			text-indent: 0px;
+			font-weight: $carousel-control-font-weight;
+			color: $carousel-control-color;
+			font-size: $carousel-control-font-icon;
+			font-family: $carousel-control-font-family-icon;
+		}
+		&.slick-prev {
+			@include dir-float-left();
+			&:before {
+				content: $carousel-control-icon-prev;
+			}
+		}
+		&.slick-next {
+			@include dir-float-right();
+			&:before {
+				content: $carousel-control-icon-next;
+			}
+		}
+		&:hover{
+			@media (min-width: 992px) {
+				border-color: $carousel-control-border-hover;
+				background: $carousel-control-background-hover;
+				&:before{
+					color: $carousel-control-color-hover;
+				}
+			}
+		}
+	}
+}
+
+.button-middle{
+	.slick-slider:not(.list-thumbs) {
+		.slick-arrows {
+			position: static;
+			@media(min-width: 992px){
+				.slick-arrow{
+					position: absolute;
+					top: 50%;
+					margin-top: -$carousel-control-height-size/2;
+					z-index: 99;
+					&.slick-prev{
+						@include dir-left-right(-$grid-gutter-width-base,auto);
+					}
+					&.slick-next{
+						@include dir-left-right(auto,-$grid-gutter-width-base);
+					}
+				}
+			}
+			@media(max-width: 991px){
+				margin: auto;
+				width: 55px;
+				padding-top: 10px;
+				padding-bottom: 10px;
+				@include clearfix();
+				.slick-arrow{
+				  width: 25px;
+				  height: 25px;
+				  &:before{
+					font-size: 8px;
+					line-height: 23px;
+				  }
+				}
+			}
+		} 
+		@media(max-width: 991px){
+			.slick-slide{
+				.item{
+					.product-miniature{
+						&:last-child{
+							.thumbnail-container{
+								margin-bottom: 0px;
+							}
+						}
+					}
+					.block-carousel-container{
+						&:last-child{
+							margin-bottom: 0px;
+						}
+					}
+				}
+			}
+		}
+	}
+	&.button-hover{
+		.slick-slider:not(.list-thumbs) {
+			@media(min-width: 992px){
+				.slick-arrows {
+					.slick-arrow{
+						@include opacity(0);
+						&.slick-prev{
+							@include dir-left-right(-50px,auto);
+						}
+						&.slick-next{
+							@include dir-left-right(auto,-50px);
+						}
+					}
+				} 
+				&:hover{
+					.slick-arrows{
+						.slick-arrow{
+							@include opacity(1);
+							&.slick-prev{
+								@include dir-left-right($carousel-control-position-hover,auto);
+							}
+							&.slick-next{
+								@include dir-left-right(auto,$carousel-control-position-hover);
+							}
+						}
+					} 
+				}
+			}
+		}
+	}
+}
+
+.button-bottom{
+	.slick-slider:not(.list-thumbs){
+		.slick-arrows{
+			margin: auto;
+			position: static;
+			@include clearfix();
+		}
+		@media(max-width: 991px){
+			.slick-slide{
+				.item{
+					.product-miniature{
+						&:last-child{
+							.thumbnail-container{
+								margin-bottom: 0px;
+							}
+						}
+					}
+					.block-carousel-container{
+						&:last-child{
+							margin-bottom: 0px;
+						}
+					}
+				}
+			}
+		}
+	} 
+	&.button-right{
+		.slick-slider:not(.list-thumbs){
+			.slick-arrows{
+				@include rtl-float-right();
+			}
+			.slick-dots{
+				margin: 10px 0;
+				@include rtl-float-left();
+			}
+		} 
+	}
+	&.button-left{
+		.slick-slider:not(.list-thumbs){
+			.slick-arrows{
+				@include rtl-float-left();
+			}
+			.slick-dots{
+				margin: 10px 0;
+				@include rtl-float-right();
+			}
+		}
+	}
+}
+
+.button-top{
+	.slick-slider:not(.list-thumbs){
+		.slick-arrows{
+			margin: auto;
+			top: -35px;
+			@include rtl-left-right($grid-gutter-width-base/2,$grid-gutter-width-base/2);
+			.slick-arrow{
+				height: 20px;
+				line-height: 18px;
+			}
+		}
+	} 
+}
+
+.button-white{
+	.slick-slider:not(.list-thumbs){
+		.slick-arrows{
+			@media (max-width: 991px) {
+				margin-top: 20px;
+			}
+			.slick-arrow{
+				@media (min-width: 992px) {
+					border-color: $white;
+					&:before{
+						color: $white;
+					}
+					&:hover{
+						background: $white;
+						&:before{
+							color: $theme-color-default;
+						}
+					}
+				}
+			}
+		}
+	} 
+}
+
+.button-vertical{
+	.slick-slider:not(.list-thumbs){
+		.slick-arrows{
+			width: auto;
+			position: relative;
+			top: auto !important;
+			left: auto !important;
+			right: auto !important;
+			bottom: auto !important;
+			margin-left: $grid-gutter-width-base/2;
+			margin-right: $grid-gutter-width-base/2;
+			@include clearfix();
+			.slick-arrow{
+				width: 50%;
+				overflow: hidden;
+				&:before{
+					@include transform(rotate(90deg));
+				}
+			}
+		}
+	}
+}
+
+/* Dots */
+.slick-dots {
+	margin: 15px 0;
+	font-size: 0px;
+	text-align: center;
+	li {
+		display: inline-block;
+		zoom: 1;
+		margin: 0 3px;
+		button {
+			display: block;
+			width: 12px;
+			height: 12px;
+			padding: 0px;
+			cursor: pointer;
+			border: 2px solid $white;
+			background: $white;
+			// @include opacity(0.3);
+			@include border-radius(100%);
+			@include transition(all 0.3s ease);
+			@include box-shadow(0px 0px 1px 1px rgba($black, 0.2));
+			&:hover, &:focus {
+				outline: none;
+			}
+		}
+		&.slick-active button {
+			background: $theme-color-default;
+			// @include opacity(1);
+		}
+		&:hover{
+			&:not(.slick-active) button{
+				background: $theme-color-default;
+				// @include opacity(1);
+			}
+		}
+	}
+}
+
+.pagination-bottom{
+	.slick-dots{
+		position: absolute;
+		left: 0px;
+		right: 0px;
+		bottom: 0px;
+		z-index: 7;
+	}
+}
+
+.pagination-style-one{
+	.slick-dots{
+		li{
+			button{
+				// background: $theme-color-default;
+				// @include opacity(1);
+				@include border-radius(50px);
+			}
+			&.slick-active{
+				button{
+					width: 30px;
+					height: 12px;
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+

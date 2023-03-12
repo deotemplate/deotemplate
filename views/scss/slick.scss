@@ -1,0 +1,124 @@
+/**
+ *  @author    DeoTemplate <deotemplate@gmail.com>
+ *  @copyright by DeoTemplate
+ *  @license   http://deotemplate.com - prestashop template provider
+ */
+@import "bourbon/_bourbon";
+@import "partials/_bootstrap";
+@import "partials/_variables";
+@import "partials/_theme_variables";
+@import "partials/_mixins";
+
+
+/* Slider */
+.slick-slider {
+	position: relative;
+	display: block;
+	@include user-select(none);
+	-ms-touch-action: pan-y;
+	touch-action: pan-y;
+	-webkit-tap-highlight-color: transparent;
+}
+.slick-row{
+	@include clearfix();
+	margin-left: -$grid-gutter-width-base/2;
+	margin-right: -$grid-gutter-width-base/2; 
+}
+.slick-list {
+	position: relative;
+	overflow: hidden;
+	display: block;
+	padding: 0;
+	&:focus {
+		outline: none;
+	}
+
+	&.dragging {
+		cursor: pointer;
+		cursor: hand;
+	}
+}
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+	@include  transform(translate3d(0, 0, 0));
+}
+
+.slick-track {
+	position: relative;
+	left: 0;
+	top: 0;
+	display: block;
+	@include clearfix();
+	.deo-carousel-loading & {
+		visibility: hidden;
+	}
+}
+.slick-slide {
+	outline: 0;
+	height: 100%;
+	min-height: 1px;
+	@include rtl-float-left();
+	padding-left: $grid-gutter-width-base/2;  
+	padding-right: $grid-gutter-width-base/2;
+	.slick-slide {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+	&.deo-carousel-loading img {
+		display: none;
+	}
+	
+	display: none;
+
+	&.dragging img {
+		pointer-events: none;
+	}
+
+	.slick-initialized & {
+		display: block;
+	}
+
+	.deo-carousel-loading:not(.slick-slider) & {
+		visibility: hidden;
+	}
+
+	.slick-vertical & {
+		display: block;
+		height: auto;
+	}
+}
+.slick-arrow.slick-hidden {
+	display: none;
+}
+
+
+.slick-slider{
+	&.deo-carousel-loading{
+		// @include make-row();
+		.slick-slide {
+			display: none;
+			&.loading-vertical{
+				width: 100%;
+			}
+		}
+		&.show-icon-loading{
+			&::before{
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 50%;
+				content: "";
+				display: inline-block;
+				width: 40px;
+				height: 40px;
+				background-color: $theme-color-default;
+				@include animation(animate 1s infinite ease-in-out);
+				margin: -20px auto 0;
+			}
+			.slick-slide{
+				visibility: hidden;
+				@include opacity(0);
+			}
+		}
+	}
+}

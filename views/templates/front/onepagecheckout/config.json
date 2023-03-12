@@ -1,0 +1,107 @@
+[
+	{"group": [
+			{
+				"type": "sperator",
+				"icon": "icon-info-sign",
+				"name":"Product informations"
+			},
+			{
+				"name":"1. Account",
+				"icon": "icon-info-sign",
+				"file":"account",
+				"data-form":{
+					"class":"",
+					"type":"register",
+					"use_tab":"0"
+				}
+			},
+			{
+				"name":"2. Address",
+				"icon":"icon-star",
+				"file":"address",
+				"data-form":{
+					"class":""
+				}
+			},
+			{
+				"name":"3. Shipping",
+				"icon": "icon-shopping-cart",
+				"file":"shipping",
+				"data-form":{
+					"class":""
+				}
+			},
+			{
+				"name":"4. Payment Method",
+				"icon":"icon-list-alt",
+				"file":"payment",
+				"data-form":{
+					"class":""
+				}
+			},
+			{
+				"name":"5. Cart Summary",
+				"icon": "icon-sun",
+				"file":"cart-summary",
+				"data-form":{
+					"class":""
+				}
+			},
+			{
+				"name":"6. Order Message",
+				"icon":"icon-gift",
+				"file":"order-message",
+				"data-form":{
+					"class":""
+				}
+			},
+			{
+				"name":"7. confirm",
+				"icon": "icon-money",
+				"file":"confirm",
+				"data-form":{
+					"class":""
+				}
+			},
+			{
+				"name":"8. Reassurance (module blockreassurance)",
+				"icon": "icon-money",
+				"file":"reassurance",
+				"data-form":{
+					"class":""
+				}
+			}
+		]
+	},
+	{
+		"group": [
+			{
+				"type": "sperator",
+				"icon": "icon-ticket",
+				"name":"Other"
+			},
+			{
+				"name":"Line",
+				"icon":"icon-minus",
+				"file":"line_checkout"
+			},
+			{
+				"name":"Space",
+				"icon":"icon-resize-vertical",
+				"file":"space_checkout"
+			},
+			{
+				"type":"box",
+				"name":"Group",
+				"icon":"icon-sitemap",
+				"file":"box"
+			},
+			{
+				"type":"code",
+				"name":"TPL Code",
+				"icon":"icon-code",
+				"file":"code"
+			}
+		]
+	}
+]

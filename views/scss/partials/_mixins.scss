@@ -1,0 +1,1984 @@
+/** search ***/
+@mixin search-box() {
+  .popup-content {
+    position: relative;
+    input[type=text] {
+      width: 100%;
+      color: #333333;
+      height: 40px;
+      font-size: 13px;
+      border: none;
+      background: transparent;
+      @include rtl-padding(5px,45px,5px,10px);
+      @include placeholder {
+        color: #333333;
+        text-indent: 0px;
+        @include opacity(0.8);
+      }
+      &:hover,&:focus{
+        outline: 0;
+      }
+    } 
+    button[type=submit] {
+      position: absolute;
+      background: transparent;
+      padding: 0px;
+      top: 0px;
+      bottom: 0px;
+      z-index: 9;
+      margin: auto;
+      border: none;
+      display: table;
+      font-size: 0px;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      cursor: pointer;
+      @include rtl-right(0px);
+      @include transition(all 0.4s ease);
+      @include backface-visibility(hidden);
+      &:focus{
+        outline: 0;
+      }
+      .search{
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+@mixin search-border() { 
+  .popup-content{
+    @include animation(none);
+    input[type=text]{
+      border: 1px solid #cccccc;
+    }
+    button[type=submit]{
+      @include rtl-border-left(1px solid #cccccc);
+    }
+  } 
+}
+
+@mixin popup-search() {
+  .popup-title{
+    display: block;
+    overflow: hidden;
+    position: relative;
+    @include rtl-margin(0,0,0,0);
+    .search{
+      @include opacity(1);
+      @include transition(all 0.5s ease);
+    }
+    &:before,&:after{
+      content: '';
+      display: block;
+      background: $black;
+      position: absolute;
+      margin: auto;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      @include opacity(0);
+      @include transition(all 0.5s ease);
+      @include transform(translateY(50px) rotate(45deg));
+    }
+    &:before{
+      height: 15px;
+      width: 1px;
+    }
+    &:after{
+      width: 15px;
+      height: 1px;
+    }
+  }
+  .popup-content{
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    display: none;
+    background: $white;
+    @include border-radius(5px);
+    @include rtl-left-right(auto,100%);
+    @include box-shadow(0px 2px 5px 1px rgba(102, 102, 102, 0.35));
+    &:before{
+      display: block;
+    }
+  }
+  // form {
+  //   input[type=text] {
+  //     @include rtl-padding(5px,0px,5px,5px);
+  //   }
+  // }
+  &.open{
+    .popup-title{
+      &:before,&:after{
+        @include opacity(1);
+        @include transform(translateY(0px) rotate(45deg));
+      }
+      .search{
+        @include opacity(0);
+        @include transform(translateY(50px));
+      }
+    }
+  }
+}
+
+@mixin search-block(){
+  .popup-title{
+    display: none !important;
+  }
+  .popup-content{
+    display: block !important;
+  }
+}
+
+@mixin popup-search-bottom() {
+  .popup-title{
+    @include rtl-margin(0px,0px,0px,0px);
+  }
+  .popup-content{
+    top: 100%;
+    border: none;
+    bottom: auto;
+    @include rtl-left-right(auto,0);
+    @include rtl-padding(0px,0px,0px,0px);
+    @include box-shadow(0px 2px 5px 1px rgba(102, 102, 102, 0.35));
+  }
+  &.open{
+     .popup-title{
+        .search{
+          @include transform(translateY(-50px));
+        }
+     }
+  }
+}
+
+@mixin popup-search-mobile() {
+  position: static;
+  .popup-content{
+    width: auto;
+    @include rtl-left-right(auto,$grid-gutter-width-base/2);
+    &:before{
+      display: none;
+    }
+  }
+}
+
+@mixin search-special() {
+  @include rtl-padding(0px,0px,0px,0px);
+  .popup-content {
+    @include animation(none);
+    input[type=text]{
+      height: 35px;
+      border-style: solid;
+      border-color: #d6d6d6; 
+      border-width: 0px 0px 1px 0px;
+      @include rtl-padding(5px,25px,5px,0px);
+    }
+    button[type=submit]{
+      width: 20px;
+      height: 35px;
+      background: transparent;
+      &:hover{
+        background: transparent;
+      }
+    }
+    .search:before{
+      font-size: 16px;
+    }
+  }
+}
+
+@mixin search-white-title() {
+  .popup-title{
+    color: $theme-color-white;
+    &:before,&:after{
+      background: $theme-color-white;
+    }
+    &:hover{
+      color: $theme-color-white-hover;
+      &:before,&:after{
+        background: $theme-color-white-hover;
+      }
+    }
+  }
+}
+
+@mixin search-white() {
+  .popup-content {
+    input[type=text]{
+      @media (min-width: 992px) {
+        color: $theme-color-white-hover;
+        border-color: $theme-color-white-hover;
+      }
+      @include placeholder {
+        @media (min-width: 992px) {
+          color: $theme-color-white-hover;
+        }
+      }
+    }
+    button[type=submit]{
+      @media (min-width: 992px) {
+        color: rgba($theme-color-white-hover, 0.8);
+      }
+      &:hover{
+        @media (min-width: 992px) {
+          color: $theme-color-white-hover;
+        }
+      }
+    }
+  }
+}
+
+@mixin search-background(){
+  min-width: 100%;
+  .popup-content {
+    overflow: hidden;
+    background: #f1f1f1;
+    @include animation(none);
+    @include border-radius(20px);
+    input[type=text]{
+      @include rtl-padding(5px,40px,5px,15px);
+    }
+  }
+}
+
+@mixin search-border-radius(){
+  .popup-content {
+    @include animation(none);
+    input[type=text]{
+      height: 35px;
+      border-style: solid;
+      border-color: #cccccc; 
+      border-width: 1px;
+      @include border-radius(9999px);
+      @include rtl-padding(5px,35px,5px,13px);
+    }
+    button[type=submit]{
+      width: 35px;
+      height: 35px;
+      line-height: 35px;
+      background: transparent;
+      &:hover{
+        background: transparent;
+      }
+    }
+    .search:before{
+      font-size: 16px;
+    }
+  }
+}
+
+//reverse
+@mixin popup-search-reverse() {
+  .popup-content{
+    @include rtl-left-right(100%,auto);
+  }
+}
+
+@mixin popup-search-bottom-reverse() {
+  .popup-content{
+    @include rtl-left-right(0,auto);
+  }
+}
+
+@mixin popup-search-mobile-reverse() {
+  .popup-content{
+    @include rtl-left-right($grid-gutter-width-base/2,auto);
+  }
+}
+//end reverse
+
+@mixin fullwidth-search(){
+  width: 100%;
+  .popup-content{
+    min-width: auto;
+    width: 100%;
+  }
+}
+/** end search ***/
+
+
+
+
+/** newlestter ***/
+@mixin homepage-newsletter{
+  .navbar-toggler{
+    display: none;
+  }
+  .collapse,.collapsing{
+    display: block !important;
+    height: 100% !important;
+  }
+}
+@mixin center-newsletter(){
+  text-align: center;
+  form{
+    input[type=email]{
+      text-align: center;
+      .rtl & {
+        text-align: center;
+      }
+    }
+  }
+}
+@mixin newsletter-hidden-title(){
+  max-width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+  .box-title,.description{
+    display: none;
+  }
+  .block_content{
+    display: block !important;
+  }
+}
+@mixin newsletter-inline(){
+  .footer-container &,
+  .title_block{
+    .title_block{
+      margin-bottom: 10px;
+    }
+  }
+  .description{
+    display: none;
+  }
+  .box-title{
+    .description{
+      display: block;
+      margin-bottom: 0px;
+    }
+  }
+  .popup-content-newsletter{
+    margin-left: -$grid-gutter-width-base/2;
+    margin-right: -$grid-gutter-width-base/2;
+    @include display(flex);
+    @include align-items(center);
+    .box-title,.block_content{
+      width: 50%;
+      padding-left: $grid-gutter-width-base/2;
+      padding-right: $grid-gutter-width-base/2;
+    }
+  }
+}
+@mixin newsletter-inline-hidden-subtitle(){
+  .footer-container &,
+  .title_block{
+    .title_block{
+      margin-bottom: 0px;
+    }
+  }
+  .description{
+    display: none;
+  }
+  .popup-content-newsletter{
+    margin-left: -$grid-gutter-width-base/2;
+    margin-right: -$grid-gutter-width-base/2;
+    @include display(flex);
+    @include align-items(center);
+    .box-title{
+      padding-left: $grid-gutter-width-base/2;
+      padding-right: $grid-gutter-width-base/2;
+      @media (min-width: 768px) {
+        width: 40%;
+      }
+      @media (min-width: 992px) {
+        width: 35%;
+      }
+      @media (min-width: 1200px) {
+        width: 30%;
+      }
+    }
+    .block_content{
+      padding-left: $grid-gutter-width-base/2;
+      padding-right: $grid-gutter-width-base/2;
+      @media (min-width: 768px) {
+        width: 60%;
+      }
+      @media (min-width: 992px) {
+        width: 65%;
+      }
+      @media (min-width: 1200px) {
+        width: 70%;
+      }
+    }
+  }
+}
+/** End newlestter ***/
+
+
+
+@mixin cart-full(){
+  .cart-preview{
+    .shopping-cart{
+      font-size: 14px;
+      @include rtl-margin(0,5px,0,0);
+      &:before{
+        content: "\e9e2";
+      }
+    }
+  } 
+  .cart-products-count{
+    position: static; 
+    font-size: 13px;
+    color: inherit;
+    min-height: inherit;
+    min-width: inherit;
+    background: transparent !important;
+    @include rtl-text-align-left();
+  }
+  .zero{
+    display: none;
+  }
+  //cart-zero
+  .totals-cart,.empty,.cart-count-title,{
+    display: inline-block;
+  }
+}
+
+@mixin userinfor-inline-white(){
+  &:not(.search-widget){
+    .popup-content{
+      .dropdown-item{
+        border-color: #777777;
+        color: $theme-color-white;
+        &:hover{
+          color: $theme-color-white-hover;
+        }
+      }
+    }
+  }
+}
+
+@mixin userinfor-hidden-icon(){
+  .popup-content{
+    li{
+      .dropdown-item{
+        &:before{
+          display: none;
+        }
+        span:not(.deo-total){
+          @include rtl-padding(0px,0px,0px,0px);
+        }
+      }
+    }
+  }
+}
+
+@mixin userinfor-popup-center(){
+  .popup-content{
+    li{
+      &.sign-in-popup,&.sign-out-popup{
+        margin: 10px -15px -10px;
+        border-top: 1px solid #eaeaea;
+        .dropdown-item{
+          padding: 6px 15px;
+          text-align: center;
+          &:before{
+            display: none;
+          }
+          span:not(.deo-total){
+            @include rtl-padding(0px,0px,0px,0px);
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin userinfor-inline(){
+  &:not(.search-widget){
+    @include rtl-padding(0,0,0,0);
+    .popup-title{
+      display: none;
+    }
+    .popup-content{
+      border: none;
+      padding: 0px;
+      font-size: 0px;
+      position: static;
+      background: transparent;
+      display: block !important;
+      @include box-shadow(none);
+      @include animation(none);
+      @include border-radius(0px);
+      &:before{
+        display: none;
+      }
+      li{
+        position: relative;
+        border-bottom: none;
+        display: inline-block;
+        vertical-align: middle;
+        border-color: #e9e9e9;
+        border-style: solid;
+        @include rtl-border-width(0px,0px,0px,1px);
+        &.check-out,&.my-account{
+          display: none;
+        }
+      }
+      .dropdown-item{
+        font-size: 13px;
+        padding: 11px 15px;
+        font-weight: normal;
+        span:not(.deo-total){
+          width: auto;
+          text-transform: uppercase;
+        }
+        &:hover,&:active,&:focus{
+          background: transparent;
+        }
+        span{
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+
+@mixin hidden-title-popup(){
+  .popup-title {
+    .text-title{
+      display: none;
+    }
+    .icon{
+      display: inline-block;
+    }
+  }
+}
+
+@mixin userinfor-hidden-title(){
+  .popup-title {
+    .text-title{
+      display: none;
+    }
+    .icon{
+      display: inline-block;
+    }
+  }
+}
+
+@mixin language-hidden-flag(){
+  .popup-title{
+    .flag{
+      display: none;
+    }
+  }
+}
+
+@mixin language-iso-code(){
+  .popup-title{
+    .flag{
+      display: none;
+    }
+    .iso-code{
+      display: inline-block;
+      text-transform: uppercase;
+    }
+    .name-simple{
+      display: none;
+    }
+  }
+}
+
+@mixin hidden-icon-arrow-down(){
+  .popup-title{
+    .icon-arrow-down{
+      display: none;
+    }
+  }
+}
+
+@mixin contactinfors-inline(){
+  margin-bottom: 10px;
+  .title{
+    display: none;
+  }
+  .toggle-footer{
+    display: block !important;
+    height: auto !important;
+    ul{
+      li{
+        display: inline-block;
+        vertical-align: middle;
+        &.address{
+          display: block;
+        }
+        i{
+          display: none;
+        }
+        span{
+          display: inline-block;
+          @include rtl-padding-left(0);
+        }
+        &:not(.address){
+          & + li{
+            &:before{
+              content: '/';
+              display: inline-block;
+              vertical-align: middle;
+              margin: 0 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin mini-userinfo(){
+  .popup-title{
+    .text-title-special{
+      display: none;
+    }
+    .text-title{
+      display: none;
+    }
+    .icon{
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .icon-arrow-down{
+      bottom: 10px;
+    }
+  } 
+}
+
+@mixin mini-language(){
+  .popup-title{
+    .title-hidden{
+      display: none;
+    }
+  } 
+}
+
+@mixin mini-currency(){
+  .popup-title{
+    .title-hidden{
+      display: none;
+    }
+  } 
+}
+
+@mixin mobile-popup(){
+  .popup-title {
+    .icon{
+      display: inline-block;
+    }
+    .text-title{
+      display: none;
+    }
+  }
+}
+
+@mixin mobile-currency(){
+  .popup-title{
+    .icon{
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .name-simple{
+      display: none;
+    }
+  } 
+}
+
+@mixin mobile-language(){
+  .popup-title{
+    .icon{
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .iso-code,.name-simple,.flag{
+      display: none;
+    }
+  }
+}
+
+@mixin mobile-group-top(){
+  .popup-title{
+    .icon{
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .text-title{
+      display: none;
+    }
+  } 
+}
+
+@mixin cart-mobile-inline() {
+  .cart-preview{
+    &.active {
+      a {
+        display: block;
+      }
+    }
+    .shopping-cart{
+      vertical-align: middle;
+      @include rtl-margin(0,2px,0,0);
+    }
+  }
+  .cart-products-count{
+    min-width: inherit;
+    min-height: inherit;
+    background: transparent;
+    position: static;
+    font-size: 0px;
+    line-height: normal;
+    vertical-align: middle;
+    color: inherit;
+    @include border-radius(0px);
+    &:before{
+      content: '(';
+      font-size: 13px;
+    }
+    &:after{
+      content: ')';
+      font-size: 13px;
+    }
+    & > *{
+      font-size: 13px;
+    }
+  }
+}
+
+@mixin hidden-title-cart(){
+  .title-cart{
+    display: none;
+  }
+}
+
+@mixin mini-cart(){
+  .totals-cart,.title-cart{
+    display: none;
+  }
+}
+
+@mixin deo-search-mobile(){
+  #leo_search_block_top{
+    @media(max-width: 991px){
+      z-index: 1000;
+    }
+    #leosearchtopbox{
+      position: absolute;
+      top: 100%;
+      z-index: 99;
+      width: 290px;
+      display: none;
+      @include rtl-left-right(15px,auto);
+    }
+    .icon-open-search{
+      display: block;
+    }
+  }
+}
+
+// service
+@mixin service-center(){
+  text-align: center;
+  .media{
+    display: block;
+  }
+  .left-block{
+    margin: auto;
+  }
+  &.service-header{
+    .left-block{
+      margin-bottom: 10px;
+    }
+  }
+}
+
+@mixin service-horizontal(){
+  .media{
+    @include align-items(center);
+  }
+}
+
+@mixin service-align-top(){
+  .media{
+    @include align-items(flex-start);
+  }
+}
+
+
+@mixin prepare-col(){
+  padding-left: $grid-gutter-width-base/2;
+  padding-right: $grid-gutter-width-base/2;
+}
+
+
+/***************************************************
+  Mixins Themes 
+/***************************************************/
+/* Mixin Normal*/
+@mixin rounded-corners($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin box-shadow($shadow) {
+  -moz-box-shadow: $shadow;
+  -webkit-box-shadow: $shadow;// iOS <4.3 & Android <4.1
+  -o-box-shadow: $shadow;
+  -ms-box-shadow: $shadow;
+  box-shadow: $shadow;
+}
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  // IE8 filter
+  $opacity-ie: ($opacity * 100);
+  filter: #{alpha(opacity=$opacity-ie)};
+}
+
+@mixin ellipsis-text($value){
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $value;
+  -webkit-box-orient: vertical;  
+}
+@mixin box-sizing($boxmodel) {
+  -webkit-box-sizing: $boxmodel;
+     -moz-box-sizing: $boxmodel;
+          box-sizing: $boxmodel;
+}
+/* Mixin Clear */
+@mixin clearboxstyle(){
+  background: none;
+  border:none;
+}
+
+@mixin clearfloat(){
+  float: none;
+  width: 100%;
+}
+
+/* Mixin Border */
+@mixin border-exclude-top($border-deep, $border-type, $border-color ){
+  border-bottom: $border-deep $border-type $border-color;
+  border-left: $border-deep $border-type $border-color;
+  border-right: $border-deep $border-type $border-color;
+}
+
+@mixin border-exclude-bottom($border-deep, $border-type, $border-color ){
+  border-top: $border-deep $border-type $border-color;
+  border-left: $border-deep $border-type $border-color;
+  border-right: $border-deep $border-type $border-color;
+}
+
+@mixin border-exclude-left($border-deep, $border-type, $border-color ){
+  border-top: $border-deep $border-type $border-color;
+  border-bottom: $border-deep $border-type $border-color;
+  border-right: $border-deep $border-type $border-color;
+}
+
+@mixin border-exclude-right($border-deep, $border-type, $border-color ){
+  border-top: $border-deep $border-type $border-color;
+  border-bottom: $border-deep $border-type $border-color;
+  border-left: $border-deep $border-type $border-color;
+}
+
+// Transitions
+
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+       -o-transition: $transition;
+          transition: $transition;
+}
+
+// Transformations
+@mixin rotate($degrees) {
+  -webkit-transform: rotate($degrees);
+      -ms-transform: rotate($degrees); // IE9 only
+          transform: rotate($degrees);
+}
+@mixin scale($scale-args...) {
+  -webkit-transform: scale($scale-args);
+      -ms-transform: scale($scale-args); // IE9 only
+          transform: scale($scale-args);
+}
+@mixin translate($x, $y) {
+  -webkit-transform: translate($x, $y);
+      -ms-transform: translate($x, $y); // IE9 only
+          transform: translate($x, $y);
+}
+@mixin skew($x, $y) {
+  -webkit-transform: skew($x, $y);
+      -ms-transform: skewX($x) skewY($y); // See https://github.com/twbs/bootstrap/issues/4885; IE9+
+          transform: skew($x, $y);
+}
+@mixin translate3d($x, $y, $z) {
+  -webkit-transform: translate3d($x, $y, $z);
+          transform: translate3d($x, $y, $z);
+}
+
+@mixin rotateX($degrees) {
+  -webkit-transform: rotateX($degrees);
+      -ms-transform: rotateX($degrees); // IE9 only
+          transform: rotateX($degrees);
+}
+@mixin rotateY($degrees) {
+  -webkit-transform: rotateY($degrees);
+      -ms-transform: rotateY($degrees); // IE9 only
+          transform: rotateY($degrees);
+}
+
+@mixin clip-path($value) {
+  -webkit-clip-path: $value;
+      -ms-clip-path: $value; // IE9 only
+          clip-path: $value;
+}
+
+/*background RGBA
+============================================*/
+@mixin rgba($colour, $alpha)
+{
+  $alphaColour: hsla(hue($colour), saturation($colour), lightness($colour), $alpha);
+  $ieAlphaColour: argb($alphaColour);   
+  background-color: $colour; 
+  background-color: $alphaColour;       
+  zoom: 1; 
+  background-color: transparent\9; 
+}
+@mixin border-rgba($colour, $alpha)
+{
+  $alphaColour: hsla(hue($colour), saturation($colour), lightness($colour), $alpha);
+  $ieAlphaColour: argb($alphaColour);   
+  border-color: $colour; 
+  border-color: $alphaColour;       
+  zoom: 1; 
+  border-color: transparent\9;
+}
+@mixin background-hover {
+  color: $text-color;
+  background: rgba(228, 50, 40, 0.3);
+}
+
+// Background Gradient: Left to Right
+@mixin bg-gradient-l2r($start-colour, $end-colour) {
+    background-color: $start-colour;
+    background-image: -webkit-gradient(linear, left top, right top, from($start-colour), to($end-colour));
+    background-image: -webkit-linear-gradient(left, $start-colour, $end-colour);
+    background-image:    -moz-linear-gradient(left, $start-colour, $end-colour);
+    background-image:     -ms-linear-gradient(left, $start-colour, $end-colour);
+    background-image:      -o-linear-gradient(left, $start-colour, $end-colour);
+    background-image:         linear-gradient(left, $start-colour, $end-colour);
+    filter:            progid:DXImageTransform.Microsoft.gradient(start-colourStr='#{$start-colour}', end-colourStr='#{$end-colour}', gradientType='1');
+}
+/// button variant outline
+@mixin button-variant-outline($color, $background, $border, $colorhover, $bghover, $borderhover ) {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    color: $colorhover;
+    background-color: $bghover;
+        border-color: $borderhover ;
+  }
+  .open & { &.dropdown-toggle {
+    color: $colorhover;
+    background-color: $bghover;
+        border-color: $borderhover ;
+  } }
+  &:active,
+  &.active {
+    background-image: none;
+  }
+  .open & { &.dropdown-toggle {
+    background-image: none;
+  } }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: $background;
+          border-color: $border;
+    }
+  }
+  .badge {
+    color: $background;
+    background-color: $color;
+  }
+}
+
+
+// Block
+// -------------------------
+@mixin block-variant($border, $heading-text-color, $heading-bg-color, $heading-border) {
+  border-color: $border;
+
+  & .#{$block-heading-selector} {
+    color: $heading-text-color;
+    a{
+      color: $heading-text-color;
+    }
+    background-color: $heading-bg-color;
+    border-color: $heading-border;
+    + .#{$block-prefix}-collapse .#{$block-content-selector} {
+      border-top-color: $border;
+    }
+  }
+  & > .#{$block-prefix}-footer {
+    + .#{$block-prefix}-collapse .#{$block-prefix}-body {
+      border-bottom-color: $border;
+    }
+  }
+}
+@mixin container-layout-variant($color, $background){
+  background: $background;
+  color: $color;
+} 
+
+/***************************************************
+  Mixins RTL Themes 
+/***************************************************/
+
+// BASIC CONVERTER (ignore these)
+
+@mixin rtl-base-simple ($property, $direction) {
+  #{$property}:$direction;
+  .rtl & {
+    @if $direction == $rtl-right {
+      #{$property}:$rtl-left;
+    }
+    @else {
+      #{$property}:$rtl-right;
+    }
+  }
+}
+@mixin rtl-base-inherit ($property, $direction, $value, $inherit : inherit) {
+  #{$property}-#{$direction}: $value;
+  .rtl & {
+    @if $direction == $rtl-right {
+      #{$property}-#{$rtl-left}: $value;
+    }
+    @else {
+      #{$property}-#{$rtl-right}: $value;
+    }
+    #{$property}-#{$direction}: $inherit;
+  }
+}
+
+@mixin rtl-base-toprightbottomleft ($property, $t, $r, $b, $l) {
+  #{$property}: $t $r $b $l;
+  .rtl & {
+    #{$property}: $t $l $b $r;
+  }
+}
+
+// BODY STYLES
+
+@mixin rtl-direction ($forBody : true) {
+  direction: ltr;
+  @if $forBody {
+    &.rtl {
+      direction: rtl;
+    }
+  }
+  @else {
+    .rtl & {
+      direction: rtl;
+    }
+  }
+}
+@mixin rtl-font-family ($ltr, $rtl, $forBody : false) {
+  font-family: $ltr;
+  @if $forBody {
+    &.rtl, &.non-latin {
+      font-family:$rtl;
+    }
+  }
+  @else {
+    .rtl &, .non-latin & {
+      font-family:$rtl;
+    }
+  }
+}
+
+// MARGIN
+
+@mixin rtl-margin ($t, $r, $b, $l) {
+  @include rtl-base-toprightbottomleft(margin,$t, $r, $b, $l);
+}
+@mixin rtl-margin-left ($value) {
+  @include rtl-base-inherit(margin,$rtl-left,$value);
+}
+@mixin rtl-margin-right ($value) {
+  @include rtl-base-inherit(margin,$rtl-right,$value);
+}
+
+// PADDING
+
+@mixin rtl-padding ($t, $r, $b, $l) {
+  @include rtl-base-toprightbottomleft(padding,$t, $r, $b, $l);
+}
+@mixin rtl-padding-left ($value) {
+  @include rtl-base-inherit(padding,$rtl-left,$value);
+}
+@mixin rtl-padding-right ($value) {
+  @include rtl-base-inherit(padding,$rtl-right,$value);
+}
+
+// BORDER
+
+@mixin rtl-border-width ($t,$r,$b,$l) {
+  @include rtl-base-toprightbottomleft(border-width,$t,$r,$b,$l);
+}
+@mixin rtl-border-style ($t,$r,$b,$l) {
+  @include rtl-base-toprightbottomleft(border-style,$t,$r,$b,$l);
+}
+@mixin rtl-border-left ($value) {
+  @include rtl-base-inherit(border,$rtl-left,$value);
+}
+@mixin rtl-border-right ($value) {
+  @include rtl-base-inherit(border,$rtl-right,$value);
+}
+@mixin rtl-border-color ($t,$r,$b,$l) {
+  @include rtl-base-toprightbottomleft(border-color,$t,$r,$b,$l);
+}
+
+// POSITION
+
+@mixin rtl-left ($value) {
+  #{$rtl-left}: $value;
+  .rtl & {
+    #{$rtl-right}: $value;
+    #{$rtl-left}: auto;
+  }
+}
+@mixin rtl-right ($value) {
+  #{$rtl-right}: $value;
+  .rtl & {
+    #{$rtl-left}: $value;
+    #{$rtl-right}: auto;
+  }
+}
+
+// TEXT-ALIGN
+
+@mixin rtl-text-align-left () {
+  @include rtl-base-simple(text-align, $rtl-left);
+}
+@mixin rtl-text-align-right () {
+  @include rtl-base-simple(text-align, $rtl-right);
+}
+
+// FLOAT
+
+@mixin rtl-float-left () {
+  @include rtl-base-simple(float, $rtl-left);
+}
+@mixin rtl-float-right () {
+  @include rtl-base-simple(float, $rtl-right);
+}
+
+// BACKGROUND-POSITION
+
+@mixin rtl-background-position-left ($vertical) {
+  background-position:$rtl-left $vertical !important;
+  .rtl & {
+    background-position:$rtl-right $vertical !important;
+  }
+}
+@mixin rtl-background-position-right ($vertical) {
+  background-position:$rtl-right $vertical !important;
+  .rtl & {
+    background-position:$rtl-left $vertical !important;
+  }
+}
+
+@mixin rtl-background-position-percent ($vertical, $horPercent) {
+  background-position:$horPercent $vertical !important;
+  .rtl & {
+    background-position:100% - $horPercent $vertical !important;
+  }
+}
+
+// TEXT-SHADOW & BOX-SHADOW
+
+@mixin rtl-text-shadow ($x, $rest) {
+  text-shadow: $x $rest;
+  .rtl & {
+    text-shadow: -1 * $x $rest;
+  }
+}
+@mixin rtl-box-shadow ($x, $rest) {
+  -moz-box-shadow: $x $rest;
+  -webkit-box-shadow: $x $rest;
+  box-shadow: $x $rest;
+  .rtl & {
+    -moz-box-shadow: -1 * $x $rest;
+    -webkit-box-shadow: -1 * $x $rest;
+    box-shadow: -1 * $x $rest;
+  }
+}
+
+// BORDER-RADIUS
+
+@mixin rtl-border-radius($tl, $tr, $br, $bl) {
+  -moz-border-radius: $tl $tr $br $bl;
+  -webkit-border-radius: $tl $tr $br $bl;
+  border-radius: $tl $tr $br $bl;
+  .rtl & {
+    -moz-border-radius: $tr $tl $bl $br;
+    -webkit-border-radius: $tr $tl $bl $br;
+    border-radius: $tr $tl $bl $br;
+  }
+}
+
+@mixin rtl-border-radius-topright ($value) {
+  -moz-border-top-#{$rtl-right}-radius: $value;
+  -webkit-border-top-#{$rtl-right}-radius: $value;
+  border-top-#{$rtl-right}-radius: $value;
+  .rtl & {
+    -moz-border-top-#{$rtl-left}-radius: $value;
+    -webkit-border-top-#{$rtl-left}-radius: $value;
+    border-top-#{$rtl-left}-radius: $value;
+    -moz-border-top-#{$rtl-right}-radius: inherit;
+    -webkit-border-top-#{$rtl-right}-radius: inherit;
+    border-top-#{$rtl-right}-radius: inherit;
+  }
+}
+
+@mixin rtl-border-radius-bottomright ($value) {
+  -moz-border-bottom-#{$rtl-right}-radius: $value;
+  -webkit-border-bottom-#{$rtl-right}-radius: $value;
+  border-bottom-#{$rtl-right}-radius: $value;
+  .rtl & {
+    -moz-border-bottom-#{$rtl-left}-radius: $value;
+    -webkit-border-bottom-#{$rtl-left}-radius: $value;
+    border-bottom-#{$rtl-left}-radius: $value;
+    -moz-border-bottom-#{$rtl-right}-radius: inherit;
+    -webkit-border-bottom-#{$rtl-right}-radius: inherit;
+    border-bottom-#{$rtl-right}-radius: inherit;
+  }
+}
+
+@mixin rtl-border-radius-topleft ($value) {
+  -moz-border-top-#{$rtl-left}-radius: $value;
+  -webkit-border-top-#{$rtl-left}-radius: $value;
+  border-top-#{$rtl-left}-radius: $value;
+  .rtl & {
+    -moz-border-top-#{$rtl-right}-radius: $value;
+    -webkit-border-top-#{$rtl-right}-radius: $value;
+    border-top-#{$rtl-right}-radius: $value;
+    -moz-border-top-#{$rtl-left}-radius: inherit;
+    -webkit-border-top-#{$rtl-left}-radius: inherit;
+    border-top-#{$rtl-left}-radius: inherit;
+  }
+}
+
+@mixin rtl-border-radius-bottomleft ($value) {
+  -moz-border-bottom-#{$rtl-left}-radius: $value;
+  -webkit-border-bottom-#{$rtl-left}-radius: $value;
+  border-bottom-#{$rtl-left}-radius: $value;
+  .rtl & {
+    -moz-border-bottom-#{$rtl-right}-radius: $value;
+    -webkit-border-bottom-#{$rtl-right}-radius: $value;
+    border-bottom-#{$rtl-right}-radius: $value;
+    -moz-border-bottom-#{$rtl-left}-radius: inherit;
+    -webkit-border-bottom-#{$rtl-left}-radius: inherit;
+    border-bottom-#{$rtl-left}-radius: inherit;
+  }
+}
+
+@mixin rtl-left-right ($left,$right) {
+  #{$rtl-right}: $right;
+  #{$rtl-left}: $left;
+  .rtl & {
+    #{$rtl-right}: $left;
+    #{$rtl-left}: $right;
+  }
+}
+
+@mixin dir-left-right ($left,$right) {
+  #{$rtl-right}: $right;
+  #{$rtl-left}: $left;
+  html[dir="rtl"]:not(.rtl) & {
+    #{$rtl-right}: $left;
+    #{$rtl-left}: $right;
+  }
+}
+
+@mixin dir-float-right() {
+  float: #{$rtl-right};
+  html[dir="rtl"]:not(.rtl) & {
+    float: #{$rtl-left};
+  }
+}
+
+@mixin dir-float-left() {
+  float: #{$rtl-left};
+  html[dir="rtl"]:not(.rtl) & {
+    float: #{$rtl-right};
+  }
+}
+
+@mixin linear-gradient-product(){
+  background: #e3e3e3;
+  background: -moz-linear-gradient(top, white 16%, #e3e3e3 53%, white 83%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(16%, white), color-stop(53%, #e3e3e3), color-stop(83%, white));
+  background: -webkit-linear-gradient(top, white 16%, #e3e3e3 53%, white 83%);
+  background: -o-linear-gradient(top, white 16%, #e3e3e3 53%, white 83%);
+  background: -ms-linear-gradient(top, white 16%, #e3e3e3 53%, white 83%);
+  background: linear-gradient(to bottom, #ffffff 16%, #e3e3e3 53%, #ffffff 83%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$white', endColorstr='$white',GradientType=0 );
+}
+@mixin linear-gradient($angel,$start-color,$start-percent,$end-color,$end-percent){
+  background: $start-color;
+  background: -moz-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+  background: -webkit-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+  background: -o-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+  background: -ms-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+  background: linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+
+}
+
+@mixin base-linear-gradient($angel,$start-color,$start-percent,$end-color,$end-percent){
+  background-color: $start-color;
+  background-image: -moz-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+  background-image: -webkit-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+  background-image: -o-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+  background-image: -ms-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+  background-image: linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+}
+
+
+@mixin base-border-linear-gradient($angel,$start-color,$start-percent,$end-color,$end-percent){
+  -moz-border-image: -moz-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+  -webkit-border-image: -webkit-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+  -o-border-image: -o-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+  -ms-border-image: -ms-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+  border-image: linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+  -moz-border-image-slice: 1;
+  -webkit-border-image-slice: 1;
+  -o-border-image-slice: 1;
+  -ms-border-image-slice: 1;
+  border-image-slice: 1;
+}
+
+
+// @mixin base-text-linear-gradient($angel,$start-color,$start-percent,$end-color,$end-percent){
+//   -webkit-background-clip: text;
+//   background-clip: text;
+//   color: transparent;
+//   background-color: transparent;
+//   background-image: -moz-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+//   background-image: -webkit-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+//   background-image: -o-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+//   background-image: -ms-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+//   background-image: linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+//   @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { 
+//     color: inherit;
+//     background-image: -moz-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+//     background-image: -webkit-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+//     background-image: -o-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+//     background-image: -ms-linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+//     background-image: linear-gradient($angel, $start-color $start-percent, $end-color $end-percent);
+//   }
+// }
+
+@mixin base-text-linear-gradient($angel,$start-color,$start-percent,$end-color,$end-percent){
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  @include base-linear-gradient($angel,$start-color,$start-percent,$end-color,$end-percent);
+  background-color: transparent;
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { 
+    color: $start-color;
+    @include base-linear-gradient($angel,transparent,$start-percent,transparent,$end-percent);
+    background-color: transparent;
+  }
+}
+
+@mixin base-border-image($value){
+  -moz-border-image: $value;
+  -webkit-border-image: $value;
+  -o-border-image: $value;
+  -ms-border-image: $value;
+  border-image: $value;
+}
+
+@mixin tabs-normal(){
+  .title_block{
+    // text-align: center;
+  }
+  .nav-tabs{
+    font-size: 0px;
+    text-align: center;
+    .nav-item {
+      float: none;
+      position: relative;
+      display: inline-block;
+      vertical-align: middle;
+      & + .nav-item {
+        @include rtl-margin-left(30px);
+      }
+      .nav-link {
+        color: #999999;
+        border: none;
+        padding: 0px;
+        font-size: 14px;
+        line-height: 1.3;
+        font-weight: 600;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        text-transform: uppercase;
+        @include border-radius(0px);
+      }
+    }
+  }
+}
+@mixin tabs-center(){
+  .title_block{
+    width: 100%;
+    text-align: center;
+  }
+  .nav-tabs{
+    text-align: center;
+    width: 100%;
+    .rtl & {
+      text-align: center;
+    }
+  }
+}
+@mixin tabs-title(){
+  .title_block{
+    @include make-col(4);
+    @include rtl-float-left();
+    @include rtl-text-align-left();
+  }
+  .nav-tabs{
+    @include make-col(8);
+    @include rtl-float-left();
+    @include rtl-text-align-right();
+  }
+}
+@mixin tabs-mobile(){
+  .box-select{
+    display: block;
+    // margin-bottom: 30px;
+  }
+  .nav-tabs{
+    display: none;
+  }
+}
+
+// LazyLoad
+@mixin lazyload-style-one(){
+  width: 100%;
+  display: block;
+  position: relative;
+  .lazyload-icon {
+    position: absolute;
+    height: 15px;
+    width: 5px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: auto;
+    clear: both;
+    border: 1px #cccccc solid;
+    background-color: rgba(#cccccc,0.25);
+    @include animation(spBars 1s infinite linear);
+    &:after, &:before {
+      content:'';
+      top: 0px;
+      width: inherit;
+      height: inherit;
+      border: inherit;
+      position: absolute;
+      background-color: inherit;
+    }
+    &:before {
+      left: -10px;
+      @include animation(spBarsBefore 1s infinite linear);
+    }
+    &:after {
+      right: -10px;
+      @include animation(spBarsAfter 1s infinite linear);
+    }
+  }
+}
+
+@mixin lazyload-style-two(){
+  display: block;
+  position: relative;
+  .lazyload-icon{
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    position: absolute;
+    background: #eeeeee;
+    background: -moz-linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background: -webkit-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background: -webkit-linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background: -o-linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background: -ms-linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background-size: 200% 100%;
+    @include animation-duration(1.5s);
+    @include animation-fill-mode(forwards);
+    @include animation-iteration-count(infinite);
+    @include animation-name(placeHolderShimmer);
+    @include animation-timing-function(linear);
+  }
+}
+
+
+@mixin countdown_disable_effect_rotate_number(){
+  .deo_countdown_ {
+    &digit_{
+      &last_placeholder,&new_placeholder,&last_rotate{
+        display: none;
+      }
+      &new_rotate,&new_rotated_inner{
+        position: static;
+        height: 100%;
+      }
+      &new_rotate{
+        @include animation(none);
+      }
+      &new_rotated{
+        height: 100%;
+        position: static;
+        @include transform(none);
+      }
+    }
+  }
+}
+
+@mixin simple-coutdown(){
+  .deo_countdown_ {
+    &cont {
+      margin-left: -5px;
+      margin-right: -5px;
+    }
+    &digit_{
+      &cont {
+        width: auto;
+        height: auto;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        display: inline-block;
+        vertical-align: middle;
+        @include border-radius(0px);
+        @include box-shadow(none);
+        &:nth-child(n+1):not(:last-child) {
+          @include rtl-margin-right(0px);
+        }
+      }
+      &last_rotate, &new_rotate {
+        width: auto;
+        height: auto;
+      }
+      &last_placeholder,&new_placeholder,&last_rotate{
+        display: none;
+      }
+      &new_rotate,&new_rotated_inner{
+        position: static;
+        height: auto;
+        width: auto;
+      }
+      &new_rotate{
+        background: transparent;
+        @include animation(none);
+      }
+      &new_rotated{
+        height: auto;
+        width: auto;
+        position: static;
+        @include transform(none);
+      }
+      &new_rotated_inner{
+        font-size: 13px;
+      }
+    }
+    &interval {
+      &_cont {
+        height: 25px;
+        line-height: 23px;
+        width: 40px;
+        margin: auto;
+        padding: 0 2px;
+        background: $white;
+        font-size: 0px;
+        font-weight: 500;
+        border: 2px solid #222222;
+        border-bottom: none;
+        display: block;
+      }
+      &_basic_cont {
+        padding-left: 5px;
+        padding-right: 5px;
+        vertical-align: top;
+        &_description {
+          margin-top: 0px;
+          color: $white;
+          padding: 1px;
+          display: block;
+          font-size: 9px;
+          font-weight: 300;
+          background: #222222;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+}
+
+@mixin countdown-one(){
+  // ul{
+  //  margin-left: -5px;
+  //  margin-right: -5px;
+  //  display: inline-block;
+  //  li{
+  //    margin: 5px;
+  //    min-width: 75px;
+  //    padding: 12px 10px;
+  //    display: inline-block;
+  //    vertical-align: middle;
+  //    background: rgba($white, 0.4);
+  //    @include border-radius(5px);
+  //    b{
+  //      display: block;
+  //      font-size: 22px;
+  //      font-weight: 600;
+  //    }
+  //    span{
+  //      display: block;
+  //      font-size: 12px;
+  //    }
+  //  }
+  // }
+  .deo_countdown_ {
+    &cont {
+      margin-left: -5px;
+      margin-right: -5px;
+    }
+    &digit_{
+      &cont {
+        width: auto;
+        height: auto;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        display: inline-block;
+        vertical-align: middle;
+        @include border-radius(0px);
+        @include box-shadow(none);
+        &:nth-child(n+1):not(:last-child) {
+          @include rtl-margin-right(0px);
+        }
+      }
+      &last_rotate, &new_rotate {
+        width: auto;
+        height: auto;
+      }
+      &last_placeholder,&new_placeholder,&last_rotate{
+        display: none;
+      }
+      &new_rotate,&new_rotated_inner{
+        position: static;
+        height: auto;
+        width: auto;
+      }
+      &new_rotate{
+        background: transparent;
+        @include animation(none);
+      }
+      &new_rotated{
+        height: auto;
+        width: auto;
+        position: static;
+        @include transform(none);
+      }
+      &new_rotated_inner{
+        font-size: 22px;
+      }
+    }
+    &interval {
+      &_cont {
+        font-size: 0px;
+        display: block;
+        font-weight: 600;
+      }
+      &_basic_cont {
+        margin: 5px;
+        min-width: 75px;
+        padding: 12px 10px;
+        display: inline-block;
+        vertical-align: middle;
+        background: rgba($white, 0.4);
+        @include border-radius(5px);
+        &_description {
+          display: block;
+          font-size: 12px;
+          margin-top: 0px;
+        }
+      }
+    }
+  }
+}
+
+@mixin countdown-two(){
+  // ul{
+  //  margin-left: -5px;
+  //  margin-right: -5px;
+  //  display: inline-block;
+  //  li{
+  //    min-width: 75px;
+  //    padding: 5px 10px;
+  //    position: relative;
+  //    display: inline-block;
+  //    vertical-align: middle;
+  //    @include border-radius(5px);
+  //    &:last-child{
+  //      &:after {
+  //        display: none;
+  //      }
+  //    }
+  //    &:after {
+  //      content: ':';
+  //      display: inline-block;
+  //      position: absolute;
+  //      top: 18px;
+  //      margin: auto;
+  //      font-size: 22px;
+  //      font-weight: bold;
+  //      @include rtl-right(-3px);
+  //    }
+  //    b{
+  //      color: $white;
+  //      display: block;
+  //      font-size: 22px;
+  //      font-weight: 600;
+  //      padding: 15px 5px;
+  //      @include border-radius(3px);
+  //      @include box-shadow(1px 1px 1px rgba(#040404, 0.35));
+  //      @include linear-gradient(bottom, #3A3A3A,50%, #444444,50%);
+  //    }
+  //    span{
+  //      display: block;
+  //      font-size: 12px;
+  //    }
+  //  }
+  // }
+  .deo_countdown_ {
+    &cont {
+      margin-left: -5px;
+      margin-right: -5px;
+    }
+    &digit_{
+      &cont {
+        width: auto;
+        height: auto;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        display: inline-block;
+        vertical-align: middle;
+        @include border-radius(0px);
+        @include box-shadow(none);
+        &:nth-child(n+1):not(:last-child) {
+          @include rtl-margin-right(0px);
+        }
+      }
+      &last_rotate, &new_rotate {
+        width: auto;
+        height: auto;
+      }
+      &last_placeholder,&new_placeholder,&last_rotate{
+        display: none;
+      }
+      &new_rotate,&new_rotated_inner{
+        position: static;
+        height: auto;
+        width: auto;
+      }
+      &new_rotate{
+        background: transparent;
+        @include animation(none);
+      }
+      &new_rotated{
+        height: auto;
+        width: auto;
+        position: static;
+        @include transform(none);
+      }
+      &new_rotated_inner{
+        font-size: 22px;
+      }
+    }
+    &interval {
+      &_cont {
+        color: $white;
+        display: block;
+        font-size: 0px;
+        font-weight: 600;
+        padding: 15px 5px;
+        @include border-radius(3px);
+        @include box-shadow(1px 1px 1px rgba(#040404, 0.35));
+        @include linear-gradient(bottom, #3A3A3A,50%, #444444,50%);
+      }
+      &_basic_cont {
+        min-width: 75px;
+        padding: 5px 10px;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        @include border-radius(5px);
+        &:last-child{
+          &:after {
+            display: none;
+          }
+        }
+        &:after {
+          content: ':';
+          display: inline-block;
+          position: absolute;
+          top: 18px;
+          margin: auto;
+          font-size: 22px;
+          font-weight: bold;
+          @include rtl-right(-3px);
+        }
+        &_description {
+          display: block;
+          font-size: 12px;
+          margin-top: 0px;
+        }
+      }
+    }
+  }
+}
+
+@mixin countdown-three(){
+  // ul{
+  //  margin-left: -5px;
+  //  margin-right: -5px;
+  //  display: inline-block;
+  //  @include border-radius(5px);
+  //  li{
+  //    min-width: 75px;
+  //    padding: 10px 5px;
+  //    display: inline-block;
+  //    vertical-align: middle;
+  //    @include rtl-border-right(1px solid #666666);
+  //    @include box-shadow(1px 1px 1px rgba(#040404, 0.35));
+  //    @include linear-gradient(bottom, #3A3A3A,50%, #444444,50%);
+  //    &:last-child{
+  //      border: none;
+  //    }
+  //    b{
+  //      color: $white;
+  //      display: block;
+  //      font-size: 22px;
+  //      font-weight: 600;
+  //      padding: 0px 5px;
+  //    }
+  //    span{
+  //      color: $white;
+  //      display: block;
+  //      font-size: 12px;
+  //    }
+  //  }
+  // }
+  .deo_countdown_ {
+    &cont {
+      margin-left: -5px;
+      margin-right: -5px;
+      display: inline-block;
+      @include border-radius(5px);
+    }
+    &digit_{
+      &cont {
+        width: auto;
+        height: auto;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        display: inline-block;
+        vertical-align: middle;
+        @include border-radius(0px);
+        @include box-shadow(none);
+        &:nth-child(n+1):not(:last-child) {
+          @include rtl-margin-right(0px);
+        }
+      }
+      &last_rotate, &new_rotate {
+        width: auto;
+        height: auto;
+      }
+      &last_placeholder,&new_placeholder,&last_rotate{
+        display: none;
+      }
+      &new_rotate,&new_rotated_inner{
+        position: static;
+        height: auto;
+        width: auto;
+      }
+      &new_rotate{
+        background: transparent;
+        @include animation(none);
+      }
+      &new_rotated{
+        height: auto;
+        width: auto;
+        position: static;
+        @include transform(none);
+      }
+      &new_rotated_inner{
+        font-size: 22px;
+      }
+    }
+    &interval {
+      &_cont {
+        color: $white;
+        display: block;
+        font-size: 0px;
+        font-weight: 600;
+        padding: 0px 5px;
+      }
+      &_basic_cont {
+        min-width: 75px;
+        padding: 10px 5px;
+        display: inline-block;
+        vertical-align: middle;
+        @include rtl-border-right(1px solid #666666);
+        @include box-shadow(1px 1px 1px rgba(#040404, 0.35));
+        @include linear-gradient(bottom, #3A3A3A,50%, #444444,50%);
+        &:last-child{
+          border: none;
+        }
+        &_description {
+          color: $white;
+          display: block;
+          font-size: 12px;
+          margin-top: 0px;
+        }
+      }
+    }
+  }
+}
+

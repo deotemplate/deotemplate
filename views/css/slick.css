@@ -1,0 +1,151 @@
+/**
+ *  @author    DeoTemplate <deotemplate@gmail.com>
+ *  @copyright by DeoTemplate
+ *  @license   http://deotemplate.com - prestashop template provider
+ */
+/*!
+ * Bootstrap v4.0.0-alpha.5 (https://getbootstrap.com)
+ * Copyright 2011-2016 The Bootstrap Authors
+ * Copyright 2011-2016 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+/** search ***/
+/** end search ***/
+/** newlestter ***/
+/** End newlestter ***/
+/***************************************************
+  Mixins Themes 
+/***************************************************/
+/* Mixin Normal*/
+/* Mixin Clear */
+/* Mixin Border */
+/*background RGBA
+============================================*/
+/***************************************************
+  Mixins RTL Themes 
+/***************************************************/
+/************************************ 
+	Override Bootstrap 
+*************************************/
+/**
+ *   Blocks Layout Selectors 
+ */
+/***********************************************************************/
+/** search ***/
+/** end search ***/
+/** newlestter ***/
+/** End newlestter ***/
+/***************************************************
+  Mixins Themes 
+/***************************************************/
+/* Mixin Normal*/
+/* Mixin Clear */
+/* Mixin Border */
+/*background RGBA
+============================================*/
+/***************************************************
+  Mixins RTL Themes 
+/***************************************************/
+/* Slider */
+.slick-slider {
+  position: relative;
+  display: block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent; }
+
+.slick-row {
+  margin-left: -15px;
+  margin-right: -15px; }
+  .slick-row::after {
+    content: "";
+    display: table;
+    clear: both; }
+
+.slick-list {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 0; }
+  .slick-list:focus {
+    outline: none; }
+  .slick-list.dragging {
+    cursor: pointer;
+    cursor: hand; }
+
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0); }
+
+.slick-track {
+  position: relative;
+  left: 0;
+  top: 0;
+  display: block; }
+  .slick-track::after {
+    content: "";
+    display: table;
+    clear: both; }
+  .deo-carousel-loading .slick-track {
+    visibility: hidden; }
+
+.slick-slide {
+  outline: 0;
+  height: 100%;
+  min-height: 1px;
+  float: left;
+  padding-left: 15px;
+  padding-right: 15px;
+  display: none; }
+  .rtl .slick-slide {
+    float: right; }
+  .slick-slide .slick-slide {
+    padding-left: 0px;
+    padding-right: 0px; }
+  .slick-slide.deo-carousel-loading img {
+    display: none; }
+  .slick-slide.dragging img {
+    pointer-events: none; }
+  .slick-initialized .slick-slide {
+    display: block; }
+  .deo-carousel-loading:not(.slick-slider) .slick-slide {
+    visibility: hidden; }
+  .slick-vertical .slick-slide {
+    display: block;
+    height: auto; }
+
+.slick-arrow.slick-hidden {
+  display: none; }
+
+.slick-slider.deo-carousel-loading .slick-slide {
+  display: none; }
+  .slick-slider.deo-carousel-loading .slick-slide.loading-vertical {
+    width: 100%; }
+.slick-slider.deo-carousel-loading.show-icon-loading::before {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  content: "";
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-color: #00aff0;
+  -webkit-animation: animate 1s infinite ease-in-out;
+  -moz-animation: animate 1s infinite ease-in-out;
+  animation: animate 1s infinite ease-in-out;
+  margin: -20px auto 0; }
+.slick-slider.deo-carousel-loading.show-icon-loading .slick-slide {
+  visibility: hidden;
+  opacity: 0;
+  filter: alpha(opacity=0); }
+
+/*# sourceMappingURL=slick.css.map */

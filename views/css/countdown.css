@@ -1,0 +1,1031 @@
+/**
+ *  @author    DeoTemplate <deotemplate@gmail.com>
+ *  @copyright by DeoTemplate
+ *  @license   http://deotemplate.com - prestashop template provider
+ */
+/*!
+ * Bootstrap v4.0.0-alpha.5 (https://getbootstrap.com)
+ * Copyright 2011-2016 The Bootstrap Authors
+ * Copyright 2011-2016 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+/** search ***/
+/** end search ***/
+/** newlestter ***/
+/** End newlestter ***/
+/***************************************************
+  Mixins Themes 
+/***************************************************/
+/* Mixin Normal*/
+/* Mixin Clear */
+/* Mixin Border */
+/*background RGBA
+============================================*/
+/***************************************************
+  Mixins RTL Themes 
+/***************************************************/
+/************************************ 
+	Override Bootstrap 
+*************************************/
+/**
+ *   Blocks Layout Selectors 
+ */
+/***********************************************************************/
+/** search ***/
+/** end search ***/
+/** newlestter ***/
+/** End newlestter ***/
+/***************************************************
+  Mixins Themes 
+/***************************************************/
+/* Mixin Normal*/
+/* Mixin Clear */
+/* Mixin Border */
+/*background RGBA
+============================================*/
+/***************************************************
+  Mixins RTL Themes 
+/***************************************************/
+@keyframes countDown_flip_last {
+  0% {
+    transform: rotateX(0deg);
+    z-index: 1; }
+  100% {
+    transform: rotateX(-180deg);
+    z-index: 0; } }
+@-webkit-keyframes countDown_flip_last {
+  0% {
+    -webkit-transform: rotateX(0deg);
+    z-index: 1; }
+  100% {
+    -webkit-transform: rotateX(-180deg);
+    z-index: 0; } }
+@-moz-keyframes countDown_flip_last {
+  0% {
+    -moz-transform: rotateX(0deg);
+    z-index: 1; }
+  100% {
+    -moz-transform: rotateX(-180deg);
+    z-index: 0; } }
+@keyframes countDown_flip_new {
+  0% {
+    transform: rotateX(0deg);
+    z-index: 0; }
+  100% {
+    transform: rotateX(-180deg);
+    z-index: 1; } }
+@-webkit-keyframes countDown_flip_new {
+  0% {
+    -webkit-transform: rotateX(0deg);
+    z-index: 0; }
+  100% {
+    -webkit-transform: rotateX(-180deg);
+    z-index: 1; } }
+@-moz-keyframes countDown_flip_new {
+  0% {
+    -moz-transform: rotateX(0deg);
+    z-index: 0; }
+  100% {
+    -moz-transform: rotateX(-180deg);
+    z-index: 1; } }
+.deo_countdown_expired {
+  font-weight: 500;
+  margin-top: 1em; }
+.deo_countdown_cont {
+  text-align: center;
+  display: inline-block;
+  margin-left: -0.5em;
+  margin-right: -0.5em; }
+.deo_countdown_interval_cont {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: distribute;
+  -moz-box-pack: distribute;
+  box-pack: distribute;
+  -webkit-justify-content: space-around;
+  -moz-justify-content: space-around;
+  -ms-justify-content: space-around;
+  -o-justify-content: space-around;
+  justify-content: space-around;
+  -ms-flex-pack: distribute; }
+.deo_countdown_interval_basic_cont {
+  display: inline-block;
+  padding-left: 0.5em;
+  padding-right: 0.5em; }
+  .deo_countdown_interval_basic_cont_description {
+    margin-top: 0.5em; }
+.deo_countdown_digit_cont {
+  width: 1em;
+  height: 1.5em;
+  position: relative;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.5em;
+  border-radius: 0.2em;
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  -o-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  -ms-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2); }
+  .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+    margin-right: 4px; }
+    .rtl .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+      margin-left: 4px;
+      margin-right: inherit; }
+.deo_countdown_digit_last_placeholder, .deo_countdown_digit_new_placeholder {
+  left: 0;
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  overflow: hidden;
+  text-align: center; }
+.deo_countdown_digit_last_placeholder {
+  bottom: 0;
+  background: #f7f7f7;
+  border-radius: 0 0 0.2em 0.2em; }
+  .deo_countdown_digit_last_placeholder_inner {
+    width: 100%;
+    height: 100%;
+    bottom: 50%;
+    position: absolute;
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    box-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center;
+    -ms-flex-align: center;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    box-pack: center;
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-justify-content: center;
+    -o-justify-content: center;
+    justify-content: center;
+    -ms-flex-pack: center; }
+.deo_countdown_digit_new_placeholder {
+  top: 0;
+  background: #f7f7f7;
+  border-radius: 0.2em 0.2em 0 0; }
+.deo_countdown_digit_last_rotate, .deo_countdown_digit_new_rotate {
+  top: 0;
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  box-pack: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  -o-justify-content: center;
+  justify-content: center;
+  -ms-flex-pack: center;
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-transform-origin: 100% 100%;
+  -moz-transform-origin: 100% 100%;
+  -ms-transform-origin: 100% 100%;
+  -o-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+  border-radius: 0.2em 0.2em 0 0; }
+.deo_countdown_digit_last_rotate {
+  background: #f7f7f7;
+  -webkit-animation-name: countDown_flip_last;
+  -moz-animation-name: countDown_flip_last;
+  animation-name: countDown_flip_last; }
+  .deo_countdown_digit_last_rotate:after {
+    content: "";
+    z-index: -1;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.1); }
+.deo_countdown_digit_new_rotate {
+  background: #f7f7f7;
+  -webkit-animation-name: countDown_flip_new;
+  -moz-animation-name: countDown_flip_new;
+  animation-name: countDown_flip_new; }
+.deo_countdown_digit_new_rotated {
+  width: 100%;
+  height: 100%;
+  -webkit-transform: rotateX(180deg);
+  -moz-transform: rotateX(180deg);
+  -ms-transform: rotateX(180deg);
+  -o-transform: rotateX(180deg);
+  transform: rotateX(180deg); }
+  .deo_countdown_digit_new_rotated_inner {
+    width: 100%;
+    height: 100%;
+    bottom: 50%;
+    position: absolute;
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    box-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center;
+    -ms-flex-align: center;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    box-pack: center;
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-justify-content: center;
+    -o-justify-content: center;
+    justify-content: center;
+    -ms-flex-pack: center; }
+
+.coutdown-disable-effect-rotate-number .deo_countdown_digit_last_placeholder, .coutdown-disable-effect-rotate-number .deo_countdown_digit_new_placeholder, .coutdown-disable-effect-rotate-number .deo_countdown_digit_last_rotate {
+  display: none; }
+.coutdown-disable-effect-rotate-number .deo_countdown_digit_new_rotate, .coutdown-disable-effect-rotate-number .deo_countdown_digit_new_rotated_inner {
+  position: static;
+  height: 100%; }
+.coutdown-disable-effect-rotate-number .deo_countdown_digit_new_rotate {
+  -webkit-animation: none;
+  -moz-animation: none;
+  animation: none; }
+.coutdown-disable-effect-rotate-number .deo_countdown_digit_new_rotated {
+  height: 100%;
+  position: static;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none; }
+
+.simple-coutdown .deo_countdown_cont {
+  margin-left: -5px;
+  margin-right: -5px; }
+.simple-coutdown .deo_countdown_digit_cont {
+  width: auto;
+  height: auto;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 0px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none; }
+  .simple-coutdown .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+    margin-right: 0px; }
+    .rtl .simple-coutdown .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+      margin-left: 0px;
+      margin-right: inherit; }
+.simple-coutdown .deo_countdown_digit_last_rotate, .simple-coutdown .deo_countdown_digit_new_rotate {
+  width: auto;
+  height: auto; }
+.simple-coutdown .deo_countdown_digit_last_placeholder, .simple-coutdown .deo_countdown_digit_new_placeholder, .simple-coutdown .deo_countdown_digit_last_rotate {
+  display: none; }
+.simple-coutdown .deo_countdown_digit_new_rotate, .simple-coutdown .deo_countdown_digit_new_rotated_inner {
+  position: static;
+  height: auto;
+  width: auto; }
+.simple-coutdown .deo_countdown_digit_new_rotate {
+  background: transparent;
+  -webkit-animation: none;
+  -moz-animation: none;
+  animation: none; }
+.simple-coutdown .deo_countdown_digit_new_rotated {
+  height: auto;
+  width: auto;
+  position: static;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none; }
+.simple-coutdown .deo_countdown_digit_new_rotated_inner {
+  font-size: 13px; }
+.simple-coutdown .deo_countdown_interval_cont {
+  height: 25px;
+  line-height: 23px;
+  width: 40px;
+  margin: auto;
+  padding: 0 2px;
+  background: #FFFFFF;
+  font-size: 0px;
+  font-weight: 500;
+  border: 2px solid #222222;
+  border-bottom: none;
+  display: block; }
+.simple-coutdown .deo_countdown_interval_basic_cont {
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top; }
+  .simple-coutdown .deo_countdown_interval_basic_cont_description {
+    margin-top: 0px;
+    color: #FFFFFF;
+    padding: 1px;
+    display: block;
+    font-size: 9px;
+    font-weight: 300;
+    background: #222222;
+    text-transform: uppercase; }
+
+.title-countdown {
+  color: #ff4a56;
+  font-weight: 600;
+  font-size: inherit;
+  font-family: inherit;
+  text-transform: uppercase; }
+
+.deo-countdown.pro {
+  padding-top: 15px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  border-top: 1px solid #e9e9e9; }
+  @media (max-width: 1199px) and (min-width: 992px) {
+    .deo-countdown.pro {
+      padding-top: 14px;
+      margin-top: 14px; } }
+  .countdown-product-page .deo-countdown.pro {
+    border-top: none;
+    margin-top: 0px;
+    padding-top: 0px;
+    margin-bottom: 15px; }
+  .deo-countdown.pro.hide {
+    display: none; }
+
+.deo-countdown .deal-clock-wrapper {
+  padding-top: 15px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  border-top: 1px solid #e9e9e9; }
+  @media (max-width: 1199px) and (min-width: 992px) {
+    .deo-countdown .deal-clock-wrapper {
+      padding-top: 14px;
+      margin-top: 14px; } }
+  .deo-countdown .deal-clock-wrapper.unlimited {
+    display: none; }
+    .deo-countdown .deal-clock-wrapper.unlimited ul {
+      margin-left: -5px;
+      margin-right: -5px; }
+.countdown-product-page .deo-countdown .deal-clock-wrapper {
+  border-top: none;
+  margin-top: 0px;
+  padding-top: 0px;
+  margin-bottom: 10px; }
+.deo-countdown ul {
+  margin-left: -5px;
+  margin-right: -5px;
+  display: inline-block; }
+  .deo-countdown ul li {
+    max-width: 25%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    padding: 0 5px; }
+    .deo-countdown ul li b {
+      height: 25px;
+      line-height: 23px;
+      width: 40px;
+      margin: auto;
+      padding: 0 2px;
+      background: #FFFFFF;
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      border: 2px solid #222222;
+      border-bottom: none; }
+    .deo-countdown ul li span {
+      color: #FFFFFF;
+      padding: 1px;
+      display: block;
+      font-size: 9px;
+      background: #222222;
+      text-transform: uppercase; }
+
+.countdown-one .deo_countdown_cont {
+  margin-left: -5px;
+  margin-right: -5px; }
+.countdown-one .deo_countdown_digit_cont {
+  width: auto;
+  height: auto;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 0px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none; }
+  .countdown-one .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+    margin-right: 0px; }
+    .rtl .countdown-one .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+      margin-left: 0px;
+      margin-right: inherit; }
+.countdown-one .deo_countdown_digit_last_rotate, .countdown-one .deo_countdown_digit_new_rotate {
+  width: auto;
+  height: auto; }
+.countdown-one .deo_countdown_digit_last_placeholder, .countdown-one .deo_countdown_digit_new_placeholder, .countdown-one .deo_countdown_digit_last_rotate {
+  display: none; }
+.countdown-one .deo_countdown_digit_new_rotate, .countdown-one .deo_countdown_digit_new_rotated_inner {
+  position: static;
+  height: auto;
+  width: auto; }
+.countdown-one .deo_countdown_digit_new_rotate {
+  background: transparent;
+  -webkit-animation: none;
+  -moz-animation: none;
+  animation: none; }
+.countdown-one .deo_countdown_digit_new_rotated {
+  height: auto;
+  width: auto;
+  position: static;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none; }
+.countdown-one .deo_countdown_digit_new_rotated_inner {
+  font-size: 22px; }
+.countdown-one .deo_countdown_interval_cont {
+  font-size: 0px;
+  display: block;
+  font-weight: 600; }
+.countdown-one .deo_countdown_interval_basic_cont {
+  margin: 5px;
+  min-width: 75px;
+  padding: 12px 10px;
+  display: inline-block;
+  vertical-align: middle;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 5px; }
+  .countdown-one .deo_countdown_interval_basic_cont_description {
+    display: block;
+    font-size: 12px;
+    margin-top: 0px; }
+
+.countdown-two .deo_countdown_cont {
+  margin-left: -5px;
+  margin-right: -5px; }
+.countdown-two .deo_countdown_digit_cont {
+  width: auto;
+  height: auto;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 0px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none; }
+  .countdown-two .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+    margin-right: 0px; }
+    .rtl .countdown-two .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+      margin-left: 0px;
+      margin-right: inherit; }
+.countdown-two .deo_countdown_digit_last_rotate, .countdown-two .deo_countdown_digit_new_rotate {
+  width: auto;
+  height: auto; }
+.countdown-two .deo_countdown_digit_last_placeholder, .countdown-two .deo_countdown_digit_new_placeholder, .countdown-two .deo_countdown_digit_last_rotate {
+  display: none; }
+.countdown-two .deo_countdown_digit_new_rotate, .countdown-two .deo_countdown_digit_new_rotated_inner {
+  position: static;
+  height: auto;
+  width: auto; }
+.countdown-two .deo_countdown_digit_new_rotate {
+  background: transparent;
+  -webkit-animation: none;
+  -moz-animation: none;
+  animation: none; }
+.countdown-two .deo_countdown_digit_new_rotated {
+  height: auto;
+  width: auto;
+  position: static;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none; }
+.countdown-two .deo_countdown_digit_new_rotated_inner {
+  font-size: 22px; }
+.countdown-two .deo_countdown_interval_cont {
+  color: #FFFFFF;
+  display: block;
+  font-size: 0px;
+  font-weight: 600;
+  padding: 15px 5px;
+  border-radius: 3px;
+  -moz-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+  -webkit-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+  -o-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+  -ms-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+  box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+  background: #3A3A3A;
+  background: -moz-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+  background: -webkit-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+  background: -o-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+  background: -ms-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+  background: linear-gradient(bottom, #3A3A3A 50%, #444444 50%); }
+.countdown-two .deo_countdown_interval_basic_cont {
+  min-width: 75px;
+  padding: 5px 10px;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 5px; }
+  .countdown-two .deo_countdown_interval_basic_cont:last-child:after {
+    display: none; }
+  .countdown-two .deo_countdown_interval_basic_cont:after {
+    content: ':';
+    display: inline-block;
+    position: absolute;
+    top: 18px;
+    margin: auto;
+    font-size: 22px;
+    font-weight: bold;
+    right: -3px; }
+    .rtl .countdown-two .deo_countdown_interval_basic_cont:after {
+      left: -3px;
+      right: auto; }
+  .countdown-two .deo_countdown_interval_basic_cont_description {
+    display: block;
+    font-size: 12px;
+    margin-top: 0px; }
+
+.countdown-three .deo_countdown_cont {
+  margin-left: -5px;
+  margin-right: -5px;
+  display: inline-block;
+  border-radius: 5px; }
+.countdown-three .deo_countdown_digit_cont {
+  width: auto;
+  height: auto;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 0px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none; }
+  .countdown-three .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+    margin-right: 0px; }
+    .rtl .countdown-three .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+      margin-left: 0px;
+      margin-right: inherit; }
+.countdown-three .deo_countdown_digit_last_rotate, .countdown-three .deo_countdown_digit_new_rotate {
+  width: auto;
+  height: auto; }
+.countdown-three .deo_countdown_digit_last_placeholder, .countdown-three .deo_countdown_digit_new_placeholder, .countdown-three .deo_countdown_digit_last_rotate {
+  display: none; }
+.countdown-three .deo_countdown_digit_new_rotate, .countdown-three .deo_countdown_digit_new_rotated_inner {
+  position: static;
+  height: auto;
+  width: auto; }
+.countdown-three .deo_countdown_digit_new_rotate {
+  background: transparent;
+  -webkit-animation: none;
+  -moz-animation: none;
+  animation: none; }
+.countdown-three .deo_countdown_digit_new_rotated {
+  height: auto;
+  width: auto;
+  position: static;
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none; }
+.countdown-three .deo_countdown_digit_new_rotated_inner {
+  font-size: 22px; }
+.countdown-three .deo_countdown_interval_cont {
+  color: #FFFFFF;
+  display: block;
+  font-size: 0px;
+  font-weight: 600;
+  padding: 0px 5px; }
+.countdown-three .deo_countdown_interval_basic_cont {
+  min-width: 75px;
+  padding: 10px 5px;
+  display: inline-block;
+  vertical-align: middle;
+  border-right: 1px solid #666666;
+  -moz-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+  -webkit-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+  -o-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+  -ms-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+  box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+  background: #3A3A3A;
+  background: -moz-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+  background: -webkit-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+  background: -o-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+  background: -ms-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+  background: linear-gradient(bottom, #3A3A3A 50%, #444444 50%); }
+  .rtl .countdown-three .deo_countdown_interval_basic_cont {
+    border-left: 1px solid #666666;
+    border-right: inherit; }
+  .countdown-three .deo_countdown_interval_basic_cont:last-child {
+    border: none; }
+  .countdown-three .deo_countdown_interval_basic_cont_description {
+    color: #FFFFFF;
+    display: block;
+    font-size: 12px;
+    margin-top: 0px; }
+
+.countdown-widget.countdown-style-one {
+  padding: 80px 15px;
+  text-align: center; }
+  .countdown-widget.countdown-style-one .deo_countdown_cont {
+    margin-left: -5px;
+    margin-right: -5px; }
+  .countdown-widget.countdown-style-one .deo_countdown_digit_cont {
+    width: auto;
+    height: auto;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 0px;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    -o-box-shadow: none;
+    -ms-box-shadow: none;
+    box-shadow: none; }
+    .countdown-widget.countdown-style-one .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+      margin-right: 0px; }
+      .rtl .countdown-widget.countdown-style-one .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+        margin-left: 0px;
+        margin-right: inherit; }
+  .countdown-widget.countdown-style-one .deo_countdown_digit_last_rotate, .countdown-widget.countdown-style-one .deo_countdown_digit_new_rotate {
+    width: auto;
+    height: auto; }
+  .countdown-widget.countdown-style-one .deo_countdown_digit_last_placeholder, .countdown-widget.countdown-style-one .deo_countdown_digit_new_placeholder, .countdown-widget.countdown-style-one .deo_countdown_digit_last_rotate {
+    display: none; }
+  .countdown-widget.countdown-style-one .deo_countdown_digit_new_rotate, .countdown-widget.countdown-style-one .deo_countdown_digit_new_rotated_inner {
+    position: static;
+    height: auto;
+    width: auto; }
+  .countdown-widget.countdown-style-one .deo_countdown_digit_new_rotate {
+    background: transparent;
+    -webkit-animation: none;
+    -moz-animation: none;
+    animation: none; }
+  .countdown-widget.countdown-style-one .deo_countdown_digit_new_rotated {
+    height: auto;
+    width: auto;
+    position: static;
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none; }
+  .countdown-widget.countdown-style-one .deo_countdown_digit_new_rotated_inner {
+    font-size: 22px; }
+  .countdown-widget.countdown-style-one .deo_countdown_interval_cont {
+    font-size: 0px;
+    display: block;
+    font-weight: 600; }
+  .countdown-widget.countdown-style-one .deo_countdown_interval_basic_cont {
+    margin: 5px;
+    min-width: 75px;
+    padding: 12px 10px;
+    display: inline-block;
+    vertical-align: middle;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 5px; }
+    .countdown-widget.countdown-style-one .deo_countdown_interval_basic_cont_description {
+      display: block;
+      font-size: 12px;
+      margin-top: 0px; }
+  .countdown-widget.countdown-style-one .deo-countdown.pro {
+    padding-top: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border-top: none; }
+  .countdown-widget.countdown-style-one.white {
+    color: #FFFFFF; }
+    .countdown-widget.countdown-style-one.white .title_block {
+      color: #FFFFFF; }
+  .countdown-widget.countdown-style-one .title_block {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 0px; }
+  .countdown-widget.countdown-style-one .sub-title-widget {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: uppercase; }
+  .countdown-widget.countdown-style-one .description {
+    line-height: 1.5;
+    margin-bottom: 20px; }
+  .countdown-widget.countdown-style-one .deo-countdown-link {
+    margin-top: 20px;
+    margin-bottom: 0px; }
+    .countdown-widget.countdown-style-one .deo-countdown-link a {
+      color: #FFFFFF;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 5px 10px;
+      display: inline-block;
+      vertical-align: middle;
+      background: #00aff0;
+      -webkit-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease; }
+      @media (min-width: 992px) {
+        .countdown-widget.countdown-style-one .deo-countdown-link a:hover {
+          background: #0077a4; } }
+.countdown-widget.countdown-style-two {
+  text-align: center; }
+  .countdown-widget.countdown-style-two .deo_countdown_cont {
+    margin-left: -5px;
+    margin-right: -5px; }
+  .countdown-widget.countdown-style-two .deo_countdown_digit_cont {
+    width: auto;
+    height: auto;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 0px;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    -o-box-shadow: none;
+    -ms-box-shadow: none;
+    box-shadow: none; }
+    .countdown-widget.countdown-style-two .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+      margin-right: 0px; }
+      .rtl .countdown-widget.countdown-style-two .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+        margin-left: 0px;
+        margin-right: inherit; }
+  .countdown-widget.countdown-style-two .deo_countdown_digit_last_rotate, .countdown-widget.countdown-style-two .deo_countdown_digit_new_rotate {
+    width: auto;
+    height: auto; }
+  .countdown-widget.countdown-style-two .deo_countdown_digit_last_placeholder, .countdown-widget.countdown-style-two .deo_countdown_digit_new_placeholder, .countdown-widget.countdown-style-two .deo_countdown_digit_last_rotate {
+    display: none; }
+  .countdown-widget.countdown-style-two .deo_countdown_digit_new_rotate, .countdown-widget.countdown-style-two .deo_countdown_digit_new_rotated_inner {
+    position: static;
+    height: auto;
+    width: auto; }
+  .countdown-widget.countdown-style-two .deo_countdown_digit_new_rotate {
+    background: transparent;
+    -webkit-animation: none;
+    -moz-animation: none;
+    animation: none; }
+  .countdown-widget.countdown-style-two .deo_countdown_digit_new_rotated {
+    height: auto;
+    width: auto;
+    position: static;
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none; }
+  .countdown-widget.countdown-style-two .deo_countdown_digit_new_rotated_inner {
+    font-size: 22px; }
+  .countdown-widget.countdown-style-two .deo_countdown_interval_cont {
+    color: #FFFFFF;
+    display: block;
+    font-size: 0px;
+    font-weight: 600;
+    padding: 15px 5px;
+    border-radius: 3px;
+    -moz-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+    -webkit-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+    -o-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+    -ms-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+    box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+    background: #3A3A3A;
+    background: -moz-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+    background: -webkit-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+    background: -o-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+    background: -ms-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+    background: linear-gradient(bottom, #3A3A3A 50%, #444444 50%); }
+  .countdown-widget.countdown-style-two .deo_countdown_interval_basic_cont {
+    min-width: 75px;
+    padding: 5px 10px;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 5px; }
+    .countdown-widget.countdown-style-two .deo_countdown_interval_basic_cont:last-child:after {
+      display: none; }
+    .countdown-widget.countdown-style-two .deo_countdown_interval_basic_cont:after {
+      content: ':';
+      display: inline-block;
+      position: absolute;
+      top: 18px;
+      margin: auto;
+      font-size: 22px;
+      font-weight: bold;
+      right: -3px; }
+      .rtl .countdown-widget.countdown-style-two .deo_countdown_interval_basic_cont:after {
+        left: -3px;
+        right: auto; }
+    .countdown-widget.countdown-style-two .deo_countdown_interval_basic_cont_description {
+      display: block;
+      font-size: 12px;
+      margin-top: 0px; }
+  .countdown-widget.countdown-style-two .deo-countdown.pro {
+    padding-top: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border-top: none; }
+  .countdown-widget.countdown-style-two .title_block {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 0px; }
+  .countdown-widget.countdown-style-two .sub-title-widget {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: uppercase; }
+  .countdown-widget.countdown-style-two .description {
+    line-height: 1.5;
+    margin-bottom: 20px; }
+  .countdown-widget.countdown-style-two .deo-countdown-link {
+    margin-top: 20px;
+    margin-bottom: 0px; }
+    .countdown-widget.countdown-style-two .deo-countdown-link a {
+      color: #FFFFFF;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 5px 10px;
+      display: inline-block;
+      vertical-align: middle;
+      background: #00aff0;
+      -webkit-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease; }
+      @media (min-width: 992px) {
+        .countdown-widget.countdown-style-two .deo-countdown-link a:hover {
+          background: #0077a4; } }
+.countdown-widget.countdown-style-three {
+  text-align: center; }
+  .countdown-widget.countdown-style-three .deo_countdown_cont {
+    margin-left: -5px;
+    margin-right: -5px;
+    display: inline-block;
+    border-radius: 5px; }
+  .countdown-widget.countdown-style-three .deo_countdown_digit_cont {
+    width: auto;
+    height: auto;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 0px;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    -o-box-shadow: none;
+    -ms-box-shadow: none;
+    box-shadow: none; }
+    .countdown-widget.countdown-style-three .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+      margin-right: 0px; }
+      .rtl .countdown-widget.countdown-style-three .deo_countdown_digit_cont:nth-child(n+1):not(:last-child) {
+        margin-left: 0px;
+        margin-right: inherit; }
+  .countdown-widget.countdown-style-three .deo_countdown_digit_last_rotate, .countdown-widget.countdown-style-three .deo_countdown_digit_new_rotate {
+    width: auto;
+    height: auto; }
+  .countdown-widget.countdown-style-three .deo_countdown_digit_last_placeholder, .countdown-widget.countdown-style-three .deo_countdown_digit_new_placeholder, .countdown-widget.countdown-style-three .deo_countdown_digit_last_rotate {
+    display: none; }
+  .countdown-widget.countdown-style-three .deo_countdown_digit_new_rotate, .countdown-widget.countdown-style-three .deo_countdown_digit_new_rotated_inner {
+    position: static;
+    height: auto;
+    width: auto; }
+  .countdown-widget.countdown-style-three .deo_countdown_digit_new_rotate {
+    background: transparent;
+    -webkit-animation: none;
+    -moz-animation: none;
+    animation: none; }
+  .countdown-widget.countdown-style-three .deo_countdown_digit_new_rotated {
+    height: auto;
+    width: auto;
+    position: static;
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none; }
+  .countdown-widget.countdown-style-three .deo_countdown_digit_new_rotated_inner {
+    font-size: 22px; }
+  .countdown-widget.countdown-style-three .deo_countdown_interval_cont {
+    color: #FFFFFF;
+    display: block;
+    font-size: 0px;
+    font-weight: 600;
+    padding: 0px 5px; }
+  .countdown-widget.countdown-style-three .deo_countdown_interval_basic_cont {
+    min-width: 75px;
+    padding: 10px 5px;
+    display: inline-block;
+    vertical-align: middle;
+    border-right: 1px solid #666666;
+    -moz-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+    -webkit-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+    -o-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+    -ms-box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+    box-shadow: 1px 1px 1px rgba(4, 4, 4, 0.35);
+    background: #3A3A3A;
+    background: -moz-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+    background: -webkit-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+    background: -o-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+    background: -ms-linear-gradient(bottom, #3A3A3A 50%, #444444 50%);
+    background: linear-gradient(bottom, #3A3A3A 50%, #444444 50%); }
+    .rtl .countdown-widget.countdown-style-three .deo_countdown_interval_basic_cont {
+      border-left: 1px solid #666666;
+      border-right: inherit; }
+    .countdown-widget.countdown-style-three .deo_countdown_interval_basic_cont:last-child {
+      border: none; }
+    .countdown-widget.countdown-style-three .deo_countdown_interval_basic_cont_description {
+      color: #FFFFFF;
+      display: block;
+      font-size: 12px;
+      margin-top: 0px; }
+  .countdown-widget.countdown-style-three .deo-countdown.pro {
+    padding-top: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border-top: none; }
+  .countdown-widget.countdown-style-three .title_block {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 0px; }
+  .countdown-widget.countdown-style-three .sub-title-widget {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: uppercase; }
+  .countdown-widget.countdown-style-three .description {
+    line-height: 1.5;
+    margin-bottom: 20px; }
+  .countdown-widget.countdown-style-three .deo-countdown-link {
+    margin-top: 20px;
+    margin-bottom: 0px; }
+    .countdown-widget.countdown-style-three .deo-countdown-link a {
+      color: #FFFFFF;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 5px 10px;
+      display: inline-block;
+      vertical-align: middle;
+      background: #00aff0;
+      -webkit-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease; }
+      @media (min-width: 992px) {
+        .countdown-widget.countdown-style-three .deo-countdown-link a:hover {
+          background: #0077a4; } }
+
+/*# sourceMappingURL=countdown.css.map */

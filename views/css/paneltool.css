@@ -1,0 +1,332 @@
+/**
+ *  @author    DeoTemplate <deotemplate@gmail.com>
+ *  @copyright by DeoTemplate
+ *  @license   http://deotemplate.com - prestashop template provider
+ */
+/*!
+ * Bootstrap v4.0.0-alpha.5 (https://getbootstrap.com)
+ * Copyright 2011-2016 The Bootstrap Authors
+ * Copyright 2011-2016 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+/** search ***/
+/** end search ***/
+/** newlestter ***/
+/** End newlestter ***/
+/***************************************************
+  Mixins Themes 
+/***************************************************/
+/* Mixin Normal*/
+/* Mixin Clear */
+/* Mixin Border */
+/*background RGBA
+============================================*/
+/***************************************************
+  Mixins RTL Themes 
+/***************************************************/
+/************************************ 
+	Override Bootstrap 
+*************************************/
+/**
+ *   Blocks Layout Selectors 
+ */
+/***********************************************************************/
+/** search ***/
+/** end search ***/
+/** newlestter ***/
+/** End newlestter ***/
+/***************************************************
+  Mixins Themes 
+/***************************************************/
+/* Mixin Normal*/
+/* Mixin Clear */
+/* Mixin Border */
+/*background RGBA
+============================================*/
+/***************************************************
+  Mixins RTL Themes 
+/***************************************************/
+/* PANELTOOL */
+/**********************************/
+.paneltool {
+  position: fixed;
+  top: 0px;
+  height: 100%;
+  width: 270px;
+  z-index: 9;
+  -webkit-transition: all 0.6s ease 0s;
+  -o-transition: all 0.6s ease 0s;
+  transition: all 0.6s ease 0s;
+  right: -270px; }
+  .rtl .paneltool {
+    left: -270px;
+    right: auto; }
+  .paneltool.active {
+    z-index: 1000;
+    right: 0;
+    -webkit-transition: all 0.6s;
+    -o-transition: all 0.6s;
+    transition: all 0.6s; }
+    .rtl .paneltool.active {
+      left: 0;
+      right: auto; }
+    .paneltool.active .panelbutton {
+      color: #00aff0; }
+      .paneltool.active .panelbutton i {
+        -webkit-animation: none;
+        -moz-animation: none;
+        animation: none; }
+  .paneltool .panelcontent {
+    background: #FFFFFF;
+    width: 100%;
+    height: 100%;
+    border-color: #dddddd;
+    border-style: solid;
+    overflow-y: auto;
+    border-width: 1px 0 1px 1px; }
+    .rtl .paneltool .panelcontent {
+      border-width: 1px 1px 1px 0; }
+    .paneltool .panelcontent > div {
+      padding: 15px; }
+  .paneltool .panelbutton {
+    background: #FFFFFF;
+    position: absolute;
+    top: 35%;
+    cursor: pointer;
+    line-height: 50px;
+    text-align: center;
+    color: #333333;
+    font-size: 20px;
+    border-color: #dddddd;
+    border-style: solid;
+    left: -49px;
+    width: 50px;
+    height: 50px;
+    -webkit-transform: translateY(-35%);
+    -moz-transform: translateY(-35%);
+    -ms-transform: translateY(-35%);
+    -o-transform: translateY(-35%);
+    transform: translateY(-35%);
+    border-width: 1px 0 1px 1px; }
+    .rtl .paneltool .panelbutton {
+      right: -49px;
+      left: auto; }
+    .rtl .paneltool .panelbutton {
+      border-width: 1px 1px 1px 0; }
+    .paneltool .panelbutton i:before {
+      content: '\e9ce';
+      font-family: "deo-custom-icons"; }
+  .paneltool.theme-panel .panelbutton i {
+    -webkit-animation: cssload-spin 2s infinite linear;
+    -moz-animation: cssload-spin 2s infinite linear;
+    animation: cssload-spin 2s infinite linear; }
+  .paneltool.theme-panel .panelbutton:before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: -25px;
+    z-index: 9;
+    margin: auto;
+    background: url(../../../../assets/img/modules/deotemplate/img/label-new.png) no-repeat;
+    background-size: 100%;
+    right: auto;
+    left: -25px;
+    -webkit-animation: heartbeat 1s infinite;
+    -moz-animation: heartbeat 1s infinite;
+    animation: heartbeat 1s infinite; }
+    .rtl .paneltool.theme-panel .panelbutton:before {
+      right: -25px;
+      left: auto; }
+  .paneltool.theme-customize .panelbutton {
+    margin-top: 55px; }
+    .paneltool.theme-customize .panelbutton i:before {
+      content: '\eab3'; }
+  .paneltool .line-space {
+    margin-bottom: 30px; }
+  .paneltool .control-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-size: 14px;
+    text-decoration: underline;
+    text-align: left; }
+    .rtl .paneltool .control-label {
+      text-align: right; }
+    .paneltool .control-label.label-small {
+      color: inherit;
+      font-size: 13px;
+      font-weight: normal;
+      text-transform: none;
+      text-decoration: none; }
+    .paneltool .control-label .reset-to-default {
+      font-size: 12px;
+      font-weight: normal;
+      text-transform: none;
+      float: right; }
+      .rtl .paneltool .control-label .reset-to-default {
+        float: left; }
+      .paneltool .control-label .reset-to-default:before {
+        content: '\ea55';
+        font-family: "deo-custom-icons";
+        margin-right: 3px; }
+        .rtl .paneltool .control-label .reset-to-default:before {
+          margin-left: 3px;
+          margin-right: inherit; }
+    .paneltool .control-label i {
+      display: none;
+      margin-right: 5px; }
+      .rtl .paneltool .control-label i {
+        margin-left: 5px;
+        margin-right: inherit; }
+  .paneltool .custom-skin {
+    font-size: 11px;
+    margin-top: 5px;
+    font-style: italic;
+    text-align: center; }
+  .paneltool .custom-color {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    font-size: 11px;
+    font-style: italic;
+    text-align: center;
+    border-bottom: 3px double #eaeaea; }
+  .paneltool .form-control {
+    background: transparent;
+    border: 1px solid #d9d9d9;
+    border-radius: 0px; }
+  .paneltool .desc {
+    margin-top: 5px;
+    font-size: 11px;
+    font-weight: 300;
+    font-style: italic; }
+  .paneltool .colorpicker-element .input-group-btn {
+    padding: 5px 8px;
+    background: #e9ecef;
+    border: 1px solid #ced4da; }
+    .paneltool .colorpicker-element .input-group-btn i {
+      width: 20px;
+      height: 20px; }
+  .paneltool .colorpicker-element .colorpicker-input-addon {
+    display: block; }
+    .paneltool .colorpicker-element .colorpicker-input-addon:before {
+      width: 20px;
+      height: 20px; }
+  .paneltool .colorpicker-element .form-control {
+    border-width: 1px 0px 1px 1px; }
+    .rtl .paneltool .colorpicker-element .form-control {
+      border-width: 1px 1px 1px 0px; }
+
+/* Select Skin */
+.deo-skins {
+  margin-left: -4px;
+  margin-right: -4px; }
+  .deo-skins::after {
+    content: "";
+    display: table;
+    clear: both; }
+
+.deo-theme-skin {
+  width: 30px;
+  height: 30px;
+  line-height: 24px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+  display: block;
+  margin: 4px;
+  background: #00aff0;
+  border: 3px solid #0077a4;
+  float: left; }
+  .rtl .deo-theme-skin {
+    float: right; }
+  .deo-theme-skin label {
+    display: none; }
+  .deo-theme-skin:before {
+    position: absolute;
+    content: "\e5ca";
+    font-family: "Material Icons";
+    width: 100%;
+    left: 0;
+    color: #FFFFFF;
+    font-size: 13px;
+    display: none;
+    border-radius: 50%; }
+  .deo-theme-skin.current-theme-skin:before {
+    display: inline-block; }
+  .deo-theme-skin.skin-default:before {
+    background: #00aff0;
+    border-color: #0077a4; }
+  .deo-theme-skin[data-theme-skin-id="skin-1"] {
+    background: #00b2e2;
+    border-color: #0686a9; }
+  .deo-theme-skin[data-theme-skin-id="skin-2"] {
+    background: #c4dcd6;
+    border-color: #87b6aa; }
+  .deo-theme-skin[data-theme-skin-id="skin-3"] {
+    background: #f18a8b;
+    border-color: #cc7c7d; }
+  .deo-theme-skin[data-theme-skin-id="skin-4"] {
+    background: #974cb7;
+    border-color: #7D3C98; }
+  .deo-theme-skin[data-theme-skin-id="skin-5"] {
+    background: #931936;
+    border-color: #7d2339; }
+  .deo-theme-skin[data-theme-skin-id="skin-6"] {
+    background: #fed700;
+    border-color: #b99d02; }
+  .deo-theme-skin[data-theme-skin-id="skin-7"] {
+    background: #e44853;
+    border-color: #c12d37; }
+  .deo-theme-skin[data-theme-skin-id="skin-8"] {
+    background: #7a471c;
+    border-color: #623712; }
+  .deo-theme-skin[data-theme-skin-id="skin-9"] {
+    background: #1b427d;
+    border-color: #13366b; }
+  .deo-theme-skin[data-theme-skin-id="skin-10"] {
+    background: #ed5931;
+    border-color: #c43710; }
+  .deo-theme-skin[data-theme-skin-id="skin-11"] {
+    background: #92a8ce;
+    border-color: #758fbb; }
+
+/* Enable Float Header */
+.group-input:not(:last-child) {
+  margin-bottom: 10px; }
+.group-input .deo_config {
+  display: block;
+  position: relative;
+  margin-bottom: 10px;
+  font-size: 14px; }
+  .group-input .deo_config.active {
+    color: #00aff0; }
+  .group-input .deo_config:hover {
+    color: #00aff0; }
+.group-input.group-profile .control-content {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-lines: multiple;
+  -moz-box-lines: multiple;
+  box-lines: multiple;
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap; }
+.group-input.group-profile .deo_config {
+  width: 50%; }
+
+body.keep-header .paneltool {
+  z-index: 999; }
+  body.keep-header .paneltool.active {
+    z-index: 1000; }
+
+/*# sourceMappingURL=paneltool.css.map */

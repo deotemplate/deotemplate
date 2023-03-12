@@ -1,0 +1,303 @@
+/**
+ *  @author    DeoTemplate <deotemplate@gmail.com>
+ *  @copyright by DeoTemplate
+ *  @license   http://deotemplate.com - prestashop template provider
+ */
+@import "bourbon/_bourbon";
+@import "partials/_bootstrap";
+@import "partials/_variables";
+@import "partials/_theme_variables";
+@import "partials/_mixins";
+
+
+/* PANELTOOL */
+/**********************************/
+
+.paneltool {
+	position: fixed;
+	top: 0px;
+	height: 100%;
+	width: 270px;
+	z-index: 9;
+	@include transition(all 0.6s ease 0s); 
+	@include rtl-right(-270px);
+	&.active{
+		z-index: 1000;
+		@include rtl-right(0);
+		@include transition(all 0.6s);
+		.panelbutton {
+			color: $theme-color-default;
+			i{
+				@include animation(none);
+			}
+		}
+	}
+	.panelcontent {
+		background: $white;
+		width: 100%;
+		height: 100%;
+		border-color: #dddddd;
+		border-style: solid;
+		overflow-y: auto;
+		@include rtl-border-width(1px,0,1px,1px);
+		> div{
+			padding: 15px;
+		}
+	}
+	.panelbutton {
+		background: $white;
+		position: absolute;
+		top: 35%;
+		cursor: pointer;
+		line-height: 50px;
+		text-align: center;
+		color: $body-color;
+		font-size: 20px;
+		border-color: #dddddd;
+		border-style: solid;
+		@include rtl-left(-49px);
+		@include size(50px,50px);
+		@include transform(translateY(-35%));
+		@include rtl-border-width(1px,0,1px,1px);
+		i{
+			&:before {
+				content: '\e9ce';
+				font-family: $font-icon-4;
+			}
+		}
+	}
+	&.theme-panel{
+		.panelbutton {
+			i{
+				@include animation(cssload-spin 2s infinite linear);
+			}
+			&:before{
+				content: '';
+				position: absolute;
+				width: 50px;
+				height: 50px;
+				top: -25px;
+				z-index: 9;
+				margin: auto;
+				background: url(#{$appagebuilder-path}label-new.png) no-repeat;
+				background-size: 100%;
+				@include rtl-left-right(-25px,auto);
+				@include animation(heartbeat 1s infinite);
+			}
+		}
+	}
+	&.theme-customize{
+		.panelbutton {
+			margin-top: 55px;
+			i{
+				&:before {
+					content: '\eab3';
+				}
+			}
+		}
+	}
+
+	.line-space{
+		margin-bottom: 30px;
+	}
+	.control-label{
+		display: block;
+		font-weight: 600;
+		margin-bottom: 10px;
+		text-transform: uppercase;
+		font-size: $base-font-size;
+		text-decoration: underline;
+		@include rtl-text-align-left();
+		&.label-small{
+			color: inherit;
+			font-size: 13px;
+			font-weight: normal;
+			text-transform: none;
+			text-decoration: none;
+		}
+		.reset-to-default{
+			font-size: 12px;
+			font-weight: normal;
+			text-transform: none;
+			@include rtl-float-right();
+			&:before {
+				content: '\ea55';
+				font-family: $font-icon-4;
+				@include rtl-margin-right(3px);
+			}
+		}
+		i{
+			display: none;
+			@include rtl-margin-right(5px);
+		}
+	}
+	.custom-skin{
+		font-size: 11px;
+		margin-top: 5px;
+		font-style: italic;
+		text-align: center;
+	}
+	.custom-color{
+		margin-bottom: 15px;
+		padding-bottom: 5px;
+		font-size: 11px;
+		font-style: italic;
+		text-align: center;
+		border-bottom: 3px double #eaeaea;
+	}
+	.form-control{
+		background: transparent;
+		border: 1px solid #d9d9d9;
+		@include border-radius(0px);
+	}
+	.desc{
+		margin-top: 5px;
+		font-size: 11px;
+		font-weight: 300;
+		font-style: italic;
+	}
+	.colorpicker-element {
+		.input-group-btn{
+			padding: 5px 8px;
+			background: #e9ecef;
+			border: 1px solid #ced4da;
+			i{
+				width: 20px;
+				height: 20px;
+			}
+		}
+		.colorpicker-input-addon{
+			display: block;
+			&:before{
+				width: 20px;
+				height: 20px;
+			}
+		}
+		.form-control{
+			@include rtl-border-width(1px,0px,1px,1px);
+		} 
+	}
+}
+
+/* Select Skin */
+.deo-skins{
+	margin-left: -4px;
+	margin-right: -4px;
+	@include clearfix();
+}
+.deo-theme-skin{
+	width: 30px;
+	height: 30px;
+	line-height: 24px;
+	cursor: pointer;
+	overflow: hidden;
+	position: relative;
+	text-align: center;
+	cursor: pointer;
+	display: block;
+	margin: 4px;
+	background: $theme-color-default;
+	border: 3px solid $theme-color-button-hover;
+	@include rtl-float-left();
+	label{
+		display: none;
+	}
+	&:before {
+		position: absolute;
+		content: "\e5ca";
+		font-family: $font-icon-2;
+		width: 100%;
+		left: 0;
+		color: $white;
+		font-size: 13px;
+		display: none;
+		@include border-radius(50%);
+	}
+	&.current-theme-skin:before{
+		display: inline-block;
+	}
+	&.skin-default:before{
+		background: $theme-color-default;
+		border-color: $theme-color-button-hover;
+	}
+	&[data-theme-skin-id="skin-1"]{
+		background: #00b2e2;
+		border-color: #0686a9;
+	}
+	&[data-theme-skin-id="skin-2"]{
+		background: #c4dcd6;
+		border-color: #87b6aa;
+	}
+	&[data-theme-skin-id="skin-3"]{
+		background: #f18a8b;
+		border-color: #cc7c7d;
+	}
+	&[data-theme-skin-id="skin-4"]{
+		background: #974cb7;
+		border-color: #7D3C98;
+	}
+	&[data-theme-skin-id="skin-5"]{
+		background: #931936;
+		border-color: #7d2339;
+	}
+	&[data-theme-skin-id="skin-6"]{
+		background: #fed700;
+		border-color: #b99d02;
+	}
+	&[data-theme-skin-id="skin-7"]{
+		background: #e44853;
+		border-color: #c12d37;
+	}
+	&[data-theme-skin-id="skin-8"]{
+		background: #7a471c;
+		border-color: #623712;
+	}
+	&[data-theme-skin-id="skin-9"]{
+		background: #1b427d;
+		border-color: #13366b;
+	}
+	&[data-theme-skin-id="skin-10"]{
+		background: #ed5931;
+		border-color: #c43710;
+	}
+	&[data-theme-skin-id="skin-11"]{
+		background: #92a8ce;
+		border-color: #758fbb;
+	}
+}
+/* Enable Float Header */
+.group-input{
+	&:not(:last-child){
+		margin-bottom: 10px;
+	}
+	.deo_config{
+		display: block;
+		position: relative;
+		margin-bottom: 10px;
+		font-size: $base-font-size;
+		&.active{
+			color: $theme-color-default;
+		}
+		&:hover{
+			color: $theme-color-default;
+		}
+	}
+	&.group-profile{
+		.control-content{
+			@include display(flex);
+			@include flex-wrap(wrap);
+		}
+		.deo_config{
+			width: 50%;
+		}
+	}
+}
+
+body.keep-header{
+	.paneltool{
+		z-index: 999;
+		&.active{
+			z-index: 1000;
+		}
+	}
+}

@@ -1,0 +1,77 @@
+/* Checkout blocks sorting */
+@keyframes "blinker" {
+  50% {
+    opacity: 0;
+    background: yellow; } }
+@-webkit-keyframes "ts_pulse" {
+  0% {
+    /*transform: scale(0.95);*/ }
+  25% {
+    /*transform: scale(1.05);*/
+    /*box-shadow: 0 0 0px 45px rgba(47, 181, 210, 0);*/
+    box-shadow: 0 0 10px 45px #5ab8ff00; }
+  40% {
+    /*transform: scale(0.95);*/
+    /*box-shadow: 0 0 0 0 rgba(47, 181, 210, 0);*/
+    box-shadow: 0 0 10px 1px #5ab8ff00; }
+  100% {
+    /*transform: scale(0.95);*/
+    /* box-shadow: 0 0 0 0 rgba(47, 181, 210, 0);*/
+    box-shadow: 0 0 10px 1px #5ab8ff00; } }
+textarea.max-size {
+  max-height: 200px; }
+
+.customer-fields tr.firstname .required, .customer-fields tr.lastname .required {
+  display: none; }
+
+.customer-fields, .address-fields {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px; }
+  .customer-fields .js-handle, .address-fields .js-handle {
+    cursor: move;
+    padding-right: 10px;
+    color: #1e1e1e;
+    opacity: 0.3; }
+  .customer-fields tr, .address-fields tr {
+    border-width: 1px; }
+    .customer-fields tr.is-hover td, .address-fields tr.is-hover td {
+      background: #fffcd0 !important; }
+      .customer-fields tr.is-hover td:last-child .js-handle, .address-fields tr.is-hover td:last-child .js-handle {
+        display: inline; }
+    .customer-fields tr td, .address-fields tr td {
+      text-align: center; }
+      .customer-fields tr td:last-child, .address-fields tr td:last-child {
+        position: relative; }
+  .customer-fields [name=width], .address-fields [name=width] {
+    height: auto;
+    width: 135px;
+    margin: auto !important;
+    padding: 5px 15px 5px 5px; }
+  .customer-fields thead th, .address-fields thead th {
+    padding: 0 10px;
+    text-align: center; }
+  .customer-fields thead > tr > th, .address-fields thead > tr > th {
+    font-style: italic;
+    font-size: 1.1em; }
+  .customer-fields tbody td, .address-fields tbody td {
+    padding: 0 10px; }
+  .customer-fields legend, .address-fields legend {
+    margin-bottom: 0;
+    text-align: center;
+    padding-bottom: 20px; }
+    .customer-fields legend .reset-link, .address-fields legend .reset-link {
+      display: block; }
+      .customer-fields legend .reset-link a, .address-fields legend .reset-link a {
+        color: #ff7674;
+        font-size: 12px;
+        cursor: pointer; }
+        .customer-fields legend .reset-link a:before, .address-fields legend .reset-link a:before {
+          content: '['; }
+        .customer-fields legend .reset-link a:after, .address-fields legend .reset-link a:after {
+          content: ']'; }
+        .customer-fields legend .reset-link a:hover, .address-fields legend .reset-link a:hover {
+          color: #ff0000; }
+
+/*# sourceMappingURL=back.css.map */

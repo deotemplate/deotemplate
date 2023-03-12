@@ -1,0 +1,37 @@
+// Default Variables
+$simple-line-font-path: "../fonts/" !default;
+$simple-line-font-family: "deo-custom-icons" !default;
+$simple-line-icon-prefix: "deo-custom-icons" !default;
+
+// Fonts
+@if $simple-line-font-family == "deo-custom-icons" {
+  @font-face {
+    font-family: '#{$simple-line-font-family}';
+    src:    url('#{$simple-line-font-path}deo-custom-icons.eot?v=2.4.0');
+    src:    url('#{$simple-line-font-path}deo-custom-icons.eot?v=2.4.0#iefix') format('embedded-opentype'),
+            url('#{$simple-line-font-path}deo-custom-icons.ttf?v=2.4.0') format('truetype'),
+            url('#{$simple-line-font-path}deo-custom-icons.woff?v=2.4.0') format('woff'),
+            url('#{$simple-line-font-path}deo-custom-icons.svg?v=2.4.0#simple-line-icons') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+}
+
+[class^="#{$simple-line-icon-prefix}"], [class*=" #{$simple-line-icon-prefix}"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: $simple-line-font-family;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  display: inline-block;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+// .#{$simple-line-font-family}-flag-filled:before {
+//   content: "\ea82";
+// }

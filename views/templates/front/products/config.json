@@ -1,0 +1,207 @@
+[
+	{
+		"group": [
+			{
+				"type": "sperator",
+				"icon": "icon-picture",
+				"name":"Images Product"
+			},
+			{
+				"name":"Image Primary",
+				"icon": "icon-picture",
+				"file":"product_thumbnail",
+				"data-form":{
+					"effecthover":"disable",
+					"size":"home_default",
+					"second_image":"1",
+					"labelflag":"all"
+				}
+			},
+			{
+				"name":"Images thumbnail",
+				"icon": "icon-bar-chart",
+				"file":"more_image",
+				"data-form":{
+					"size":"home_default",
+					"type":"vertical",
+					"dots":"0",
+					"centermode":"0",
+					"lazyload":"1",
+					"mousewheel":"0",
+					"fade":"0",
+					"slidestoshow":"4",
+					"responsive":""
+				}
+			}
+		]
+	},
+	{
+		"group": [
+			{
+				"type": "sperator",
+				"icon": "icon-shopping-cart",
+				"name":"Buttons Product"
+			},
+			{
+				"name":"Add to cart",
+				"icon": "icon-shopping-cart",
+				"file":"add_to_cart"
+			},
+			{
+				"name":"Compare",
+				"icon": "icon-bar-chart",
+				"file":"compare"
+			},
+			{
+				"name":"Quickview",
+				"icon": "icon-eye-open",
+				"file":"quickview"
+			},
+			{
+				"name":"Wishlist",
+				"icon": "icon-heart",
+				"file":"wishlist"
+			},
+			{
+				"name":"View",
+				"icon": "icon-link",
+				"file":"view"
+			}
+		]
+	},
+	{
+		"group": [
+			{
+				"type": "sperator",
+				"icon": "icon-tag",
+				"name":"Flags & Labels Product"
+			},
+			{
+				"name":"Show all Label",
+				"icon": "icon-tag",
+				"file":"product_flags"
+			},
+			{
+				"name":"Show all Label except New and Discount",
+				"icon": "icon-tag",
+				"file":"product_flags_new_discount"
+			},
+			{
+				"name":"Flag New and Discount",
+				"icon": "icon-bookmark",
+				"file":"label_new_discount"
+			},
+			{
+				"name":"Show all Label except New and Sale",
+				"icon": "icon-tag",
+				"file":"product_flags_new_sale"
+			},
+			{
+				"name":"Flag New and Sale",
+				"icon": "icon-bookmark",
+				"file":"label_new_sale"
+			},
+			{
+				"type": "desc",
+				"text":"Be Careful: Duplicate content with configuration element Image Primary. You should disable configuration Labels and Flags at Image Primary if you use Image Primary"
+			}
+		]
+	},
+	{
+		"group": [
+			{
+				"type": "sperator",
+				"icon": "icon-ticket",
+				"name":"Other Element"
+			},
+			{
+				"name":"Product name",
+				"icon":"icon-file",
+				"file":"product_name"
+			},
+			{
+				"name":"Price",
+				"icon":"icon-money",
+				"file":"product_price_and_shipping"
+			},
+			{
+				"name":"Review star",
+				"icon":"icon-star",
+				"file":"reviews",
+				"data-form":{
+					"show_count":"0",
+					"show_text_count":"0",
+					"show_zero_review":"1"
+				}
+			},
+			{
+				"name":"Description full",
+				"icon":"icon-file-text",
+				"file":"description"
+			},
+			{
+				"name":"Description Short",
+				"icon":"icon-file-text-o",
+				"file":"description_short"
+			},
+			{
+				"name":"Other informations",
+				"icon":"icon-info-sign",
+				"file":"basic_informations"
+			},
+			{
+				"name":"Category default",
+				"icon":"icon-tasks",
+				"file":"category_default"
+			},
+			{
+				"name":"Countdown",
+				"icon":"icon-gift",
+				"file":"countdown"
+			},
+			{
+				"name":"Color product variants",
+				"icon":"icon-circle",
+				"file":"variants"
+			},
+			{
+				"name":"Count sold",
+				"icon":"icon-inbox",
+				"file":"count_sold"
+			},
+			{
+				"name":"Quantity number",
+				"icon":"icon-inbox",
+				"file":"stock"
+			},
+			{
+				"name":"Attributes Listing",
+				"icon":"icon-list",
+				"file":"attribute",
+				"data-form":{
+					"show_color":"1",
+					"show_value_text":"0",
+					"show_name_attribute":"1"
+				}
+			},
+			{
+				"name":"Select combination to add card",
+				"icon":"icon-list",
+				"file":"combination"
+			},
+			{
+				"name":"Select quantity to add card",
+				"icon":"icon-sort",
+				"file":"quantity",
+				"data-form":{
+					"show_label_quantity":"1"
+				}
+			},
+			{
+				"name":"hookdisplayProductListReviews",
+				"icon":"icon-anchor",
+				"file":"hookdisplayProductListReviews"
+			}
+		]
+	}
+]

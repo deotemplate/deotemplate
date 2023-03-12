@@ -1,0 +1,137 @@
+[
+	{"group": [
+			{
+				"type": "sperator",
+				"icon": "icon-info-sign",
+				"name":"Product informations"
+			},
+			{
+				"name":"1. Product Image",
+				"class": "deo-detail-1",
+				"icon": "icon-picture",
+				"file":"product_cover_thumbnails",
+				"config":"product-image",
+				"data-form":{
+					"type":"thumbnail",
+					"lazyload":"1",
+					"thumb":"bottom",
+					"responsive":"1",
+					"breakpoints":"[[1200, 5],[992, 4],[768, 3], [576, 2]]",
+					"column_xxl":"1",
+					"column_xl":"1",
+					"column_lg":"1",
+					"column_md":"1",
+					"column_sm":"1",
+					"column_xs":"1",
+					"column_sp":"1",
+					"modal":"1",
+					"size":"home_default",
+					"zoom":"in",
+					"position":"right",
+					"zoomWidth":"400",
+					"zoomHeight":"400"
+				}
+			},
+			{
+				"name":"2. Product Detail Name",
+				"icon": "icon-info-sign",
+				"file":"product_detail_name"
+			},
+			{
+				"name":"3. hook product additional info",
+				"icon": "icon-plus-sign-alt",
+				"file":"hook_display_product_additional_info"
+			},
+			{
+				"name":"4. Product review stars",
+				"icon":"icon-star",
+				"file":"product_review_extra"
+			},
+			{
+				"name":"5. Price",
+				"icon": "icon-money",
+				"file":"product_price"
+			},
+			{
+				"name":"6. Countdown",
+				"icon":"icon-gift",
+				"file":"countdown"
+			},
+			{
+				"name":"7. Additional infomations",
+				"icon":"icon-eject",
+				"file":"more_info"
+			},
+			{
+				"name":"8. Description short",
+				"icon":"icon-list-alt",
+				"file":"product_description_short"
+			},
+			{
+				"name":"9. Product customization",
+				"icon": "icon-sun",
+				"file":"product_customization"
+			},
+			{
+				"name":"10. Actions Form: varian, add to cart form",
+				"icon": "icon-shopping-cart",
+				"file":"product_actions_form"
+			},
+			{
+				"name":"11. hook display reassurance",
+				"icon": "icon-shield",
+				"file":"hook_display_reassurance"
+			},
+			{
+				"name":"12. More infomations",
+				"icon": "icon-file-text-alt",
+				"file":"product_more_info",
+				"config":"product-more-info",
+				"data-form":{
+					"type":"show_all"
+				}
+			}
+		]
+	},
+	{
+		"group": [
+			{
+				"type": "sperator",
+				"icon": "icon-ticket",
+				"name":"Other"
+			},
+			{
+				"name":"13. Product accessories",
+				"icon":"icon-link",
+				"file":"product_accessories"
+			},
+			{
+				"name":"14. hook footer product",
+				"icon":"icon-eject",
+				"file":"hook_display_footer_product"
+			},
+			{
+				"name":"Line",
+				"icon":"icon-minus",
+				"file":"line_detail"
+			},
+			{
+				"name":"Space",
+				"icon":"icon-resize-vertical",
+				"file":"space_detail"
+			},
+			{
+				"type":"box",
+				"name":"Group",
+				"icon":"icon-sitemap",
+				"file":"box"
+			},
+			{
+				"type":"code",
+				"name":"TPL Code",
+				"icon":"icon-code",
+				"file":"code"
+			}
+		]
+	}
+]
