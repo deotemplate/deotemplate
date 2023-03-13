@@ -70,7 +70,7 @@ class DeoTemplate extends Module implements WidgetInterface
 		$this->tab = 'front_office_features';
 		$this->version = '1.0.0';
 		$this->author = 'DeoTemplate';
-		$this->ps_versions_compliancy = array('min' => '1.8', 'max' => _PS_VERSION_);
+		$this->ps_versions_compliancy = array('min' => '1.7', 'max' => _PS_VERSION_);
 		$this->need_instance = 0;
 		$this->bootstrap = true;
 		parent::__construct();
