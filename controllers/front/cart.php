@@ -243,7 +243,11 @@ class DeoTemplateCartModuleFrontController extends ModuleFrontController
 		$position_vertical_flycart = $params_ajax_cart['position_vertical_flycart'];
 		$position_vertical_value_flycart = $params_ajax_cart['position_vertical_value_flycart'].'px';
 		if ($this->context->language->is_rtl){
-			$position_vertical_flycart = ($position_vertical_flycart == 'left') ? 'right' : 'left';
+			if ($position_vertical_flycart == 'left'){
+				$position_vertical_flycart = 'right';
+			}elseif ($position_vertical_flycart == 'right'){
+				$position_vertical_flycart = 'left';
+			}
 		}
 		$position_horizontal_flycart = $params_ajax_cart['position_horizontal_flycart'];
 		$position_horizontal_value_flycart = $params_ajax_cart['position_horizontal_value_flycart'].'px';
