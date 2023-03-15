@@ -156,11 +156,11 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 						}
 					
 
-						$position_id = (int)isset($hook['position_id']) ? $hook['position_id'] : '0';
+						$position_id = (int)isset($hook['position_id']) ? $hook['position_id'] : 0;
+
 						$hook['position'] = (isset($hook['position']) && $hook['position']) ? $hook['position'] : '';
 						$hook['name'] = (isset($hook['name']) && $hook['name']) ? $hook['name'] : 0;
 						$position = Tools::strtolower($hook['position']);
-						$arr_id[$position] = (isset($arr_id[$position]) && $arr_id[$position]) ? $arr_id[$position] : '';
 						// Create new position with name is auto random, and save id of new for other positions reuse
 						// position for other hook in this position to variable $header, $content...
 						if ($position_id == 0 && $arr_id[$position] == 0) {
@@ -214,7 +214,7 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 					};
 
 					// echo "<pre>";
-					// print_r($params_profile);
+					// print_r($arr_id);
 					// echo "</pre>";
 					// die();
 

@@ -221,7 +221,7 @@ class AdminDeoWidgetsMegamenuController extends ModuleAdminControllerCore
 
 
                 # GET POST - BEGIN
-                //DOGNND:: validate module
+                //validate module
                 $widget_type = Tools::getValue('widget_type');
                 $validate_class = str_replace('_', '', $widget_type);
                 $file_name = _PS_MODULE_DIR_.'deotemplate/classes/Megamenu/widget/'.$widget_type.'.php';
@@ -549,16 +549,5 @@ class AdminDeoWidgetsMegamenuController extends ModuleAdminControllerCore
                 }
             }
         }
-    }
-
-    public function getMediaDir()
-    {
-        $media_dir = '';
-        if (version_compare(_PS_VERSION_, '1.7.4.0', '>=') || version_compare(Configuration::get('PS_VERSION_DB'), '1.7.4.0', '>=')) {
-            $media_dir = 'modules/'.$this->name.'/views/';
-        } else {
-            $media_dir = 'modules/'.$this->name.'/';
-        }
-        return $media_dir;
     }
 }

@@ -61,17 +61,21 @@ class DeoTemplateBlogModuleFrontController extends ModuleFrontController
      */
     protected function copyFromPost(&$object, $table, $post = array())
     {
-        /* Classical fields */
         foreach ($post as $key => $value) {
-            if (key_exists($key, $object) && $key != 'id_'.$table) {
-                /* Do not take care of password field if empty */
-                if ($key == 'passwd' && Tools::getValue('id_'.$table) && empty($value)) {
-                    continue;
+            if (is_array($object)){
+                if (key_exists($key, $object) && $key != 'id_'.$table) {
+                    /* Do not take care of password field if empty */
+                    if ($key == 'passwd' && Tools::getValue('id_'.$table) && empty($value)) {
+                        continue;
+                    }
+                    if ($key == 'passwd' && !empty($value)) {
+                        /* Automatically encrypt password in MD5 */
+                        $value = Tools::encrypt($value);
+                    }
+                    $object->{$key} = $value;
                 }
-                if ($key == 'passwd' && !empty($value)) {
-                    /* Automatically encrypt password in MD5 */
-                    $value = Tools::encrypt($value);
-                }
+            }else{
+                /* Classical fields */
                 $object->{$key} = $value;
             }
         }

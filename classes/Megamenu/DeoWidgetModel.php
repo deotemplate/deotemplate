@@ -78,7 +78,7 @@ if (!class_exists('DeoWidgetModel')) {
                     }
                     require_once($w);
                     $f = str_replace('.php', '', basename($w));
-                    //DOGNND:: validate module
+                    //validate module
                     $validate_class = str_replace('_', '', $f);
                     $class = 'DeoWidget'.Tools::ucfirst($validate_class);
 

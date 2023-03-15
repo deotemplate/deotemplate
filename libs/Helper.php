@@ -1318,7 +1318,7 @@ class DeoHelper
 	}
 
 
-	public function getMediaDir()
+	public static function getMediaDir()
 	{
 		$media_dir = '';
 		if (version_compare(_PS_VERSION_, '1.7.4.0', '>=') || version_compare(Configuration::get('PS_VERSION_DB'), '1.7.4.0', '>=')) {
@@ -1329,7 +1329,7 @@ class DeoHelper
 		return $media_dir;
 	}
 
-	public function getThemeMediaDir($media = null)
+	public static function getThemeMediaDir($media = null)
 	{
 		$media_dir = '';
 

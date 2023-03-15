@@ -34,6 +34,7 @@
 		let row_empty = '<div class="dropdown-widget dropdown-menu"><div class="dropdown-menu-inner"><div class="row active empty">'+btn_rows+'</div></div>'+btn_add_row+'</div>';
 		let submenu_empty = '<div class="dropdown-menu"><div class="dropdown-menu-inner"><div class="row"><div class="col-sp-12 mega-col" data-colwidth="12" data-type="menu"><div class="inner"><ul></ul></div></div></div></div></div>';
 		let btn_close_modal = '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+		let panel_heading = '<div class="panel-heading"></div>';
 		let activeMenu = null;
 
 
@@ -730,7 +731,13 @@
 				}).done(function(jsonData) {
 					jsonData = jQuery.parseJSON(jsonData);
 					let modal_content = $(jsonData);
-					modal_content.find('.panel-heading').append(btn_close_modal);
+					if (modal_content.find('.panel-heading').length){
+						modal_content.find('.panel-heading').append(btn_close_modal);
+					}else{
+						modal_content.find('.panel').prepend(panel_heading);
+						modal_content.find('.panel-heading').append(btn_close_modal);
+					}
+
 					modal_content.find('#configuration_form_cancel_btn').removeAttr('onclick').attr('data-dismiss','modal');
 					$('#form-submenu').find('.modal-content').append(modal_content);
 					$("#form-submenu").DeoMegaMenuList();
@@ -760,7 +767,12 @@
 				}).done(function(jsonData) {
 					jsonData = jQuery.parseJSON(jsonData);
 					let modal_content = $(jsonData);
-					modal_content.find('.panel-heading').append(btn_close_modal);
+					if (modal_content.find('.panel-heading').length){
+						modal_content.find('.panel-heading').append(btn_close_modal);
+					}else{
+						modal_content.find('.panel').prepend(panel_heading);
+						modal_content.find('.panel-heading').append(btn_close_modal);
+					}
 					modal_content.find('#configuration_form_cancel_btn').removeAttr('onclick').attr('data-dismiss','modal');
 					modal_content.find('#id_parent').val(id_parent);
 					$('#form-submenu').find('.modal-content').append(modal_content);
@@ -973,7 +985,12 @@
 				}).done(function(jsonData) {
 					jsonData = jQuery.parseJSON(jsonData);
 					let modal_content = $(jsonData);
-					modal_content.find('.panel-heading').append(btn_close_modal);
+					if (modal_content.find('.panel-heading').length){
+						modal_content.find('.panel-heading').append(btn_close_modal);
+					}else{
+						modal_content.find('.panel').prepend(panel_heading);
+						modal_content.find('.panel-heading').append(btn_close_modal);
+					}
 					modal_content.find('#configuration_form_cancel_btn').removeAttr('onclick').attr('data-dismiss','modal');
 					$('#form-widget').find('.modal-content').append(modal_content);
 					$('#form-widget').find('form').validate();
@@ -1006,7 +1023,12 @@
 				}).done(function( jsonData ) {
 					jsonData = jQuery.parseJSON(jsonData);
 					let modal_content = $(jsonData);
-					modal_content.find('.panel-heading').append(btn_close_modal);
+					if (modal_content.find('.panel-heading').length){
+						modal_content.find('.panel-heading').append(btn_close_modal);
+					}else{
+						modal_content.find('.panel').prepend(panel_heading);
+						modal_content.find('.panel-heading').append(btn_close_modal);
+					}
 					modal_content.find('#configuration_form_cancel_btn').removeAttr('onclick').attr('data-dismiss','modal');
 					$('#form-widget').find('.modal-content').append(modal_content);
 					$('#form-widget').find('form').validate();

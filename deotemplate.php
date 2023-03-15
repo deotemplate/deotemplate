@@ -100,7 +100,7 @@ class DeoTemplate extends Module implements WidgetInterface
 	{
 		// $this->registerHook('actionFrontControllerSetMedia');
 		// NEED HOOK TO MODULEROUTES
-		if (Context::getContext()->controller === null || Context::getContext()->controller->controller_type != 'admin') {
+		if (isset(Context::getContext()->controller->controller_type) && in_array(Context::getContext()->controller->controller_type, array('front', 'modulefront'))) {
 			$id_deotemplate_profiles = Tools::getValue('id_deotemplate_profiles');
 			if (Configuration::get('PS_REWRITING_SETTINGS') && Tools::getIsset('id_deotemplate_profiles') && $id_deotemplate_profiles) {
 				$profile_data = DeoTemplateProfilesModel::getActiveProfile('index');
