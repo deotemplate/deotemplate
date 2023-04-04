@@ -264,7 +264,7 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 
 		$this->context->controller->addCss(__PS_BASE_URI__.'js/jquery/ui/themes/base/jquery.ui.tabs.css');
 		$this->context->controller->addCss(__PS_BASE_URI__.$media_dir.'css/megamenu/admin/form.css');
-
+		echo __PS_BASE_URI__.$media_dir.'css/megamenu/admin/form.css';
 		$admin_webpath = str_ireplace(_PS_CORE_DIR_, '', _PS_ADMIN_DIR_);
 		$admin_webpath = preg_replace('/^' . preg_quote(DIRECTORY_SEPARATOR, '/') . '/', '', $admin_webpath);
 		$bo_theme = ((Validate::isLoadedObject($this->context->employee)

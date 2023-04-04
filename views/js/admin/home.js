@@ -1570,6 +1570,7 @@ function htmlentitiesDecode(str) {
 				toogle_carousel(sub_show);
 			});
 
+			toogle_product();
 			toogle_logo();
 			toogle_popup();
 			toogle_video();
@@ -3028,6 +3029,16 @@ function toogle_carousel(sub_show){
 	toogle_switch($(sub_show + ' input[name="lazyload"]'),$('.group_lazyload_owl'),400);
 	toogle_switch($(sub_show + ' input[name="pagination"]'),$('.group-pagination'),400);
 	toogle_switch($(sub_show + ' input[name="scrollperpage"]'),$('.group-scroll-per-page'),400);
+}
+
+function toogle_product(){
+	$(document).on('change', '#order_way', function(){
+		if ($(this).val() == 'random'){
+			$('.order_type_sub').addClass('hide-config');
+		}else{
+			$('.order_type_sub').removeClass('hide-config');
+		}
+	});
 }
 
 function toogle_logo(){

@@ -471,32 +471,33 @@ class DeoTemplate extends Module implements WidgetInterface
 		}
 		$order_by = isset($params['order_by']) ? Tools::strtolower($params['order_by']) : 'position';
 		$order_way = isset($params['order_way']) ? $params['order_way'] : 'ASC';
+		$get_total = isset($params['get_total']) ? $params['get_total'] : false;
+		$order_by_prefix = false;
 		$random = false;
 		if ($order_way == 'random') {
 			$random = true;
-		}
-		$get_total = isset($params['get_total']) ? $params['get_total'] : false;
-		$order_by_prefix = false;
-		if ($order_by == 'id_product' || $order_by == 'date_add' || $order_by == 'date_upd') {
-			$order_by_prefix = 'product_shop';
-		} else if ($order_by == 'reference') {
-			$order_by_prefix = 'p';
-		} else if ($order_by == 'name') {
-			$order_by_prefix = 'pl';
-		} elseif ($order_by == 'manufacturer') {
-			$order_by_prefix = 'm';
-			$order_by = 'name';
-		} elseif ($order_by == 'position') {
-			$order_by = 'date_add';
-			$order_by_prefix = 'product_shop';
-			// $order_by_prefix = 'cp';
-		} elseif ($order_by == 'quantity') {
-			$order_by_prefix = 'ps';    // ps_product_sale
-			$sql_join .= ' INNER JOIN '._DB_PREFIX_.'product_sale ps ON (ps.id_product= p.`id_product` )';
-		}
-		if ($order_by == 'price') {
-			$order_by = 'orderprice';
-			$order_by_prefix = 'p';
+		}else{
+			if ($order_by == 'id_product' || $order_by == 'date_add' || $order_by == 'date_upd') {
+				$order_by_prefix = 'product_shop';
+			} else if ($order_by == 'reference') {
+				$order_by_prefix = 'p';
+			} else if ($order_by == 'name') {
+				$order_by_prefix = 'pl';
+			} elseif ($order_by == 'manufacturer') {
+				$order_by_prefix = 'm';
+				$order_by = 'name';
+			} elseif ($order_by == 'position') {
+				$order_by = 'date_add';
+				$order_by_prefix = 'product_shop';
+				// $order_by_prefix = 'cp';
+			} elseif ($order_by == 'quantity') {
+				$order_by_prefix = 'ps';    // ps_product_sale
+				$sql_join .= ' INNER JOIN '._DB_PREFIX_.'product_sale ps ON (ps.id_product= p.`id_product` )';
+			}
+			if ($order_by == 'price') {
+				$order_by = 'orderprice';
+				$order_by_prefix = 'p';
+			}
 		}
 		$active = 1;
 		if (!Validate::isBool($active) || !Validate::isOrderBy($order_by)) {
@@ -586,7 +587,7 @@ class DeoTemplate extends Module implements WidgetInterface
 		}
 
 		// + best seller
-		if ($value_by_product_type && $product_type == 'best_sellers') {
+		if ($value_by_product_type && $product_type == 'best_sellers' && $random) {
 			$sql_join .= ' LEFT JOIN `'._DB_PREFIX_.'product_sale` ps ON ps.`id_product` = p.`id_product`';
 		}
 		
@@ -622,49 +623,6 @@ class DeoTemplate extends Module implements WidgetInterface
 		}
 
 		$result = $this->addAttributesProduct($result);
-
-		// $now = date('Y-m-d H:i:s');
-		// foreach ($result as &$val) {
-			// $time = false;
-			// if (isset($tmp_img[$val['id_product']])) {
-			//     $val['images'] = $tmp_img[$val['id_product']];
-			//     $val['id_image'] = $cover_img[$val['id_product']];
-			// } else {
-			//     $val['images'] = array();
-			// }
-
-			// $val['specific_prices'] = self::getSpecificPriceById($val['id_specific_price']);
-			
-
-			// if (isset($val['specific_prices']['from']) && $val['specific_prices']['from'] > $now) {
-			//     $time = strtotime($val['specific_prices']['from']);
-			//     $val['countdown_status'] = 'not_yet';
-			//     $val['lofdate'] = Tools::displayDate($val['specific_prices']['from']);
-			// } elseif (isset($val['specific_prices']['to']) && $val['specific_prices']['to'] > $now) {
-			//     $time = strtotime($val['specific_prices']['to']);
-			//     $val['countdown_status'] = 1;
-			//     $val['lofdate'] = Tools::displayDate($val['specific_prices']['to']);
-			// } elseif (isset($val['specific_prices']['to']) && $val['specific_prices']['to'] == '0000-00-00 00:00:00') {
-			//     $val['js'] = 'unlimited';
-			//     $val['finish'] = $this->l('Unlimited');
-			//     $val['countdown_status'] = 1;
-			//     $val['lofdate'] = $this->l('Unlimited');
-			// } else if (isset($val['specific_prices']['to'])) {
-			//     $time = strtotime($val['specific_prices']['to']);
-			//     $val['countdown_status'] = 2;
-			//     $val['lofdate'] = Tools::displayDate($val['specific_prices']['from']);
-			// }
-			// if ($time) {
-			//     $val['js'] = array(
-			//         'month' => date('m', $time),
-			//         'day' => date('d', $time),
-			//         'year' => date('Y', $time),
-			//         'hour' => date('H', $time),
-			//         'minute' => date('i', $time),
-			//         'seconds' => date('s', $time)
-			//     );
-			// }
-		// }
 
 		return $result;
 	}

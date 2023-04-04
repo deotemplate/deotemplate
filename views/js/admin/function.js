@@ -85,6 +85,7 @@ function toogle_select(element, group, value_show, duration){
 function miniLeftMenu(parameters) {
     if( !$('body').hasClass('page-sidebar-closed')){
         $('body').toggleClass('page-sidebar-closed');
+        $('.main-menu').toggleClass('sidebar-closed');
         if ($('body').hasClass('page-sidebar-closed')) {
             $('nav.nav-bar ul.main-menu > li')
             .removeClass('ul-open open')
