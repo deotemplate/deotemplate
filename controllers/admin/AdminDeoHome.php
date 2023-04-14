@@ -323,7 +323,8 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 				'tinymce' => false,
 			),
 		);
-		$helper->fields_value = isset($this->fields_value) ? $this->fields_value : array();
+		$fields_value = array('file' => '', 'import_for' => 'all','override' => 0);
+		$helper->fields_value = $fields_value;
 		$array = array('hasError' => false, 'result' => $helper->generateForm(array($fields_form)));
 		die(json_encode($array));
 	}
@@ -1537,38 +1538,5 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 		}
 
 		return $this->tabSlug;
-	}
-	
-	/**
-	 * PERMISSION ACCOUNT demo@demo.com
-	 * OVERRIDE CORE
-	 */
-	public function initProcess()
-	{
-		parent::initProcess();
-		if (count($this->errors) <= 0) {
-			
-			if (!$this->access('edit')){
-				if (Tools::isSubmit('submitSaveAndStay')) {
-					$this->errors[] = $this->trans('You do not have permission to edit this.', array(), 'Admin.Notifications.Error');
-				}elseif (Tools::isSubmit('submitImportData')) {
-					$this->errors[] = $this->trans('You do not have permission to import.', array(), 'Admin.Notifications.Error');
-				}elseif( Tools::getIsset('action') && Tools::getValue('action') == 'export'){
-					$this->errors[] = $this->trans('You do not have permission to export this.', array(), 'Admin.Notifications.Error');
-				}
-				
-			}
-					
-			if (!$this->access('edit') && $this->ajax){
-				if (Tools::getValue('action') == 'showImportForm'){
-					$this->errors[] = $this->trans('You do not have permission to import.', array(), 'Admin.Notifications.Error');
-				} elseif(Tools::getValue('action') == 'renderList'){
-					// Allow
-				}else{
-					# DEFAULT
-					$this->errors[] = $this->trans('You do not have permission to edit this.', array(), 'Admin.Notifications.Error');
-				}
-			}
-		}
 	}
 }

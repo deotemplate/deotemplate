@@ -474,7 +474,7 @@ class DeoHelper
 			`fullwidth` TINYINT(1),
 			`active` TINYINT(1),
 		PRIMARY KEY (`id_deotemplate_onepagecheckout`)
-		) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8mb4;
+		) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;
 		');
 
 		Db::getInstance()->execute('CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'deotemplate_onepagecheckout_shop` (
@@ -482,7 +482,7 @@ class DeoHelper
 			`id_shop` int(10) unsigned NOT NULL,
 			`active` TINYINT(1),
 			PRIMARY KEY (`id_deotemplate_onepagecheckout`, `id_shop`)
-		) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8mb4;
+		) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;
 		');
 
 		// create missing table pagenotfound, sekeyword, statssearch

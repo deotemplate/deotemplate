@@ -68,8 +68,10 @@ class DeoBlogs extends DeoShortCodeBase
         $image_size = array(
             array('id' => '', 'name' => $this->l('Original Size'))
         );
-        foreach ($configuration->image_size as $key => $value) {
-            $image_size[] = array('id' => $key, 'name' => $key.' ('.$value->width.'x'.$value->height.')');
+        if (is_array($configuration->image_size)){
+            foreach ($configuration->image_size as $key => $value) {
+                $image_size[] = array('id' => $key, 'name' => $key.' ('.$value->width.'x'.$value->height.')');
+            }
         }
 
         $inputs_head = array(

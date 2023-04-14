@@ -202,7 +202,7 @@ $(document).ready(function(){
  * IMAGE SIZE
  */
 $(document).ready(function(){
-	if ($('.AdminDeoBlogDashboard').length == 0){
+	if ($('.admindeoblogdashboard').length == 0){
 		return;
 	}
 

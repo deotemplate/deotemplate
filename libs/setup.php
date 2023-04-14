@@ -230,7 +230,7 @@ if (!class_exists("DeoPageSetup")) {
 					`fullwidth` TINYINT(1),
 					`active` TINYINT(1),
 				PRIMARY KEY (`id_deotemplate_onepagecheckout`)
-				) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8mb4;
+				) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;
 			');
 			if ($reset == 1) {
 				$drop = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'deotemplate_onepagecheckout_shop`;';
@@ -241,7 +241,7 @@ if (!class_exists("DeoPageSetup")) {
 					`id_shop` int(10) unsigned NOT NULL,
 					`active` TINYINT(1),
 					PRIMARY KEY (`id_deotemplate_onepagecheckout`, `id_shop`)
-				) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8mb4;
+				) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;
 		
 			');
 			if ($reset == 1) {
@@ -750,7 +750,6 @@ if (!class_exists("DeoPageSetup")) {
 					PRIMARY KEY (`id_deomegamenu_group`,`id_lang`)
 				) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;
 			');
-
 
 			return true;
 		}
