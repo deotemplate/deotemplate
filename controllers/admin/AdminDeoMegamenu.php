@@ -264,7 +264,7 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 
 		$this->context->controller->addCss(__PS_BASE_URI__.'js/jquery/ui/themes/base/jquery.ui.tabs.css');
 		$this->context->controller->addCss(__PS_BASE_URI__.$media_dir.'css/megamenu/admin/form.css');
-		echo __PS_BASE_URI__.$media_dir.'css/megamenu/admin/form.css';
+		$this->context->controller->addCss(DeoHelper::getCssAdminDir().'fonts.css');
 		$admin_webpath = str_ireplace(_PS_CORE_DIR_, '', _PS_ADMIN_DIR_);
 		$admin_webpath = preg_replace('/^' . preg_quote(DIRECTORY_SEPARATOR, '/') . '/', '', $admin_webpath);
 		$bo_theme = ((Validate::isLoadedObject($this->context->employee)
@@ -2356,29 +2356,5 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 					break;
 			}
 		}
-	}
-	
-	/**
-	 * PERMISSION ACCOUNT demo@demo.com
-	 */
-	public function getPermission($variable, $employee = null)
-	{
-		if ($variable == 'configure') {
-			// Allow see form if permission is : configure, view
-			$configure = Module::getPermissionStatic($this->id, 'configure', $employee);
-			$view = Module::getPermissionStatic($this->id, 'view', $employee);
-			return ($configure || $view);
-		}
-		
-		return Module::getPermissionStatic($this->id, $variable, $employee);
-	}
-	
-	/**
-	 * PERMISSION ACCOUNT demo@demo.com
-	 */
-	public function access($action, $disable = false)
-	{
-		$employee = null;
-		return Module::getPermissionStatic($this->id, $action, $employee);
 	}
 }
