@@ -1058,18 +1058,18 @@ class DeoHelper
 		// 	Tools::copy(_PS_ROOT_DIR_.'/js/admin/tinymce.inc.js', _PS_MODULE_DIR_.'deotemplate/views/js/shortcode/backup/tinymce.inc.js');
 		// }
 
-		@mkdir(_PS_ROOT_DIR_.'/js/admin/', 0755, true);
+		// @mkdir(_PS_ROOT_DIR_.'/js/admin/', 0755, true);
 
 		#shortcode to tinymce :  override file
 		// Tools::copy(_PS_MODULE_DIR_.'deotemplate/views/js/shortcode/tinymce.inc.js', _PS_ROOT_DIR_.'/js/admin/tinymce.inc.js');
 
 		#shortcode to tinymce : copy folder plugin of shortcode for tinymce
-		@mkdir(_PS_ROOT_DIR_.'/js/tiny_mce/plugins/deotemplate/', 0755, true);
-		Tools::copy(_PS_MODULE_DIR_.'deotemplate/views/js/shortcode/deotemplate/index.php', _PS_ROOT_DIR_.'/js/tiny_mce/plugins/deotemplate/index.php');
-		Tools::copy(_PS_MODULE_DIR_.'deotemplate/views/js/shortcode/deotemplate/plugin.min.js', _PS_ROOT_DIR_.'/js/tiny_mce/plugins/deotemplate/plugin.min.js');
+		// @mkdir(_PS_ROOT_DIR_.'/js/tiny_mce/plugins/deotemplate/', 0755, true);
+		// Tools::copy(_PS_MODULE_DIR_.'deotemplate/views/js/shortcode/deotemplate/index.php', _PS_ROOT_DIR_.'/js/tiny_mce/plugins/deotemplate/index.php');
+		// Tools::copy(_PS_MODULE_DIR_.'deotemplate/views/js/shortcode/deotemplate/plugin.min.js', _PS_ROOT_DIR_.'/js/tiny_mce/plugins/deotemplate/plugin.min.js');
 
-		@mkdir(_PS_ROOT_DIR_.'/override/controllers/front/listing/', 0755, true);
-		Tools::copy(_PS_ROOT_DIR_.'/override/controllers/front/index.php', _PS_ROOT_DIR_.'/override/controllers/front/listing/index.php');
+		// @mkdir(_PS_ROOT_DIR_.'/override/controllers/front/listing/', 0755, true);
+		// Tools::copy(_PS_ROOT_DIR_.'/override/controllers/front/index.php', _PS_ROOT_DIR_.'/override/controllers/front/listing/index.php');
 
 		if (($correct && !Configuration::get('DEOTEMPLATE_OVERRIDED')) || ($correct && $quickstart)){
 			$instance_module = DeoTemplate::getInstance();
@@ -1092,10 +1092,10 @@ class DeoHelper
 		// 	Tools::copy(_PS_MODULE_DIR_.'deotemplate/views/js/shortcode/cms_page_form.bundle.js', _PS_ADMIN_DIR_.'/themes/new-theme/public/cms_page_form.bundle.js');
 		// }
 
-		if (version_compare(_PS_VERSION_, '1.7.8.0', '=')){
-			#fix error 1780 :  can't add to cart when click to icon or text
-			Tools::copy(_PS_MODULE_DIR_.'deotemplate/views/js/shortcode/core.js', _PS_ALL_THEMES_DIR_.'core.js');
-		}
+		// if (version_compare(_PS_VERSION_, '1.7.8.0', '=')){
+		// 	#fix error 1780 :  can't add to cart when click to icon or text
+		// 	Tools::copy(_PS_MODULE_DIR_.'deotemplate/views/js/shortcode/core.js', _PS_ALL_THEMES_DIR_.'core.js');
+		// }
 	}
 		
 	
