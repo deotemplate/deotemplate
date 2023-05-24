@@ -85,26 +85,26 @@ class AdminDeoWidgetsMegamenuController extends ModuleAdminControllerCore
             'href' => $this->context->link->getAdminLink('AdminDeoMegamenu'),
             'target' => '_blank',
             'desc' => $this->l('Groups Menu'),
-            'class' => 'icon-sitemap'
+            'icon' => 'icon-sitemap'
         );
         $this->page_header_toolbar_btn['export_widgets'] = array(
             'short' => 'ExportWidgetsMenu',
             'href' => $this->context->link->getAdminLink('AdminDeoWidgetsMegamenu').'&exportwidgets=1',
             'desc' => $this->l('Export Widgets'),
-            'class' => 'icon-cloud-download'
+            'icon' => 'icon-cloud-download'
         );
         $this->page_header_toolbar_btn['import_widgets'] = array(
             'short' => 'ImportWidgetsMenu',
             'href' => 'javascript:void(0)',
             'desc' => $this->l('Import Widgets'),
-            'class' => 'icon-cloud-upload'
+            'icon' => 'icon-cloud-upload'
         );
         $this->page_header_toolbar_btn['widgets'] = array(
             'short' => 'Widgets',
             'href' => $this->context->link->getAdminLink('AdminDeoWidgetsMegamenu'),
             'target' => '_blank',
             'desc' => $this->l('Widgets'),
-            'class' => 'icon-list-alt'
+            'icon' => 'icon-list-alt'
         );
         parent::initPageHeaderToolbar();
     }

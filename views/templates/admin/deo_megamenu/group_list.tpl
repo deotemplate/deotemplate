@@ -222,7 +222,7 @@
 			return false;
 		});
 
-		$("#page-header-desc-deomegamenu-icon-cloud-upload").click(function(e) {
+		$("#page-header-desc-deomegamenu-import_groups").click(function(e) {
 			e.preventDefault();
 			$('#import_group_menu').modal('show');
 		});

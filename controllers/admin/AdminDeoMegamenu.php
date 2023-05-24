@@ -69,14 +69,14 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 				'href' => $this->context->link->getAdminLink('AdminDeoMegamenu'),
 				'target' => '_blank',
 				'desc' => $this->l('Groups Menu'),
-				'class' => 'icon-sitemap'
+				'icon' => 'icon-sitemap'
 			);
 		}else{
 			$this->page_header_toolbar_btn['import_groups'] = array(
 				'short' => 'ImportGroupMenu',
 				'href' => 'javascript:void(0)',
 				'desc' => $this->l('Import Group Menu'),
-				'class' => 'icon-cloud-upload'
+				'icon' => 'icon-cloud-upload'
 			);
 		}
 
@@ -85,7 +85,7 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 			'href' => $this->context->link->getAdminLink('AdminDeoWidgetsMegamenu'),
 			'target' => '_blank',
 			'desc' => $this->l('Widgets'),
-			'class' => 'icon-list-alt'
+			'icon' => 'icon-list-alt'
 		);
 
 		parent::initPageHeaderToolbar();
