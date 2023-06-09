@@ -1360,6 +1360,7 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 		if (Tools::getValue('params_widget')) {
 			$params_widget = trim(html_entity_decode(Tools::getValue('params_widget')));
 			$array_params_widget = json_decode($params_widget, true);
+
 			if (count($array_params_widget) > 0) {
 				foreach ($array_params_widget as $key => $value) {
 					$menu_obj = new DeoMegamenuModel((int)$key);

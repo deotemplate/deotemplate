@@ -1282,7 +1282,7 @@
 
 			$.ajax({
 				url: config.action_save,
-				data:'params_widget='+JSON.stringify(output_widget)+'&params_subwith='+JSON.stringify(output_subwith)+'&id_shop='+config.id_shop,
+				data:'params_widget='+encodeURIComponent(JSON.stringify(output_widget))+'&params_subwith='+encodeURIComponent(JSON.stringify(output_subwith))+'&id_shop='+config.id_shop,
 				type:'POST',
 			}).done(function(data) {
 				$('#configuration_form.AdminDeoMegamenu').submit();
@@ -1329,7 +1329,7 @@
 				data: {
 					ajax : true,
 					allWidgets : 1,
-					dataForm : JSON.stringify(allWidgets),
+					dataForm : encodeURIComponent(JSON.stringify(allWidgets)),
 				},
 				type:'POST',
 			}).done(function( jsonData ) {
