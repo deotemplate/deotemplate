@@ -155,9 +155,11 @@
 
             _.options = $.extend({}, _.defaults, settings, dataSettings);
 
-            if (_.options.slidesToShow < _.slideCount){
-                _.currentSlide = _.options.initialSlide;
-            }
+            // if (_.options.slidesToShow < _.slideCount){
+                if ( typeof _.options.initialSlide !== undefined){
+                    _.currentSlide = _.options.initialSlide;
+                }
+            // }
 
             _.originalSettings = _.options;
 

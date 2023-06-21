@@ -1748,7 +1748,7 @@ $(window).load(function(){
 		configurations_cover.rtl = slick_rtl;
 		configurations_cover.slidesToShow = 1;
 		configurations_cover.slidesToScroll = 1;
-		
+
 		if (thumb == "none"){
 			DeoTemplate.callInitSlickCarousel(slider_cover, configurations_cover);
 		}else{
@@ -1928,74 +1928,67 @@ $(window).load(function(){
 
 	// build slick slider for modal - product page
 	function initSlickProductModal(){
+		var index_image_cover_detail_page = $('.images-for-detail').data('initialslide');
 		let slider_cover = $('#product-modal .product-modal-cover');
-		let slide_modal = $('#product-modal .product-modal-thumb');
-		let configurations_cover_modal_product_page = Object.assign({}, configurations_cover);
+		
+		$('.images-for-detail .product-images').on('afterChange', function(event, slick, currentSlide){
+			let slide = slick.$slides.get(currentSlide);
+			let total_slide = $('#product-modal .thumbnails-modal img').length;
+			let index = $(slide).data('slick-index');
+			if ((index + 1) > total_slide){
+				index =  index - total_slide;
+			}
 
-		configurations_modal_product_page.activeMode = true;
-		configurations_modal_product_page.asNavFor = "#product-modal .product-modal-cover";
-		configurations_cover_modal_product_page.asNavFor = "#product-modal .product-modal-thumb";
-		configurations_modal_product_page.initialSlide = $('.images-for-detail').data('initialslide');
-		configurations_cover_modal_product_page.initialSlide = $('.images-for-detail').data('initialslide');
+			index_image_cover_detail_page = index;
+			$('#product-modal .thumbnails-modal img').removeClass('selected');
+			$('#product-modal .thumbnails-modal img[data-index="'+ (index_image_cover_detail_page + 1) +'"]').addClass('selected');
+		});
 
-		let deo_col_thumbnail = [];
-		let responsive = configurations_modal_product_page.responsive;
-		let class_loading = (configurations_modal_product_page.vertical) ? 'loading-vertical ' : '';
+		$('#product-modal').on('shown.bs.modal', function(e){
+			let configurations_cover_modal_product_page = Object.assign({}, configurations_cover);
+			configurations_cover_modal_product_page.initialSlide = index_image_cover_detail_page;
+			configurations_cover_modal_product_page.asNavFor = ".images-for-detail .product-images, .images-for-detail .thumb-images";
+			
+			if (!slider_cover.hasClass('slick-initialized')) {
+				DeoTemplate.callInitSlickCarousel(slider_cover, configurations_cover_modal_product_page);
+			}
 
-		deo_col_thumbnail.push("loading-xxl-"+configurations_modal_product_page.slidesToShow);
-		if (Object.keys(responsive).length){
-			$.each(responsive, function(index, value) {
-				if (value.breakpoint <= 480) {
-					deo_col_thumbnail.push("loading-sp-"+value.settings.slidesToShow);
-				}else if (value.breakpoint <= 576) {
-					deo_col_thumbnail.push("loading-xs-"+value.settings.slidesToShow);
-				}else if (value.breakpoint <= 768) {
-					deo_col_thumbnail.push("loading-sm-"+value.settings.slidesToShow);
-				}else if (value.breakpoint <= 992) {
-					deo_col_thumbnail.push("loading-md-"+value.settings.slidesToShow);
-				}else if (value.breakpoint <= 1200) {
-					deo_col_thumbnail.push("loading-lg-"+value.settings.slidesToShow);
-				}else if (value.breakpoint <= 1500) {
-					deo_col_thumbnail.push("loading-xl-"+value.settings.slidesToShow);
+			$('.product-cover .layer').click(function(e) {
+				let slider = $('.images-for-detail .product-images');
+
+				if (slider.hasClass('slick-initialized')) {
+					index_image_cover_detail_page = slider.find('.slick-active.first.last').data('slick-index');
+			
+					if (index_image_cover_detail_page != slider_cover.find('.slick-active.first.last').data('slick-index')){
+						slider_cover.slick('slickGoTo', index_image_cover_detail_page);
+					}
 				}
 			});
-		}
 
-		class_loading += deo_col_thumbnail.join(" ");
-		slide_modal.find('.col-thumbnail').addClass(class_loading).removeClass('col-thumbnail');
-		
-		$('#product-modal').on('shown.bs.modal', function(e){
-			DeoTemplate.callInitSlickCarousel(slider_cover, configurations_cover_modal_product_page);
-			DeoTemplate.callInitSlickCarousel(slide_modal, configurations_modal_product_page);
-		});
-		$('#product-modal').on('hide.bs.modal', function(e){
-			slider_cover.slick('unslick');
-			slide_modal.slick('unslick');
-		});
+			slider_cover.on('afterChange', function(event, slick, currentSlide){
+				let slider = slick.$slides.get(currentSlide);
+				let total_slide = $('#product-modal .thumbnails-modal img').length;
+				let index = $(slider).data('slick-index');
+				if ((index + 1) > total_slide){
+					index =  index - total_slide;
+				}
 
-		// slide_modal.on('init', function(event, slick){
-		// 	var slides = slick.$slides;
-		// 	slides.each(function(key, slide){
-		// 		let thumb = $(slide).find('.thumbnail-image');
-		// 		if (thumb.hasClass('selected')){
-		// 			let currentSlide = $(slide).attr("data-slick-index");
-		// 			slick.slickGoTo(currentSlide);
+				$('#product-modal .thumbnails-modal img').removeClass('selected');
+				$('#product-modal .thumbnails-modal img[data-index="'+ (index + 1) +'"]').addClass('selected');
+			});
 
-		// 			return true;
-		// 		}
-		// 	});
-		// });
-
-		slide_modal.on('afterChange', function(event, slick, currentSlide){
-			let current = $(slick.$slides.get(currentSlide));
-
-			if (!current.find('.thumbnail-image').hasClass('selected')){
-				slide_modal.find('.thumbnail-image').removeClass('selected');
-				current.find('.thumbnail-image').addClass('selected');
-			}
+			$('#product-modal .thumbnails-modal img').click(function(e) {
+				e.preventDefault();
+				if(!$(this).hasClass('selected')){
+					$('#product-modal .thumbnails-modal img').removeClass('selected');
+					$(this).addClass('selected');
+					if (slider_cover.hasClass('slick-initialized')) {
+						slider_cover.slick('slickGoTo', $(this).data('index') - 1);
+					}
+				}
+			});
 		});
 	}
-
 });
 
 // fix default prestashop remove css inline of label
