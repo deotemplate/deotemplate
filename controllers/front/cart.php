@@ -187,7 +187,7 @@ class DeoTemplateCartModuleFrontController extends ModuleFrontController
 			$return = true;
 			// Check product quantity availability
 			if ($id_product_attribute) {
-				if (!Product::isAvailableWhenOutOfStock($product->out_of_stock) && !Attribute::checkAttributeQty($id_product_attribute, $qty_to_check)) {
+				if (!Product::isAvailableWhenOutOfStock($product->out_of_stock) && !ProductAttribute::checkAttributeQty($id_product_attribute, $qty_to_check)) {
 					$return = false;
 				}
 			} elseif (!$product->checkQty($qty_to_check)) {

@@ -452,63 +452,11 @@ $(document).ready(function(){
 		}
 	});
 
-	// show dropdown cart
-	function showDropDownCart($element, $type){
-		let object_element = '';
-		if ($type == 'defaultcart'){
-			object_element = $element.siblings('.deo-content-cart-wrapper');
-		}
-		if ($type == 'flycart'){
-			object_element = $element.parents('.deo-cart-solo').find('.deo-content-cart-wrapper');
-		}
-		
-		if (!object_element.hasClass('show')){
-			object_element.addClass('show');
-		}else{
-			object_element.removeClass('show');
-		}
-	}
 
-	// show dropdown cart
-	function showSlideBarCart($element){
-		$('[data-toggle="deo-tooltip"].has-init-tooltip').tooltip('hide');
-		if (!$('.deo-sidebar-cart.disable').length){
-			if (!$element.hasClass('active-slidebarcart')){
-				let type = $element.data('type');
-				$element.addClass('active-slidebarcart');
-				
-				$('.deo-sidebar-cart.'+type).addClass('active');
-				if ($('.deo-cart-mask').length){
-					$('body').addClass('active-sidebar-cart');
-				}
-			}else{
-				$('.deo-sidebar-cart .icon-cart-sidebar-wrapper').trigger('click');
-			}
-		}
-	}
 
-	// event for dropdown cart
-	function activeDropdownEvent(){
-		// active scroll bar
-		$('.list-items').each(function(){
-			let check_number_cartitem = 3;
-			if (typeof number_cartitem_display != 'undefined'){
-				check_number_cartitem = number_cartitem_display;
-			}
-			// scroll bar for dropdown
-			if (!$(this).parents('.deo-sidebar-cart').length){			
-				checkFlyCartScrollBarDropDown($(this));
-			}
-			
-			// scroll bar for slidebar
-			if ($(this).parents('.deo-sidebar-cart').length){
-				checkFlyCartScrollBar($(this));
-			}
-		})
-	
-		
 		// remove dropdown cart item
-		$('.remove-cart').click(function(){
+		$(document).on('click', '.remove-cart', function(e){
+		// $('.remove-cart').click(function(){
 			let id_product = $(this).data('id-product');
 			let id_product_attribute = $(this).data('id-product-attribute');
 			let id_customization = $(this).data('id-customization');
@@ -592,10 +540,12 @@ $(document).ready(function(){
 			return false;
 		});
 		
-		$('.input-product-qty').focusout(function(){
+		$(document).on('focusout', '.input-product-qty', function(e){
+		// $('.input-product-qty').focusout(function(){
 			updateQuantityProduct($(this));
 		})
-		$('.input-product-qty').keyup(function(event){
+		$(document).on('keyup', '.input-product-qty', function(e){
+		// $('.input-product-qty').keyup(function(event){
 			if (event.keyCode == 13) {
 				updateQuantityProduct($(this));
 			}
@@ -605,7 +555,8 @@ $(document).ready(function(){
 		let flag = false;
 		
 		// change quantity product dropdown with button up-down
-		$('.btn-qty-down, .btn-qty-up').on('touchstart click', function(){
+		$(document).on('touchstart click', '.btn-qty-down, .btn-qty-up', function(e){
+		// $('.btn-qty-down, .btn-qty-up').on('touchstart click', function(){
 			if(flag == true){
 				flag = false;
 				clearTimeout(timer);
@@ -636,6 +587,63 @@ $(document).ready(function(){
 			
 			return false;
 		});
+
+
+
+
+	// show dropdown cart
+	function showDropDownCart($element, $type){
+		let object_element = '';
+		if ($type == 'defaultcart'){
+			object_element = $element.siblings('.deo-content-cart-wrapper');
+		}
+		if ($type == 'flycart'){
+			object_element = $element.parents('.deo-cart-solo').find('.deo-content-cart-wrapper');
+		}
+		
+		if (!object_element.hasClass('show')){
+			object_element.addClass('show');
+		}else{
+			object_element.removeClass('show');
+		}
+	}
+
+	// show dropdown cart
+	function showSlideBarCart($element){
+		$('[data-toggle="deo-tooltip"].has-init-tooltip').tooltip('hide');
+		if (!$('.deo-sidebar-cart.disable').length){
+			if (!$element.hasClass('active-slidebarcart')){
+				let type = $element.data('type');
+				$element.addClass('active-slidebarcart');
+				
+				$('.deo-sidebar-cart.'+type).addClass('active');
+				if ($('.deo-cart-mask').length){
+					$('body').addClass('active-sidebar-cart');
+				}
+			}else{
+				$('.deo-sidebar-cart .icon-cart-sidebar-wrapper').trigger('click');
+			}
+		}
+	}
+
+	// event for dropdown cart
+	function activeDropdownEvent(){
+		// active scroll bar
+		$('.list-items').each(function(){
+			let check_number_cartitem = 3;
+			if (typeof number_cartitem_display != 'undefined'){
+				check_number_cartitem = number_cartitem_display;
+			}
+			// scroll bar for dropdown
+			if (!$(this).parents('.deo-sidebar-cart').length){			
+				checkFlyCartScrollBarDropDown($(this));
+			}
+			
+			// scroll bar for slidebar
+			if ($(this).parents('.deo-sidebar-cart').length){
+				checkFlyCartScrollBar($(this));
+			}
+		})
 	}
 
 	function updateQuantityProduct($element){
