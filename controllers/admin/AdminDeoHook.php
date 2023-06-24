@@ -101,7 +101,7 @@ class AdminDeoHookController extends ModuleAdminControllerCore
         $this->context->smarty->assign('toolbar_scroll', 1);
         $this->context->smarty->assign('show_toolbar', 1);
         $this->context->smarty->assign('toolbar_btn', $this->toolbar_btn);
-        $this->context->smarty->assign('title', $this->toolbar_title);
+        // $this->context->smarty->assign('title', $this->toolbar_title);
     }
 
     /**
