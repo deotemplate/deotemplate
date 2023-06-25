@@ -1192,15 +1192,12 @@ $(document).ready(function(){
 		function callback(img){
 			if ($(img).hasClass('lazyload-bg')){
 				let src = $(img).attr('data-bgset');
-				// console.log(src);
 				$(img).css('background-image', 'url('+src+')');
-				// $(img).removeAttr('data-bgset');
 				$(img).removeClass('lazyload').addClass('lazyloaded');
 				$(img).find('.lazyload-background').first().remove();
 
 			}else{
 				let src = $(img).attr('data-src');
-				// console.log(src);
 				$(img).attr('src', src);
 				$(img).removeAttr('data-src');
 				$(img).css("display", "");
@@ -1494,7 +1491,7 @@ $(window).load(function(){
 					clearInterval(check_loaded_main_product);
 					let thumb = $("#content").data("thumb");
 					let breakpoints = $("#content").data("breakpoints");
-					if (thumb !== 'undefined'){
+					if (typeof thumb != 'undefined'){
 						initSlickProductThumb(thumb, breakpoints);
 					}
 				}, 300);
@@ -1750,6 +1747,7 @@ $(window).load(function(){
 		configurations_cover.slidesToScroll = 1;
 
 		if (thumb == "none"){
+			configurations_cover.asNavFor = null;
 			DeoTemplate.callInitSlickCarousel(slider_cover, configurations_cover);
 		}else{
 			configurations_thumb.asNavFor = ".images-for-detail .product-images";
@@ -1758,28 +1756,6 @@ $(window).load(function(){
 			configurations_cover.initialSlide = $('.images-for-detail').data('initialslide');
 			DeoTemplate.callInitSlickCarousel(slider_cover, configurations_cover);
 			DeoTemplate.callInitSlickCarousel(slider_thumb, configurations_thumb);
-
-			// console.log(configurations_cover,configurations_thumb);
-			
-			// slider_thumb.on('init', function(event, slick){
-			// 	let slide_count = slick.slideCount, 
-			// 		slides_to_show = slick.slickGetOption('slidesToShow'),
-			// 		initial_slide = $('.images-for-detail').data('initialslide');
-
-			// 	if (slide_count < slides_to_show){
-			// 		return false;
-			// 	}
-
-			// 	let check_init_thumb;
-			// 	if (typeof check_init_thumb != 'undefined'){
-			// 		clearInterval(check_init_thumb);
-			// 	}
-				
-			// 	check_init_thumb = setInterval(function(){
-			// 		clearInterval(check_init_thumb);
-			// 		slick.slickGoTo(initial_slide);
-			// 	}, 300);
-			// });
 
 			slider_thumb.on('afterChange', function(event, slick, currentSlide){
 				let current = $(slick.$slides.get(currentSlide));
@@ -1901,20 +1877,6 @@ $(window).load(function(){
 		DeoTemplate.callInitSlickCarousel(slider_cover, configurations_cover);
 		DeoTemplate.callInitSlickCarousel(slide_quickview, configurations_quickview);
 
-		// console.log(configurations_cover, configurations_quickview);
-		
-		// slide_quickview.on('init', function(event, slick){
-		// 	var slides = slick.$slides;
-		// 	slides.each(function(key, slide){
-		// 		let thumb = $(slide).find('.thumbnail-image');
-		// 		if (thumb.hasClass('selected')){
-		// 			let currentSlide = $(slide).attr("data-slick-index");
-		// 			slick.slickGoTo(currentSlide);
-
-		// 			return true;
-		// 		}
-		// 	});
-		// });
 
 		slide_quickview.on('afterChange', function(event, slick, currentSlide){
 			let current = $(slick.$slides.get(currentSlide));
@@ -1929,7 +1891,7 @@ $(window).load(function(){
 	// build slick slider for modal - product page
 	function initSlickProductModal(){
 		var index_image_cover_detail_page = $('.images-for-detail').data('initialslide');
-		let slider_cover = $('#product-modal .product-modal-cover');
+		let slider_modal = $('#product-modal .product-modal-cover');
 		
 		$('.images-for-detail .product-images').on('afterChange', function(event, slick, currentSlide){
 			let slide = slick.$slides.get(currentSlide);
@@ -1947,10 +1909,9 @@ $(window).load(function(){
 		$('#product-modal').on('shown.bs.modal', function(e){
 			let configurations_cover_modal_product_page = Object.assign({}, configurations_cover);
 			configurations_cover_modal_product_page.initialSlide = index_image_cover_detail_page;
-			configurations_cover_modal_product_page.asNavFor = ".images-for-detail .product-images, .images-for-detail .thumb-images";
-			
-			if (!slider_cover.hasClass('slick-initialized')) {
-				DeoTemplate.callInitSlickCarousel(slider_cover, configurations_cover_modal_product_page);
+			configurations_cover_modal_product_page.asNavFor = ($("#content").data("thumb") == 'none') ? ".images-for-detail .product-images" : ".images-for-detail .product-images, .images-for-detail .thumb-images";
+			if (!slider_modal.hasClass('slick-initialized')) {
+				DeoTemplate.callInitSlickCarousel(slider_modal, configurations_cover_modal_product_page);
 			}
 
 			$('.product-cover .layer').click(function(e) {
@@ -1959,13 +1920,13 @@ $(window).load(function(){
 				if (slider.hasClass('slick-initialized')) {
 					index_image_cover_detail_page = slider.find('.slick-active.first.last').data('slick-index');
 			
-					if (index_image_cover_detail_page != slider_cover.find('.slick-active.first.last').data('slick-index')){
-						slider_cover.slick('slickGoTo', index_image_cover_detail_page);
+					if (index_image_cover_detail_page != slider_modal.find('.slick-active.first.last').data('slick-index')){
+						slider_modal.slick('slickGoTo', index_image_cover_detail_page);
 					}
 				}
 			});
 
-			slider_cover.on('afterChange', function(event, slick, currentSlide){
+			slider_modal.on('afterChange', function(event, slick, currentSlide){
 				let slider = slick.$slides.get(currentSlide);
 				let total_slide = $('#product-modal .thumbnails-modal img').length;
 				let index = $(slider).data('slick-index');
@@ -1982,8 +1943,8 @@ $(window).load(function(){
 				if(!$(this).hasClass('selected')){
 					$('#product-modal .thumbnails-modal img').removeClass('selected');
 					$(this).addClass('selected');
-					if (slider_cover.hasClass('slick-initialized')) {
-						slider_cover.slick('slickGoTo', $(this).data('index') - 1);
+					if (slider_modal.hasClass('slick-initialized')) {
+						slider_modal.slick('slickGoTo', $(this).data('index') - 1);
 					}
 				}
 			});
