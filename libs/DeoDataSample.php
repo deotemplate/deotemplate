@@ -1045,23 +1045,23 @@ class DeoDataSample
 
     public function importDataHosting()
     {
-        $reassurance_new = Db::getInstance()->executeS('SELECT * FROM `' . _DB_PREFIX_ . 'psreassurance`');
-        if (count($reassurance_new)){
-            $icon_uri = $reassurance_new[0]['icon'];
+        // $reassurance_new = Db::getInstance()->executeS('SELECT * FROM `' . _DB_PREFIX_ . 'psreassurance`');
+        // if (count($reassurance_new)){
+        //     $icon_uri = $reassurance_new[0]['icon'];
             
-            $reassurance_old = Db::getInstance()->executeS('SELECT * FROM `' . _DB_PREFIX_ . 'reassurance`');
-            if (count($reassurance_old)){
-                $icon_name = $reassurance_old[0]['file_name'];
-                $uri_old = str_replace('modules/blockreassurance/img/'.$icon_name,'',$icon_uri);
+        //     $reassurance_old = Db::getInstance()->executeS('SELECT * FROM `' . _DB_PREFIX_ . 'reassurance`');
+        //     if (count($reassurance_old)){
+        //         $icon_name = $reassurance_old[0]['file_name'];
+        //         $uri_old = str_replace('modules/blockreassurance/img/'.$icon_name,'',$icon_uri);
                
-                Db::getInstance()->execute('UPDATE `'._DB_PREFIX_.'psreassurance` SET `icon` = replace(`icon`, "'.$uri_old.'", "'.__PS_BASE_URI__.'")');
-                // echo 'UPDATE `'._DB_PREFIX_.'psreassurance` SET `icon` = replace(`icon`, "'.$uri_old.'", "'.__PS_BASE_URI__.'")';
+        //         Db::getInstance()->execute('UPDATE `'._DB_PREFIX_.'psreassurance` SET `icon` = replace(`icon`, "'.$uri_old.'", "'.__PS_BASE_URI__.'")');
+        //         // echo 'UPDATE `'._DB_PREFIX_.'psreassurance` SET `icon` = replace(`icon`, "'.$uri_old.'", "'.__PS_BASE_URI__.'")';
 
-                Db::getInstance()->execute('UPDATE `'._DB_PREFIX_.'psreassurance_lang` SET `link` = replace(`link`, "http://localhost'.$uri_old.'", "'._PS_BASE_URL_.__PS_BASE_URI__.'")');
-                // echo 'UPDATE `'._DB_PREFIX_.'psreassurance_lang` SET `link` = replace(`link`, "http://localhost'.$uri_old.'", "'._PS_BASE_URL_.__PS_BASE_URI__.'")';
+        //         Db::getInstance()->execute('UPDATE `'._DB_PREFIX_.'psreassurance_lang` SET `link` = replace(`link`, "http://localhost'.$uri_old.'", "'._PS_BASE_URL_.__PS_BASE_URI__.'")');
+        //         // echo 'UPDATE `'._DB_PREFIX_.'psreassurance_lang` SET `link` = replace(`link`, "http://localhost'.$uri_old.'", "'._PS_BASE_URL_.__PS_BASE_URI__.'")';
                 
-            }
-        }
+        //     }
+        // }
 
         
         if (!(Tools::strpos(_PS_BASE_URL_, 'localhost') == false)){
@@ -1069,17 +1069,7 @@ class DeoDataSample
             Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_GOOGLE_CLIENTID'), '1038085221664-a11l6ld3cq8b3qcbejud1bsp8gsf5m0j.apps.googleusercontent.com');
             Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_TWITTER_APIKEY'), 'D3dke82MFDXLrc9VdRhR44xGB');
             Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_TWITTER_APISECRET'), 'rIBr8P4GY2njPgU4uDgMxKTgeNg4wU0bZ2CVsBrFwpJkqnWznL');
-        }else if (!(Tools::strpos(_PS_BASE_URL_, 'demo-1.site') ==  false)){
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_FACEBOOK_APPID'), '569418377248645');
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_GOOGLE_CLIENTID'), '200750373187-epmrgb7bmu743ottmmfdk891fk30md19.apps.googleusercontent.com');
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_TWITTER_APIKEY'), 'yefSI71I6nM9eROWYv3imoLVS');
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_TWITTER_APISECRET'), 'uHGB0xGTs3F2NlO0vBdw0KAbzi7ttRxsRH6pzyPcgWgYKhABH2');
-        }else if (!(Tools::strpos(_PS_BASE_URL_, 'demo-2.site') ==  false)){
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_FACEBOOK_APPID'), '569418377248645');
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_GOOGLE_CLIENTID'), '200750373187-epmrgb7bmu743ottmmfdk891fk30md19.apps.googleusercontent.com');
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_TWITTER_APIKEY'), 'yefSI71I6nM9eROWYv3imoLVS');
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_TWITTER_APISECRET'), 'uHGB0xGTs3F2NlO0vBdw0KAbzi7ttRxsRH6pzyPcgWgYKhABH2');
-        }else if (!(Tools::strpos(_PS_BASE_URL_, 'bvptheme.site') ==  false)){
+        }else if (!(Tools::strpos(_PS_BASE_URL_, 'demo-everything.com') ==  false)){
             Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_FACEBOOK_APPID'), '569418377248645');
             Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_GOOGLE_CLIENTID'), '200750373187-epmrgb7bmu743ottmmfdk891fk30md19.apps.googleusercontent.com');
             Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_TWITTER_APIKEY'), 'yefSI71I6nM9eROWYv3imoLVS');
