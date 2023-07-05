@@ -8,7 +8,7 @@
 		<div class="icon-cart-sidebar-wrapper">
 			<a href="javascript:void(0)" class="icon-cart-sidebar"></a>
 			<span class="icon-cart-total">0</span>
-			<span class="name-simple">{l s='Home'  mod='deotemplate'}</span>
+			<span class="name-simple">{l s='Cart'  mod='deotemplate'}</span>
 		</div>
 		<div class="deo-icon-cart-loading"></div>
 	</div>

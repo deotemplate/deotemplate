@@ -924,6 +924,8 @@ $(document).ready(function(){
 						}else{
 							$('.icon-cart-total').text("0");
 						}	
+					}else{
+						$('.icon-cart-total').text($(result.contentcart).find('.cart-total').data('cart-total'));
 					}
 					if ($('.DeoCartClone').length){
 						$('.DeoCartClone .deo-cart-solo,.DeoCartClone .deo-cart-solo .icon-cart-sidebar').data('type',type_dropdown_flycart);
