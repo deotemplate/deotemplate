@@ -251,7 +251,7 @@ class DeoSetting
 			'displayLeftColumnProduct',
 			'displayRightColumnProduct',
 			'displayReassurance',
-			'displayProductButtons',
+			'displayProductAdditionalInfo',
 			'displayFooterProduct',
 		);
 		if ($type == 'all') {

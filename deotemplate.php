@@ -3152,9 +3152,9 @@ class DeoTemplate extends Module implements WidgetInterface
 		return $html;
 	}
 	
-	// public function hookdisplayProductButtons($params)
+	// public function hookDisplayProductAdditionalInfo($params)
 	// {
-	// 	return $this->processHook('displayProductButtons', $params);
+	// 	return $this->processHook('displayProductAdditionalInfo', $params);
 	// }
 	
 	// public function hookDisplayReassurance($params)
@@ -4241,7 +4241,7 @@ class DeoTemplate extends Module implements WidgetInterface
 		# Multishop create new shop
 		$res &= $this->registerHook('actionAdminShopControllerSaveAfter');
 		
-		$res &= $this->registerHook('displayProductButtons');
+		$res &= $this->registerHook('displayProductAdditionalInfo');
 		$res &= $this->registerHook('displayReassurance');
 		$res &= $this->registerHook('displayDeoProfileProduct');
 		$res &= $this->registerHook('displayDeoPanelTool');
@@ -4334,7 +4334,7 @@ class DeoTemplate extends Module implements WidgetInterface
 		# Multishop create new shop
 		$res &= $this->unregisterHook('actionAdminShopControllerSaveAfter');
 		
-		$res &= $this->unregisterHook('displayProductButtons');
+		$res &= $this->unregisterHook('displayProductAdditionalInfo');
 		$res &= $this->unregisterHook('displayReassurance');
 		$res &= $this->unregisterHook('displayDeoProfileProduct');
 		$res &= $this->unregisterHook('displayDeoPanelTool');

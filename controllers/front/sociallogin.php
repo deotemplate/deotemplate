@@ -256,7 +256,6 @@ class DeoTemplateSocialLoginModuleFrontController extends ModuleFrontController
             //Fresh authentication
 
             $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
-
             $request_token = $connection->getRequestToken(OAUTH_CALLBACK);
 
             //Received token info from twitter
