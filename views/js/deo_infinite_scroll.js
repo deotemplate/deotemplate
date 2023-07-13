@@ -717,7 +717,7 @@
 				);
 			}
 
-			let params = {'content_only':1, 'infinitescroll':1};
+			let params = {'infinitescroll':1};
 			params[object.DEFAULT_PAGE_PARAMETER] = page;
 
 			let customxhr = new XMLHttpRequest();
