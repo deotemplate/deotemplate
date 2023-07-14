@@ -342,11 +342,12 @@ class AdminDeoBlogsController extends ModuleAdminController
         }
                 
         if ((Tools::isSubmit('save'.$this->name) && Tools::isSubmit('active')) || Tools::isSubmit('submitAdddeoblogAndPreview') || Tools::isSubmit('saveandstay')) {
+            parent::validateRules();
+
             if (count($this->errors)) {
+                $this->display = 'edit';
                 return false;
             }
-            
-            parent::validateRules();
             
             $id_shop = (int)Context::getContext()->shop->id;
             if (!$id_deoblog = (int)Tools::getValue('id_deoblog')) {

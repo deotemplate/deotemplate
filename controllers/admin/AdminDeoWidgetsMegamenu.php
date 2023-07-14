@@ -203,6 +203,11 @@ class AdminDeoWidgetsMegamenuController extends ModuleAdminControllerCore
     public function postProcess()
     {
         if ((Tools::isSubmit('savedeowidget') || Tools::isSubmit('saveandstaydeowidget')) && Tools::isSubmit('widgets')) {
+            parent::validateRules();
+            if (count($this->errors)) {
+                $this->display = 'edit';
+                return false;
+            }
             if (!Tools::getValue('widget_name')) {
                 $this->errors[] = Tools::displayError('Widget Name Empty !');
             }

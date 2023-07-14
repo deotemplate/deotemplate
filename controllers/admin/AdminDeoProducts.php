@@ -331,6 +331,12 @@ class AdminDeoProductsController extends ModuleAdminControllerCore
         
         
         if (Tools::isSubmit('saveELement')) {
+            parent::validateRules();
+            if (count($this->errors)) {
+                $this->display = 'edit';
+                return false;
+            }
+            
             $filecontent = Tools::getValue('filecontent');
             $fileName = Tools::getValue('fileName');
             if (!is_dir($this->theme_dir.'modules/deotemplate/views/templates/hook/products/')) {

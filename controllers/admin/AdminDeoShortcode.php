@@ -569,6 +569,10 @@ class AdminDeoShortcodeController extends ModuleAdminControllerCore
         }
         if (Tools::isSubmit('submitAdddeotemplate_shortcode')) {
             parent::validateRules();
+            if (count($this->errors)) {
+                $this->display = 'edit';
+                return false;
+            }
             
             if ((int) Tools::getValue('id_deotemplate_shortcode')) {
                 $mess_id = '4';

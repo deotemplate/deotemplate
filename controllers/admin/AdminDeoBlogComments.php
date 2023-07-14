@@ -177,6 +177,7 @@ class AdminDeoBlogCommentsController extends ModuleAdminController
             parent::validateRules();
 
             if (count($this->errors)) {
+                $this->display = 'edit';
                 return false;
             }
 

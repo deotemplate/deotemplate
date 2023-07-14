@@ -136,16 +136,6 @@ class AdminDeoBlogCategoriesController extends ModuleAdminController
         return $url;
     }
 
-    /**
-     * add toolbar icons
-     */
-    public function initToolbar()
-    {
-        $this->context->smarty->assign('toolbar_scroll', 1);
-        $this->context->smarty->assign('show_toolbar', 1);
-        $this->context->smarty->assign('toolbar_btn', $this->toolbar_btn);
-        $this->context->smarty->assign('title', $this->toolbar_title);
-    }
 
     public function postProcess()
     {
@@ -194,6 +184,12 @@ class AdminDeoBlogCategoriesController extends ModuleAdminController
             }
             Tools::redirectAdmin(AdminController::$currentIndex.'&token='.Tools::getValue('token'));
         }else if ((Tools::isSubmit('save'.$this->name) && Tools::isSubmit('active')) || Tools::isSubmit('saveandstay')) {
+            parent::validateRules();
+            
+            if (count($this->errors)) {
+                $this->display = 'edit';
+                return false;
+            }
             if ($id_deoblog_category = Tools::getValue('id_deoblog_category')) {
                 # validate module
                 $category = new DeoBlogCategory((int)$id_deoblog_category);
