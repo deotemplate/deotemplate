@@ -421,6 +421,8 @@ class AdminDeoShortcodeController extends ModuleAdminControllerCore
         
         $this->context->controller->addJqueryUI('ui.sortable');
         $this->context->controller->addJqueryUI('ui.draggable');
+        $this->context->controller->addJs(DeoHelper::getJsAdminDir().'admin/bootstrap-colorpicker.js');
+        $this->context->controller->addCss(DeoHelper::getCssAdminDir().'admin/bootstrap-colorpicker.css');
         $this->context->controller->addJs(DeoHelper::getJsAdminDir().'admin/function.js');
         $this->context->controller->addCss(DeoHelper::getCssAdminDir().'admin/imagemanager.css');
         $this->context->controller->addJs(DeoHelper::getJsAdminDir().'admin/imagemanager.js');

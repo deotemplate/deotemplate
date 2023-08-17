@@ -1665,17 +1665,28 @@ function htmlentitiesDecode(str) {
 				});
 			}
 
-			$('textarea.autoload_rte').each((index, textarea) => {
-		    if (window.tinyMCE) {
-		      const editor = window.tinyMCE.get(textarea.id);
+			if ($('.colorpicker-element').length){
+				$('.colorpicker-element').colorpicker();
+				$('.colorpicker-element .color-picker').keyup(function(){
+					if ($(this).val() == ''){
+						let colorpicker = $(this).closest('.colorpicker-element');  
+						colorpicker.colorpicker('setValue', '#000000');
+						$(this).val('');
+					}
+				});
+			}
 
-		      if (editor) {
-		      	console.log(textarea.id)
-		        // Reset content to force refresh of editor
-		        editor.setContent(editor.getContent());
-		      }
-		    }
-		  });
+			$('textarea.autoload_rte').each((index, textarea) => {
+				if (window.tinyMCE) {
+					const editor = window.tinyMCE.get(textarea.id);
+
+					if (editor) {
+						// console.log(textarea.id)
+						// Reset content to force refresh of editor
+						editor.setContent(editor.getContent());
+					}
+				}
+			});
 
 			if ($('.em_text').length > 0) {
 				//page in column form
