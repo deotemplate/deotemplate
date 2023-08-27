@@ -83,20 +83,34 @@
 						<input type="email" class="form-control register-email" name="register-email" required="" placeholder="{l s='Email' mod='deotemplate'}">
 					</div>
 				</div>
-				<div class="form-group form-group-input password">
-					<div class="input-group">
-						<div class="input-group-addon">
-							<i class="icon icon-password"></i>
+				<div class="form-group form-group-input password field-password-policy">
+					<div class="js-input-column">
+						<div class="input-group js-parent-focus">
+							<div class="input-group-addon">
+								<i class="icon icon-password"></i>
+							</div>
+							<input type="password" class="form-control register-password js-child-focus js-visible-password" name="register-password" required placeholder="{l s='Password' mod='deotemplate'}" id="#field-register-password" 
+								pattern=".{literal}{{/literal}5,{literal}}{/literal}"
+								{if isset($configuration.password_policy.minimum_length)}data-minlength="{$configuration.password_policy.minimum_length}"{/if}
+								{if isset($configuration.password_policy.maximum_length)}data-maxlength="{$configuration.password_policy.maximum_length}"{/if}
+								{if isset($configuration.password_policy.minimum_score)}data-minscore="{$configuration.password_policy.minimum_score}"{/if}
+							>
 						</div>
-						<input type="password" class="form-control register-password" name="register-password" required="" placeholder="{l s='Password' mod='deotemplate'}">
 					</div>
 				</div>
-				<div class="form-group form-group-input repeat-password">
-					<div class="input-group">
-						<div class="input-group-addon">
-							<i class="icon icon-password"></i>
+				<div class="form-group form-group-input repeat-password field-password-policy">
+					<div class="js-input-column">
+						<div class="input-group js-parent-focus">
+							<div class="input-group-addon">
+								<i class="icon icon-password"></i>
+							</div>
+							<input type="password" class="form-control repeat-register-password js-child-focus js-visible-password" name="repeat-register-password" required placeholder="{l s='Repeat Password' mod='deotemplate'}" id="#field-repeat-register-password" 
+								pattern=".{literal}{{/literal}5,{literal}}{/literal}"
+								{if isset($configuration.password_policy.minimum_length)}data-minlength="{$configuration.password_policy.minimum_length}"{/if}
+								{if isset($configuration.password_policy.maximum_length)}data-maxlength="{$configuration.password_policy.maximum_length}"{/if}
+								{if isset($configuration.password_policy.minimum_score)}data-minscore="{$configuration.password_policy.minimum_score}"{/if}
+							>
 						</div>
-						<input type="password" class="form-control repeat-register-password" name="repeat-register-password" required="" placeholder="{l s='Repeat Password' mod='deotemplate'}">
 					</div>
 				</div>
 				<div class="form-group form-group-input firstname">

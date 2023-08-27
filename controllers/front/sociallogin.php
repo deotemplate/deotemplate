@@ -8,6 +8,8 @@
 include_once(_PS_MODULE_DIR_ . 'deotemplate/classes/SocialLogin/TwitterOAuth.php');
 use PrestaShop\PrestaShop\Core\Crypto\Hashing;
 //use PrestaShop\PrestaShop\Core\Crypto\Hashing as Crypto;
+use PrestaShop\PrestaShop\Core\Domain\Customer\Command\DeleteCustomerCommand;
+use PrestaShop\PrestaShop\Core\Domain\Customer\CommandHandler\DeleteCustomerHandlerInterface;
 
 class DeoTemplateSocialLoginModuleFrontController extends ModuleFrontController
 {
@@ -110,11 +112,11 @@ class DeoTemplateSocialLoginModuleFrontController extends ModuleFrontController
                 $errors[] = $this->module->l('Invalid email address', 'sociallogin');
             }
 
-            if (!($pass = trim(Tools::getValue('register-password'))) || !Validate::isPasswd($pass)) {
+            if (!($pass = trim(Tools::getValue('register-password'))) || (!Validate::isAcceptablePasswordLength($pass) || !Validate::isAcceptablePasswordScore($pass))) {
                 $errors[] = $this->module->l('Invalid password', 'sociallogin');
             }
 
-            if (!($repeat_pass = trim(Tools::getValue('repeat-register-password'))) || !Validate::isPasswd($repeat_pass)) {
+            if (!($repeat_pass = trim(Tools::getValue('repeat-register-password'))) ||  (!Validate::isAcceptablePasswordLength($repeat_pass) || !Validate::isAcceptablePasswordScore($repeat_pass))) {
                 $errors[] = $this->module->l('Invalid repeat password', 'sociallogin');
             }
 
@@ -158,10 +160,10 @@ class DeoTemplateSocialLoginModuleFrontController extends ModuleFrontController
                         $this->context->cart->update();
                         // send mail new account
                         if (!$customer->is_guest && Configuration::get('PS_CUSTOMER_CREATION_EMAIL')) {
-                            Mail::Send($this->context->language->id, 'account', $this->module->l('Welcome!', 'sociallogin'), array(
+                            Mail::Send($this->context->language->id, 'account_social', $this->module->l('Welcome!', 'sociallogin'), array(
                                 '{firstname}' => $customer->firstname,
                                 '{lastname}' => $customer->lastname,
-                                '{email}' => $customer->email), $customer->email, $customer->firstname . ' ' . $customer->lastname);
+                                '{email}' => $customer->email), $customer->email, $customer->firstname . ' ' . $customer->lastname, null, null, null, null, _PS_MODULE_DIR_ . $this->module->name . '/mails/');
                         }
 
                         Hook::exec('actionCustomerAccountAdd', array(
@@ -248,6 +250,30 @@ class DeoTemplateSocialLoginModuleFrontController extends ModuleFrontController
             }
         }
 
+        if ($action == 'delete-account') {
+            $result = array(
+                'success' => false,
+                'message' => $this->module->l('Delete Error!', 'sociallogin')
+            );
+            if (!$this->context->customer->isLogged()) {
+                $result['message'] = $this->module->l('You are not loggin!', 'sociallogin');
+            }else{
+                // deny_registration_after or allow_registration_after
+                $ALLOW_CUSTOMER_REGISTRATION = 'allow_registration_after';
+                $customerId = $this->context->customer->id;
+                $customer = new Customer($customerId);
+
+                $command = new DeleteCustomerCommand($customerId , $ALLOW_CUSTOMER_REGISTRATION);
+                if ($command->getDeleteMethod()->isAllowedToRegisterAfterDelete()) {
+                    $customer->delete();
+                    $result['success'] = true;
+                    $result['message'] = $this->module->l('Delete Account Successful! All account informations has been deleted in our store. You will redirect to home page after 2 seconds', 'sociallogin');
+                }
+            }
+
+            die(json_encode($result));
+        }
+
 
         define('CONSUMER_KEY', DeoHelper::getConfig('SOCIAL_LOGIN_TWITTER_APIKEY')); // YOUR CONSUMER KEY
         define('CONSUMER_SECRET', DeoHelper::getConfig('SOCIAL_LOGIN_TWITTER_APISECRET')); //YOUR CONSUMER SECRET KEY
@@ -306,6 +332,8 @@ class DeoTemplateSocialLoginModuleFrontController extends ModuleFrontController
         }
 
 
+
+
         $array_result['success'] = $success;
         $array_result['errors'] = $errors;
         die(json_encode($array_result));
@@ -321,6 +349,7 @@ class DeoTemplateSocialLoginModuleFrontController extends ModuleFrontController
         if (Tools::getValue('ajax')) {
             return;
         }
+
         parent::initContent();
     }
 

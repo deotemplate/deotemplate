@@ -246,7 +246,38 @@ $(document).ready(function(){
 			}		
 		}
 	});
-	
+
+	$('#delete-account-link a').click(function(){
+		if (confirm(deo_confirm_delete_account) == true) {
+			$.ajax({
+				type: 'POST',
+				headers: {"cache-control": "no-cache"},
+				url: deo_url_ajax_social_login,
+				async: true,
+				cache: false,
+				data: {
+					"action": "delete-account",
+				},
+				success: function (result){
+					let object_result = $.parseJSON(result);
+
+					if (object_result.success){
+						DeoTemplate.messageSuccess(object_result.message);
+						setTimeout(function(){
+							window.location.href = deo_redirect_url;
+						}, 2000);
+
+					}else{
+						DeoTemplate.messageError(object_result.message);
+					}											
+				},
+				error: function (XMLHttpRequest, textStatus, errorThrown) {
+					console.log("TECHNICAL ERROR: \n\nDetails:\nError thrown: " + XMLHttpRequest + "\n" + 'Text status: ' + textStatus);
+				}
+			});
+		}
+	});	
+
 	$('.deo-login-form form').submit(function(){
 		// if ($(this).find('.form-group.validate-error').length)
 		if ($(this).find('.btn-login').hasClass('validate-ok') || $(this).find('.validate-error').length){

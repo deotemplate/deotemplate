@@ -1768,7 +1768,10 @@ class DeoTemplate extends Module implements WidgetInterface
 				'module_dir' => $this->_path,
 				'is_gen_rtl' => $this->is_gen_rtl,
 			);
+
 			Media::addJsDef(array(
+				'deo_confirm_delete_account' => $this->l('Are you want to delete account? All account informations has been deleted in our store'),
+				'deo_redirect_url' => Context::getContext()->link->getPageLink('index', true),
 				'deo_url_ajax_social_login' => $this->context->link->getModuleLink('deotemplate', 'sociallogin'),
 				'deo_variables_social_login' => $deo_variables_social_login,
 			));
@@ -2558,11 +2561,11 @@ class DeoTemplate extends Module implements WidgetInterface
 	{
 		if ((int) DeoHelper::getConfig('ENABLE_PRODUCT_WISHLIST')) {
 			$this->context->smarty->assign(array(
-
 				'wishlist_link' => $this->context->link->getModuleLink('deotemplate', 'mywishlist'),
 			));
-			return $this->display(__FILE__, 'feature/wishlist_link.tpl');
 		}
+
+		return $this->display(__FILE__, 'feature/wishlist_link.tpl');
 	}
 
 	// copy function from base

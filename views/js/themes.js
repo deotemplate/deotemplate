@@ -665,9 +665,10 @@ $(document).ready(function(){
 		let bg_data = popup.data('bg_data');
 		let lazyload = popup.data('lazyload');
 		let bg_img = popup.data('bg_img');
+		let show_homepage = (typeof popup.data('show_homepage') != 'undefined') ? popup.data('show_homepage') : false;
 
 		if (position_popup) top = left = 0.5;
-		if (prestashop.page.page_name != 'index'){
+		if (prestashop.page.page_name != 'index' && !show_btn_open_popup){
 			active = (show_homepage) ? false : true; 
 		}
 
@@ -761,7 +762,7 @@ $(document).ready(function(){
 					this.width  = width;  
 					this.height  = height;
 					//check cookie
-					if ($.cookie('popup_'+id_popup) && $.cookie('popup_'+id_popup) == 1){
+					if ($.cookie('popup_'+id_popup) && $.cookie('popup_'+id_popup) == 1 && !show_btn_open_popup){
 						parent.$.fancybox.close();
 					}
 
@@ -785,7 +786,7 @@ $(document).ready(function(){
 					//set cookie
 					let fancybox_wrap = $(this.wrap);
 					let check_box = $(fancybox_wrap).find('.show_message_again').first();
-					if (hide_popup_when_close){
+					if (hide_popup_when_close && !show_btn_open_popup){
 						if (check_box.length){
 							if (time_life > 0 && check_box.is(":checked")){
 								$.cookie('popup_'+id_popup, '1', { expires: time_life });
@@ -846,7 +847,7 @@ $(document).ready(function(){
 			active = (show_homepage) ? false : true; 
 		}
 
-		if (active && $.cookie('popup_'+id_popup) && $.cookie('popup_'+id_popup) == 0) {
+		if (active && $.cookie('popup_'+id_popup) && $.cookie('popup_'+id_popup) == 0 && !show_btn_open_popup) {
 			// setTimeout( function() {
 				$('#'+id_popup).removeClass('hidden-popup');
 				$('#'+id_popup+'-bg-overlay-popup').removeClass('hidden-overlay-popup');
@@ -863,7 +864,7 @@ $(document).ready(function(){
 
 		$('#'+id_popup+' .deo-close-popup, #'+id_popup+' .close-popup').click(function(){
 			let check_box = $('#'+id_popup+' .show_message_again');
-			if (hide_popup_when_close){
+			if (hide_popup_when_close && !show_btn_open_popup){
 				if (check_box.length){
 					if (time_life > 0 && check_box.is(":checked")){
 						$.cookie('popup_'+id_popup, '1', { expires: time_life });
