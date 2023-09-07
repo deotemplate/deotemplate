@@ -94,12 +94,15 @@ $(document).ready(function(){
 		// 	}
 		// });
 
-		if (btn_add_cart.hasClass('.deo-btn-cart')){
+		if (btn_add_cart.hasClass('deo-btn-cart')){
 			product_name = btn_add_cart.closest('.product-miniature').find('.product-title').text();
 		}else{
-			product_name = btn_add_cart.closest('.product-detail').find('.product-detail-name').text();
+			if ($('.quickview .product-detail-name').length){
+				product_name = $('.quickview').find('.product-detail-name').text();
+			}else{
+				product_name = $('.product-detail').find('.product-detail-name').text();
+			}
 		}
-
 
 		// loading default cart
 		if ($('#cart-block .cart-preview .deo-icon-cart-loading').length){
@@ -610,7 +613,9 @@ $(document).ready(function(){
 
 	// show dropdown cart
 	function showSlideBarCart($element){
-		$('[data-toggle="deo-tooltip"].has-init-tooltip').tooltip('hide');
+		if ($('[data-toggle="deo-tooltip"].has-init-tooltip').length){
+			$('[data-toggle="deo-tooltip"].has-init-tooltip').tooltip('hide');
+		}
 		if (!$('.deo-sidebar-cart.disable').length){
 			if (!$element.hasClass('active-slidebarcart')){
 				let type = $element.data('type');
@@ -927,6 +932,7 @@ $(document).ready(function(){
 					}else{
 						$('.icon-cart-total').text($(result.contentcart).find('.cart-total').data('cart-total'));
 					}
+
 					if ($('.DeoCartClone').length){
 						$('.DeoCartClone .deo-cart-solo,.DeoCartClone .deo-cart-solo .icon-cart-sidebar').data('type',type_dropdown_flycart);
 						// ($formAtts.type_dropdown == 'dropup' || $formAtts.type_dropdown == 'dropdown') ? ' enable-dropdown' : ''
