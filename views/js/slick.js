@@ -314,6 +314,11 @@
 
         _.animateHeight();
 
+        //custom fix bug
+        if ( _.options.asNavFor && _.options.infinite && _.slideCount <= _.options.slidesToShow) {
+            targetLeft = 0;
+        }
+
         if (_.options.rtl === true && _.options.vertical === false) {
             targetLeft = -targetLeft;
         }
