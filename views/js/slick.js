@@ -348,6 +348,11 @@
                     easing: _.options.easing,
                     step: function(now) {
                         now = Math.ceil(now);
+     
+                        //custom fix bug
+                        if ( _.options.asNavFor && _.options.infinite && _.slideCount <= _.options.slidesToShow) {
+                            now = 0;
+                        }
                         if (_.options.vertical === false) {
                             animProps[_.animType] = 'translate(' +
                                 now + 'px, 0px)';
@@ -366,10 +371,13 @@
                 });
 
             } else {
-
                 _.applyTransition();
                 targetLeft = Math.ceil(targetLeft);
 
+                //custom fix bug
+                if ( _.options.asNavFor && _.options.infinite && _.slideCount <= _.options.slidesToShow) {
+                    targetLeft = 0;
+                }
                 if (_.options.vertical === false) {
                     animProps[_.animType] = 'translate3d(' + targetLeft + 'px, 0px, 0px)';
                 } else {
@@ -2092,6 +2100,11 @@ if(_.$slides){
             _.$slideTrack.css(positionProps);
         } else {
             positionProps = {};
+             //custom fix bug
+            if ( _.options.asNavFor && _.options.infinite && _.slideCount <= _.options.slidesToShow) {
+                x = 0;
+            }
+                        
             if (_.cssTransitions === false) {
                 positionProps[_.animType] = 'translate(' + x + ', ' + y + ')';
                 _.$slideTrack.css(positionProps);
