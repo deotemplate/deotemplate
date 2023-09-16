@@ -522,16 +522,6 @@ $(document).ready(function() {
             $("#modal_form").modal({
                 "backdrop": "static"
             });
-
-            $('#modal_form').on('shown.bs.modal', function(e){
-                if ($(this).find('#group_config').length){
-                    if ($('input[name="fullwidth"]:checked').val() == 0){
-                        $('#modal_form #group_config .form-group.group-container').hide();
-                    }else{
-                        $('#modal_form #group_config .form-group.group-container').show();
-                    }
-                }
-            });
         });
 
         $(document).on('click', '#home_wrapper .element-config', function (e) {

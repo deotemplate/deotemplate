@@ -338,7 +338,7 @@
 							<label for="container_off">{l s='No' mod='deotemplate'}</label>
 							<a class="slide-button btn"></a>
 						</span>
-						<p class="help-block">{l s='Note: Auto disable when layout of product page is Layout Sidebar (layout-left-column or layout-right-column sidebar) or Layout Both Columns (layout-both-columns)' mod='deotemplate'}</p>
+						<p class="help-block">{l s='You need set Hook displayHome at layout other page with page name Product is fullwidth at Hompage builder default to use this setting' mod='deotemplate'}<br>{l s='Note: Auto disable when layout of product page is Layout Sidebar (layout-left-column or layout-right-column sidebar) or Layout Both Columns (layout-both-columns)' mod='deotemplate'}</p>
 					</div>
 				</div>
 				<div class="well">

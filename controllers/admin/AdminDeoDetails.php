@@ -67,14 +67,6 @@ class AdminDeoDetailsController extends ModuleAdminControllerCore
 				'filter_key' => 'a!class_detail',
 				'orderby' => false
 			),
-			'fullwidth' => array(
-				'title' => $this->l('Fullwidth'),
-				'active' => 'status',
-				'align' => 'text-center',
-				'type' => 'bool',
-				'filter_key' => 'a!fullwidth',
-				'orderby' => false
-			),
 			'active' => array(
 				'title' => $this->l('Is Default'),
 				'active' => 'status',
@@ -230,7 +222,6 @@ class AdminDeoDetailsController extends ModuleAdminControllerCore
 					$obj_model->name = $product_details->name->__toString();
 					$obj_model->class_detail = $product_details->class_detail->__toString();
 					$obj_model->params = $product_details->params->__toString();
-					$obj_model->fullwidth = $product_details->fullwidth->__toString();
 					$obj_model->active = 0;
 					$obj_model->url_img_preview = $product_details->url_img_preview->__toString();
 					if ($obj_model->save()) {
@@ -316,13 +307,13 @@ class AdminDeoDetailsController extends ModuleAdminControllerCore
 			foreach ($result as $value) {
 				$data_form = str_replace($this->str_search, $this->str_relace, $value['params']);
 				$data_form = json_decode($value['params'], true);
-				$this->saveTplFile($value['plist_key'], $value['params'], $value['class_detail'], $data_form['class'], $value['fullwidth']);
+				$this->saveTplFile($value['plist_key'], $value['params'], $value['class_detail'], $data_form['class']);
 			}
 			Tools::redirectAdmin(self::$currentIndex.'&token='.Tools::getValue('token'));
 		}
 	}
 
-	public function convertObjectToTpl($object_form, $fullwidth)
+	public function convertObjectToTpl($object_form)
 	{
 		$tpl = '';
 
@@ -332,18 +323,18 @@ class AdminDeoDetailsController extends ModuleAdminControllerCore
 			}
 
 			if ($object['name'] == 'group') {
-				$tpl .= (isset($object['form']['container']) && $object['form']['container'] && isset($fullwidth) && $fullwidth) ? '{if isset($page.body_classes["layout-full-width"]) && $page.body_classes["layout-full-width"]}<div class="container">{/if}' : '';
+				$tpl .= (isset($object['form']['container']) && $object['form']['container']) ? '{if isset($page.body_classes["layout-full-width"]) && $page.body_classes["layout-full-width"]}<div class="container">{/if}' : '';
 				$tpl .= '<div class="'.$object['form']['class'].'">';
-				$tpl .= $this->convertObjectToTpl($object['columns'], $fullwidth);
+				$tpl .= $this->convertObjectToTpl($object['columns']);
 				$tpl .= '</div>';
-				$tpl .= (isset($object['form']['container']) && $object['form']['container'] && isset($fullwidth) && $fullwidth) ? '{if isset($page.body_classes["layout-full-width"]) && $page.body_classes["layout-full-width"]}</div>{/if}' : '';
+				$tpl .= (isset($object['form']['container']) && $object['form']['container']) ? '{if isset($page.body_classes["layout-full-width"]) && $page.body_classes["layout-full-width"]}</div>{/if}' : '';
 			} else if ($object['name'] == 'column') {
 				$tpl .= '<div class="'.$this->convertToColumnClass($object['form']).'">';
-				$tpl .= $this->convertObjectToTpl($object['sub'], $fullwidth);
+				$tpl .= $this->convertObjectToTpl($object['sub']);
 				$tpl .= '</div>';
 			} else if ($object['name'] == 'box') {
 				$tpl .= '<div class="'.$object['form']['css'].'">';
-				$tpl .= $this->convertObjectToTpl($object['element'], $fullwidth);
+				$tpl .= $this->convertObjectToTpl($object['element']);
 				$tpl .= '</div>';
 			} else if ($object['name'] == 'code') {
 				$tpl .= $object['code'];
@@ -668,12 +659,6 @@ class AdminDeoDetailsController extends ModuleAdminControllerCore
 					'width' => 140
 				),
 				array(
-					'type' => 'switch',
-					'label' => $this->l('Fullwidth'),
-					'name' => 'fullwidth',
-					'values' => DeoSetting::returnYesNo(),
-				),
-				array(
 					'type' => 'product_page_builder',
 					'name' => 'product_page_builder',
 					'params' => $params,
@@ -706,10 +691,6 @@ class AdminDeoDetailsController extends ModuleAdminControllerCore
 					'icon' => 'process-icon-save')
 			)
 		);
-
-		if ($this->display == 'add'){
-			$this->fields_value['fullwidth'] = true;
-		}
 
 		return parent::renderForm();
 	}
@@ -798,7 +779,7 @@ class AdminDeoDetailsController extends ModuleAdminControllerCore
 	}
 
 	//save file
-	public function saveTplFile($plist_key, $params = '', $class_detail = null, $main_class = null, $fullwidth = null)
+	public function saveTplFile($plist_key, $params = '', $class_detail = null, $main_class = null)
 	{
 		$data_form = str_replace($this->str_search, $this->str_relace, $params);
 		$data_form = json_decode($data_form, true);
@@ -808,13 +789,12 @@ class AdminDeoDetailsController extends ModuleAdminControllerCore
 		}
 		// $class_detail = (isset($class_detail)) ? $class_detail : Tools::getValue('class_detail', '');
 		// $main_class = (isset($main_class)) ? $main_class : Tools::getValue('main_class', '');
-		$fullwidth = (isset($fullwidth)) ? $fullwidth : Tools::getValue('fullwidth', '');
 		// $class = array($class_detail, $main_class);
 
 		$objectForm = $data_form['objectForm'];
 		$tpl_grid = $this->returnFileContent('header_product');
 		// $tpl_grid = str_replace('class="product-detail', 'class="product-detail '.implode(" ",$class), $tpl_grid);
-		$tpl_grid .= $this->convertObjectToTpl($objectForm, $fullwidth);
+		$tpl_grid .= $this->convertObjectToTpl($objectForm);
 		$tpl_grid .= $this->returnFileContent('footer_product');
 		
 		$tpl_grid = preg_replace('/\{\*[\s\S]*?\*\}/', '', $tpl_grid);

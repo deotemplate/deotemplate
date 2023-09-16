@@ -55,7 +55,7 @@ class AdminDeoOnepagecheckoutController extends ModuleAdminControllerCore
 				'filter_key' => 'a!name'
 			),
 			'plist_key' => array(
-				'title' => $this->l('Product List Key'),
+				'title' => $this->l('Checkout Key'),
 				'filter_key' => 'a!plist_key',
 				'type' => 'text',
 				'width' => 140,
