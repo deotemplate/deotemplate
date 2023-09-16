@@ -987,9 +987,9 @@ $(document).on("click", ".btn-save-level2", function() {
 	}else{
 		let image_element, src_image = '';
 		if ($('input[name="temp_use_image_link"]:checked').val() == 1) {
-			image_element = $('.row-level2 .preview-image-link .img-preview').first();
+			image_element = $('.row-level2 .preview-image-link .img-preview');
 		}else{
-			image_element = $('.row-level2 .image-select-wrapper img').first();
+			image_element = $('.row-level2 .image-select-wrapper img');
 		}
 
 		if (deo_language.length == 1){
