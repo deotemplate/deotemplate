@@ -759,6 +759,7 @@ class DeoTemplate extends Module implements WidgetInterface
 
 			$this->profile_data = DeoTemplateProfilesModel::getActiveProfile('index');
 			$this->profile_param = json_decode($this->profile_data['params'], true);
+
 			
 			// override setting fullwidth for hook displayHome with other pages
 			if (($page_name != 'home' || $page_name != 'index') && isset($this->profile_param['fullwidth_content_other_page'])){
@@ -768,8 +769,12 @@ class DeoTemplate extends Module implements WidgetInterface
 					$controller_key = $page_name;
 				}
 
-				if (isset($this->profile_param['fullwidth_content_other_page'][$controller_key])){
-					$this->profile_param['fullwidth_other_hook']['displayHome'] = $this->profile_param['fullwidth_content_other_page'][$controller_key];
+				if ($controller_key == 'module-deotemplate-order'){
+					$this->profile_param['fullwidth_other_hook']['displayHome'] = $this->profile_param['fullwidth_content_other_page']['order'];
+				}else{
+					if (isset($this->profile_param['fullwidth_content_other_page'][$controller_key])){
+						$this->profile_param['fullwidth_other_hook']['displayHome'] = $this->profile_param['fullwidth_content_other_page'][$controller_key];
+					}
 				} 
 			}
 

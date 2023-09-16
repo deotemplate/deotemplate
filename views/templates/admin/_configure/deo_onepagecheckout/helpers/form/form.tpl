@@ -199,6 +199,7 @@
 							<label for="container_off">{l s='No' mod='deotemplate'}</label>
 							<a class="slide-button btn"></a>
 						</span>
+						<p class="help-block">{l s='You need set Hook displayHome at layout other page with page name Order is fullwidth at Hompage builder default to use this setting' mod='deotemplate'}</p>
 					</div>
 				</div>
 				<div class="well">
