@@ -328,7 +328,7 @@
 			</div>
 
 			<div id="group_config">
-				<div class="form-group row">
+				<div class="form-group group-container row">
 					<label class="control-label col-lg-3">{l s='Container' mod='deotemplate'}</label>
 					<div class="col-lg-9">
 						<span class="switch prestashop-switch fixed-width-lg">

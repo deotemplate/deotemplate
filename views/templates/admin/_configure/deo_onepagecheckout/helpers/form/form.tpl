@@ -199,7 +199,6 @@
 							<label for="container_off">{l s='No' mod='deotemplate'}</label>
 							<a class="slide-button btn"></a>
 						</span>
-						<p class="help-block">{l s='Note: Auto disable when layout of product page is Layout Sidebar (layout-left-column or layout-right-column sidebar) or Layout Both Columns (layout-both-columns)' mod='deotemplate'}</p>
 					</div>
 				</div>
 				<div class="well">
