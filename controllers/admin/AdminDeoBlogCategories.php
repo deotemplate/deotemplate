@@ -310,6 +310,7 @@ class AdminDeoBlogCategoriesController extends ModuleAdminController
         $no_image = __PS_BASE_URI__.'modules/deotemplate/views/img/no-image.png';
 
         $this->multiple_fieldsets = true;
+        $this->fields_value['id_parent'] = $id_root;
         $this->fields_form[0]['form'] = array(
             'legend' => array(
                 'title' => $this->l('Category Form.'),

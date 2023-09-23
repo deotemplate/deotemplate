@@ -109,7 +109,9 @@ class AdminDeoBlogsController extends ModuleAdminController
         $this->initPageHeaderToolbar();
 
         $obj = new DeoBlogCategory();
-        $obj->getTree();
+        $id_root = $obj->getRoot();
+        $id_root = ($id_root) ? $id_root : 1;
+        $obj->getTree($id_root);
         $menus = $obj->getDropdown(null, $obj->id_parent);
         // array_shift($menus);
         

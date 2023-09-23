@@ -329,10 +329,10 @@ class DeoBlogCategory extends ObjectModel
     {
         $id_shop = Context::getContext()->shop->id;
 
-        $sql = ' SELECT m.id_deoblog_category AS id_category 
+        $sql = 'SELECT m.id_deoblog_category AS id_category 
                 FROM '._DB_PREFIX_.'deoblog_category m 
-                LEFT JOIN '._DB_PREFIX_.'deoblog_category_shop bs ON m.id_deoblog_category = bs.id_deoblog_category AND bs.id_shop = '.(int)($id_shop).'
-                WHERE m.`is_root`=1 ';
+                LEFT JOIN '._DB_PREFIX_.'deoblog_category_shop bs ON m.id_deoblog_category = bs.id_deoblog_category 
+                WHERE m.`is_root`=1 AND bs.id_shop = '.(int)($id_shop);
 
         $result = Db::getInstance()->executeS($sql);
 

@@ -830,7 +830,7 @@ class DeoDataSample
                 }
                 // normal field
                 else {
-                    // param field of module leoboostrapmenu
+                    // param field of megamenu
                     if ($val["type"] == 3 || $val["type"] == 5 || $val["type"] == 6) {
                         $this->_content .= '<'.$ke.'><![CDATA['.$obj->{$ke}.']]></'.$ke.'>';
                     } else {
