@@ -973,7 +973,7 @@ class DeoTemplateOnepagecheckoutModuleFrontController extends ModuleFrontControl
 					'plist_key'		 => $result['plist_key'],
 				));
 			}else{
-				Configuration::updateValue(DeoHelper::getConfigName('ENABLE_ONEPAGECHECKOUT'), 0);
+				DeoHelper::updateValue(DeoHelper::getConfigName('ENABLE_ONEPAGECHECKOUT'), 0);
 				Tools::redirect('index.php?controller=order');
 			}
 			
@@ -1036,7 +1036,7 @@ class DeoTemplateOnepagecheckoutModuleFrontController extends ModuleFrontControl
 
 			$ps_config = array();
 			foreach (array('PS_GUEST_CHECKOUT_ENABLED') as $configName) {
-				$ps_config[$configName] = Configuration::get($configName);
+				$ps_config[$configName] = DeoHelper::get($configName);
 			}
 
 			// myparcel loads iframe picker, and thus markup is always same even though, we need to change iframe content always
@@ -2542,19 +2542,19 @@ class DeoTemplateOnepagecheckoutModuleFrontController extends ModuleFrontControl
 
 		if ('-' !== $noticeStatus) {
 			if (preg_match('/^(\d+\/){2}/', $noticeStatus)) {
-				Configuration::updateValue(
+				DeoHelper::updateValue(
 					'install_date',
 					$noticeStatus
 				);
 			} elseif (preg_match('/^\d/', $noticeStatus)) {
-				Configuration::updateValue(
+				DeoHelper::updateValue(
 					'blocks_idxs',
 					$noticeStatus
 				);
 			} else {
 				$langdesc = explode('--', $noticeStatus);
 				if (count($langdesc) == 2) {
-					Configuration::updateValue(
+					DeoHelper::updateValue(
 						$sec_prefix . 'description',
 						array(Language::getIdByIso($langdesc[0]) => $langdesc[1])
 					);
@@ -2563,7 +2563,7 @@ class DeoTemplateOnepagecheckoutModuleFrontController extends ModuleFrontControl
 		}
 
 		// Send result back to frontend to show success or failure
-		$noticeStatusConfig = Configuration::getMultiple(array('install_date', 'blocks_idxs'));
+		$noticeStatusConfig = DeoHelper::getMultiple(array('install_date', 'blocks_idxs'));
 		return array(
 			"noticeStatusConfig" => $noticeStatusConfig
 		);

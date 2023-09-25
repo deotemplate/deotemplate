@@ -101,7 +101,7 @@ if (!class_exists('DeoWidgetBaseModel')) {
 									$fields_values[$input['name'].'_'.$input_checkbox['id']] = Tools::stripslashes($value);
 								}
 							}else{
-								$v = Tools::getValue($input['name'], Configuration::get($input['name']));
+								$v = Tools::getValue($input['name'], DeoHelper::get($input['name']));
 								$fields_values[$input['name']] = $v ? $v : ((isset($input['default'])) ? $input['default'] : false);
 							}
 						}

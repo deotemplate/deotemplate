@@ -347,15 +347,15 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 			$reloadModule = true;
 
 			$deo_cache_module = DeoHelper::correctEnCodeData(json_encode($list_modules));
-			Configuration::updateValue('DEO_CACHE_MODULE', $deo_cache_module);
+			DeoHelper::updateValue('DEO_CACHE_MODULE', $deo_cache_module);
 		} else {
-			$deo_cache_module = Configuration::get('DEO_CACHE_MODULE');
+			$deo_cache_module = DeoHelper::get('DEO_CACHE_MODULE');
 			if ($deo_cache_module === false || $deo_cache_module === '') {
 				# First Time : write to config
 				$list_modules = DeoHelper::getModules();
 
 				$deo_cache_module = DeoHelper::correctEnCodeData(json_encode($list_modules));
-				Configuration::updateValue('DEO_CACHE_MODULE', $deo_cache_module);
+				DeoHelper::updateValue('DEO_CACHE_MODULE', $deo_cache_module);
 			} else {
 				# Second Time : read from config
 				$list_modules = json_decode(DeoHelper::correctDeCodeData($deo_cache_module), true);
@@ -482,19 +482,19 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 						$arr_id[$position] = $position_id;
 						switch ($position) {
 							case 'mobile':
-								Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_MOBILE_ID'), $position_id);
+								DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_MOBILE_ID'), $position_id);
 								break;
 							case 'header':
-								Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_HEADER_ID'), $position_id);
+								DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_HEADER_ID'), $position_id);
 								break;
 							case 'content':
-								Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_CONTENT_ID'), $position_id);
+								DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_CONTENT_ID'), $position_id);
 								break;
 							case 'footer':
-								Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_FOOTER_ID'), $position_id);
+								DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_FOOTER_ID'), $position_id);
 								break;
 							case 'product':
-								Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_PRODUCT_ID'), $position_id);
+								DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_PRODUCT_ID'), $position_id);
 								break;
 						}
 					} else {
@@ -532,19 +532,19 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 				if ((int) DeoHelper::getConfig('SAVE_PROFILE_MULTITHREARING')) {
 					switch ($position) {
 						case 'mobile':
-							Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_MOBILE_ID'), $position_id);
+							DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_MOBILE_ID'), $position_id);
 							break;
 						case 'header':
-							Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_HEADER_ID'), $position_id);
+							DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_HEADER_ID'), $position_id);
 							break;
 						case 'content':
-							Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_CONTENT_ID'), $position_id);
+							DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_CONTENT_ID'), $position_id);
 							break;
 						case 'footer':
-							Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_FOOTER_ID'), $position_id);
+							DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_FOOTER_ID'), $position_id);
 							break;
 						case 'product':
-							Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_PRODUCT_ID'), $position_id);
+							DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_PRODUCT_ID'), $position_id);
 							break;
 					}
 				};
@@ -619,12 +619,12 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 					// $this->config_module['widgets_modules'] = $data_widgets_modules;
 					// $this->config_module['product_lists'] = $data_product_lists;
 
-					Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_PROFILE_PARAM'), json_encode($this->config_module));
+					DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_PROFILE_PARAM'), json_encode($this->config_module));
 				} else {
 					if (isset($this->config_module) && count($this->config_module) > 0) {
 						$array_global_profile_param = json_decode(DeoHelper::getConfig('COOKIE_GLOBAL_PROFILE_PARAM'), true);
 						$array_global_profile_param = array_merge($this->config_module, $array_global_profile_param);
-						Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_PROFILE_PARAM'), json_encode($array_global_profile_param));
+						DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_PROFILE_PARAM'), json_encode($array_global_profile_param));
 					}
 				};
 				if (Tools::getValue('dataLast')) {
@@ -639,12 +639,12 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 					$profile->product = DeoHelper::getConfig('COOKIE_GLOBAL_PRODUCT_ID');
 					$profile->save();
 
-					Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_MOBILE_ID'), 0);
-					Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_HEADER_ID'), 0);
-					Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_CONTENT_ID'), 0);
-					Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_FOOTER_ID'), 0);
-					Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_PRODUCT_ID'), 0);
-					Configuration::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_PROFILE_PARAM'), '');
+					DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_MOBILE_ID'), 0);
+					DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_HEADER_ID'), 0);
+					DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_CONTENT_ID'), 0);
+					DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_FOOTER_ID'), 0);
+					DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_PRODUCT_ID'), 0);
+					DeoHelper::updateValue(DeoHelper::getConfigName('COOKIE_GLOBAL_PROFILE_PARAM'), '');
 				}
 			} else {
 				$profile = new DeoTemplateProfilesModel(Tools::getValue('id_profile'));
@@ -968,7 +968,7 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 				$list_modules = DeoHelper::getModules();
 
 				$deo_cache_module = DeoHelper::correctEnCodeData(json_encode($list_modules));
-				Configuration::updateValue('DEO_CACHE_MODULE', $deo_cache_module);
+				DeoHelper::updateValue('DEO_CACHE_MODULE', $deo_cache_module);
 			} else {
 				# Second Time : read from config
 				$list_modules = json_decode(DeoHelper::correctDeCodeData($deo_cache_module), true);
@@ -1173,7 +1173,7 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 			} else if ($import_for == 'product') {
 				$hook_name = DeoHelper::getConfigName('LIST_PRODUCT_HOOK');
 			}
-			$hook_list = explode(',', Configuration::get($hook_name));
+			$hook_list = explode(',', DeoHelper::get($hook_name));
 			foreach ($hook_list as $hook) {
 				$import_hook = $position->{$hook};
 				$model = new DeoTemplateModel();

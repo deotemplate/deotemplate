@@ -307,7 +307,6 @@ class AdminDeoPositionsController extends ModuleAdminControllerCore
     {
         $this->initToolbar();
 
-        $this->addRowAction('view');
         $this->addRowAction('edit');
         $this->addRowAction('duplicate');
         $this->addRowAction('delete');
@@ -320,7 +319,7 @@ class AdminDeoPositionsController extends ModuleAdminControllerCore
         $this->context->controller->addJqueryUI('ui.sortable');
         $this->fields_form = array(
             'legend' => array(
-                'title' => $this->l('Ap Position Manage'),
+                'title' => $this->l('Position Manage'),
                 'icon' => 'icon-folder-close'
             ),
             'input' => array(
@@ -336,6 +335,7 @@ class AdminDeoPositionsController extends ModuleAdminControllerCore
                     'label' => $this->l('Position Key'),
                     'name' => 'position_key',
                     'required' => true,
+                    'disabled' => ($this->display == 'edit') ? true : false,
                     'desc' => $this->l('Use it to save as file name of css and js of Position'),
                     'hint' => $this->l('Invalid characters:').' &lt;&gt;;=#{}'
                 ),
@@ -343,6 +343,7 @@ class AdminDeoPositionsController extends ModuleAdminControllerCore
                     'type' => 'select',
                     'label' => $this->l('Type'),
                     'name' => 'position',
+                    'disabled' => ($this->display == 'edit') ? true : false,
                     'options' => array(
                         'query' => array(
                             array(
@@ -370,18 +371,18 @@ class AdminDeoPositionsController extends ModuleAdminControllerCore
                         'name' => 'name'
                     ),
                 ),
-                array(
-                    'type' => 'textarea',
-                    'label' => $this->l('Custom Css'),
-                    'name' => 'css',
-                    'desc' => sprintf($this->l('Please set write Permission for folder %s'), $this->position_css_folder),
-                ),
-                array(
-                    'type' => 'textarea',
-                    'label' => $this->l('Custom Js'),
-                    'name' => 'js',
-                    'desc' => sprintf($this->l('Please set write Permission for folder %s'), $this->position_js_folder),
-                )
+                // array(
+                //     'type' => 'textarea',
+                //     'label' => $this->l('Custom Css'),
+                //     'name' => 'css',
+                //     'desc' => sprintf($this->l('Please set write Permission for folder %s'), $this->position_css_folder),
+                // ),
+                // array(
+                //     'type' => 'textarea',
+                //     'label' => $this->l('Custom Js'),
+                //     'name' => 'js',
+                //     'desc' => sprintf($this->l('Please set write Permission for folder %s'), $this->position_js_folder),
+                // )
             ),
             'submit' => array(
                 'title' => $this->l('Save'),
@@ -393,7 +394,15 @@ class AdminDeoPositionsController extends ModuleAdminControllerCore
                     'type' => 'submit',
                     'class' => 'btn btn-default pull-right',
                     'icon' => 'process-icon-save'
-                ))
+                ),
+                'change-position-key' => array(
+                    'title' => $this->l('Change Position Key'),
+                    'name' => 'submit'.$this->table.'ChangePositionKey',
+                    'type' => 'submit',
+                    'class' => 'btn btn-primary pull-right',
+                    'icon' => 'process-icon-loading',
+                ),
+            )
         );
         return parent::renderForm();
     }
@@ -401,10 +410,13 @@ class AdminDeoPositionsController extends ModuleAdminControllerCore
     public function getFieldsValue($obj)
     {
         $file_value = parent::getFieldsValue($obj);
-        if ($obj->id && $obj->position_key) {
-            $file_value['css'] = Tools::file_get_contents($this->position_css_folder.$obj->position.$obj->position_key.'.css');
-            $file_value['js'] = Tools::file_get_contents($this->position_js_folder.$obj->position.$obj->position_key.'.js');
-        } else {
+        // if ($obj->id && $obj->position_key) {
+        //     $file_value['css'] = Tools::file_get_contents($this->position_css_folder.$obj->position.$obj->position_key.'.css');
+        //     $file_value['js'] = Tools::file_get_contents($this->position_js_folder.$obj->position.$obj->position_key.'.js');
+        // } else {
+        //     $file_value['position_key'] = 'position'.DeoSetting::getRandomNumber();
+        // }
+        if ($this->display == 'add'){
             $file_value['position_key'] = 'position'.DeoSetting::getRandomNumber();
         }
         return $file_value;
@@ -424,23 +436,51 @@ class AdminDeoPositionsController extends ModuleAdminControllerCore
         if ($obj = parent::processUpdate()) {
             $this->saveCustomJsAndCss($obj->position.$obj->position_key, $old_object->position.$obj->position_key);
         }
+
+        if (Tools::isSubmit('submit'.$this->table.'ChangePositionKey')) {
+            $old_key = $obj->position_key;
+            $new_key = 'position'.DeoSetting::getRandomNumber();
+            $position = $obj->position;
+            $obj->position_key = $new_key;
+            $obj->update();
+           
+
+            if ($file_content = Tools::file_get_contents($this->position_js_folder.$position.$old_key.'.js')){
+                DeoSetting::writeFile($this->position_js_folder, $position.$new_key.'.js', $file_content);
+            }
+            if ($file_content = Tools::file_get_contents($this->position_css_folder.$position.$old_key.'.css')){
+                DeoSetting::writeFile($this->position_css_folder, $position.$new_key.'.css', $file_content);
+            }
+            if ($file_content = Tools::file_get_contents($this->position_customize_setting_folder.$position.$old_key.'.json')){
+                DeoSetting::writeFile($this->position_customize_setting_folder, $position.$new_key.'.json', $file_content);
+            }
+            if ($file_content = Tools::file_get_contents($this->position_customize_css_folder.$position.$old_key.'.css')){
+                DeoSetting::writeFile($this->position_customize_css_folder, $position.$new_key.'.css', $file_content);
+            }
+
+            $this->redirect_after = Context::getContext()->link->getAdminLink('AdminDeoPositions');
+            $this->redirect_after .= '&updatedeotemplate_positions&id_deotemplate_positions='.($this->object->id);
+            $this->redirect();
+        }
     }
 
     public function saveCustomJsAndCss($key, $old_key = '')
     {
+        return true;
+
         // Delete old file
         if ($old_key) {
-            Tools::deleteFile($this->position_css_folder.$old_key.'.css');
-            Tools::deleteFile($this->position_js_folder.$old_key.'.js');
+            if (Tools::getValue('js') != '') {
+                Tools::deleteFile($this->position_js_folder.$old_key.'.js');
+                DeoSetting::writeFile($this->position_js_folder, $key.'.js', Tools::getValue('js'));
+            }
+            
+            if (Tools::getValue('css') != '') {
+                Tools::deleteFile($this->position_css_folder.$old_key.'.css');
+                DeoSetting::writeFile($this->position_css_folder, $key.'.css', Tools::getValue('css'));
+            }
         }
 
-        if (Tools::getValue('js') != '') {
-            DeoSetting::writeFile($this->position_js_folder, $key.'.js', Tools::getValue('js'));
-        }
-        
-        if (Tools::getValue('css') != '') {
-            DeoSetting::writeFile($this->position_css_folder, $key.'.css', Tools::getValue('css'));
-        }
     }
 
     /**

@@ -63,7 +63,7 @@ class AdminDeoBlogDashboardController extends ModuleAdminControllerCore
 
         if (Tools::isSubmit('saveConfiguration')) {
             $posts = Tools::getValue(DeoHelper::getConfigName('BLOG_DASHBOARD_FIELDS_VALUE'));
-            Configuration::updateValue(DeoHelper::getConfigName('BLOG_DASHBOARD_FIELDS_VALUE'), $posts);
+            DeoHelper::updateValue(DeoHelper::getConfigName('BLOG_DASHBOARD_FIELDS_VALUE'), $posts);
             $posts = json_decode($posts);
 
             foreach ($posts as $key => $post) {
@@ -72,7 +72,7 @@ class AdminDeoBlogDashboardController extends ModuleAdminControllerCore
                 if ($key == DeoHelper::getConfigName('BLOG_DASHBOARD_FIELDS_VALUE')){
                     continue;
                 }
-                Configuration::updateValue($key, $value);
+                DeoHelper::updateValue($key, $value);
             }
         }
 
@@ -814,8 +814,8 @@ class AdminDeoBlogDashboardController extends ModuleAdminControllerCore
                         continue;
                     }
 
-                    if (Configuration::hasKey($input['name'])){
-                        $fields_value[$input['name']] = Configuration::get($input['name']);
+                    if (DeoHelper::hasKey($input['name'])){
+                        $fields_value[$input['name']] = DeoHelper::get($input['name']);
                     }else{
                         if (isset($input['default'])){
                             $fields_value[$input['name']] = $input['default'];

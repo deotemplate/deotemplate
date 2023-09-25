@@ -111,6 +111,7 @@ class AdminDeoBlogsController extends ModuleAdminController
         $obj = new DeoBlogCategory();
         $id_root = $obj->getRoot();
         $id_root = ($id_root) ? $id_root : 1;
+        // var_dump($id_root);
         $obj->getTree($id_root);
         $menus = $obj->getDropdown(null, $obj->id_parent);
         // array_shift($menus);

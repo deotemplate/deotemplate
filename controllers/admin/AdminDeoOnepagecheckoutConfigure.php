@@ -552,7 +552,7 @@ class AdminDeoOnepagecheckoutConfigureController extends ModuleAdminController
 					$value = Tools::getValue(trim($input['name']).'_'.$lang['id_lang']);
 					$data[$lang['id_lang']] = $value ? $value : $input['default'];
 				}
-				Configuration::updateValue(trim($input['name']), $data, true);
+				DeoHelper::updateValue(trim($input['name']), $data, true);
 			} else {
 				if (isset($input['save']) && $input['save']) {
 					// NOT SAVE
@@ -561,9 +561,9 @@ class AdminDeoOnepagecheckoutConfigureController extends ModuleAdminController
 						$input_name_conf = Tools::str_replace_once('[]', '', $input['name']);
 						$value = (!empty(Tools::getValue(trim($input_name_conf)))) ? Tools::getValue(trim($input_name_conf)) : array();
 						$value = json_encode($value);
-						Configuration::updateValue(trim($input_name_conf), $value);
+						DeoHelper::updateValue(trim($input_name_conf), $value);
 					}else{
-						$value = Tools::getValue(trim($input['name']), Configuration::get($input['name']));
+						$value = Tools::getValue(trim($input['name']), DeoHelper::get($input['name']));
 
 						// don't change SEPARATE_PAYMENT value, when field is "disabled"
 						if ($input['name'] == DeoHelper::getConfigName('SEPARATE_PAYMENT')) {
@@ -595,12 +595,12 @@ class AdminDeoOnepagecheckoutConfigureController extends ModuleAdminController
 							// Special treatment for password field - whenever its 'required' status is updated here
 							// on config page, let's update PS core config value also
 							if ($input['name'] == DeoHelper::getConfigName('CUSTOMER_FIELDS')) {
-								Configuration::updateValue('PS_GUEST_CHECKOUT_ENABLED', !($decodedString['password']['visible'] && $decodedString['password']['required']));
+								DeoHelper::updateValue('PS_GUEST_CHECKOUT_ENABLED', !($decodedString['password']['visible'] && $decodedString['password']['required']));
 							}
 							
-							Configuration::updateValue($input['name'], json_encode($decodedString));
+							DeoHelper::updateValue($input['name'], json_encode($decodedString));
 						} else {
-							Configuration::updateValue($input['name'], $value);
+							DeoHelper::updateValue($input['name'], $value);
 						}
 					}
 					
@@ -630,17 +630,17 @@ class AdminDeoOnepagecheckoutConfigureController extends ModuleAdminController
 
 	private function resetConfigAccountFields()
 	{
-		Configuration::deleteByName(DeoHelper::getConfigName('CUSTOMER_FIELDS'));
+		DeoHelper::deleteByName(DeoHelper::getConfigName('CUSTOMER_FIELDS'));
 	}
 
 	private function resetConfigInvoiceFields()
 	{
-		Configuration::deleteByName(DeoHelper::getConfigName('INVOICE_FIELDS'));
+		DeoHelper::deleteByName(DeoHelper::getConfigName('INVOICE_FIELDS'));
 	}
 
 	private function resetConfigDeliveryFields()
 	{
-		Configuration::deleteByName(DeoHelper::getConfigName('DELIVERY_FIELDS'));
+		DeoHelper::deleteByName(DeoHelper::getConfigName('DELIVERY_FIELDS'));
 	}
 
 
@@ -689,8 +689,8 @@ class AdminDeoOnepagecheckoutConfigureController extends ModuleAdminController
 					foreach ($languages as $lang) {
 						if (Tools::getIsset($input['name'].'_'.$lang['id_lang'])){
 							$val = Tools::getValue($input['name'].'_'.$lang['id_lang']);
-						}else if (Configuration::hasKey($input['name'], $lang['id_lang'])){
-							$val = Configuration::get($input['name'], $lang['id_lang']);
+						}else if (DeoHelper::hasKey($input['name'], $lang['id_lang'])){
+							$val = DeoHelper::get($input['name'], $lang['id_lang']);
 						}
 						$input['default'] = isset($input['default']) ? $input['default'] : '';
 						$this->fields_values[$input['name']][$lang['id_lang']] = isset($val) ? $val : $input['default'];
@@ -700,8 +700,8 @@ class AdminDeoOnepagecheckoutConfigureController extends ModuleAdminController
 						$val = '';
 						if (Tools::getIsset($input['name'])){
 							$val = Tools::getValue($input['name']);
-						}else if (Configuration::hasKey($input['name'])){
-							$val = Configuration::get($input['name']);
+						}else if (DeoHelper::hasKey($input['name'])){
+							$val = DeoHelper::get($input['name']);
 						}
 
 						$decodedString = json_decode(trim($val), true); // true = return array instead of stdObject
@@ -720,14 +720,14 @@ class AdminDeoOnepagecheckoutConfigureController extends ModuleAdminController
 							$input_name_conf = Tools::str_replace_once('[]', '', $input['name']);
 							if (Tools::getIsset($input_name_conf)){
 								$val = Tools::getValue($input_name_conf);
-							}else if (Configuration::hasKey($input_name_conf)){
-								$val = Configuration::get($input_name_conf);
+							}else if (DeoHelper::hasKey($input_name_conf)){
+								$val = DeoHelper::get($input_name_conf);
 							}
 						}else{
 							if (Tools::getIsset($input['name'])){
 								$val = Tools::getValue($input['name']);
-							}else if (Configuration::hasKey($input['name'])){
-								$val = Configuration::get($input['name']);
+							}else if (DeoHelper::hasKey($input['name'])){
+								$val = DeoHelper::get($input['name']);
 							}
 						}
 					}

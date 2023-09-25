@@ -1083,11 +1083,11 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 				} else {
 					if (isset($input['lang'])) {
 						foreach ($languages as $lang) {
-							$v = Tools::getValue('title', Configuration::get($input['name'], $lang['id_lang']));
+							$v = Tools::getValue('title', DeoHelper::get($input['name'], $lang['id_lang']));
 							$fields_values[$input['name']][$lang['id_lang']] = $v ? $v : $input['default'];
 						}
 					} else {
-						$v = Tools::getValue($input['name'], Configuration::get($input['name']));
+						$v = Tools::getValue($input['name'], DeoHelper::get($input['name']));
 						$fields_values[$input['name']] = $v ? $v : $input['default'];
 					}
 					if ($input['name'] == $obj->type.'_type') {

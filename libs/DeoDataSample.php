@@ -53,8 +53,13 @@ class DeoDataSample
      */
     public function processImport($moduleName = '')
     {
+        // Remove sample when install module deotemplate before import sample from theme
+        if (file_exists(_PS_MODULE_DIR_.'deotemplate/libs/setup.php')) {
+            require_once(_PS_MODULE_DIR_.'deotemplate/libs/setup.php');
+            DeoPageSetup::uninstallSampleModule();
+        }
+
         $theme_name = DeoHelper::getInstallationThemeName() . '/';
-        
         $data = false;
         
         if (file_exists(_PS_ALL_THEMES_DIR_.$theme_name.'config.xml')) {
@@ -115,7 +120,7 @@ class DeoDataSample
                     foreach ($content->configurations->children() as $contentConfig) {
                         $key_config = Module::configXmlStringFormat(Tools::strtoupper(trim($contentConfig->name)));
                         $val_config = Module::configXmlStringFormat(trim($contentConfig->value));
-                        Configuration::updateValue($key_config, $val_config);
+                        DeoHelper::updateValue($key_config, $val_config);
                     }
                 }
 
@@ -174,14 +179,15 @@ class DeoDataSample
         DeoBlogImage::regenerateImage();
         
         if (defined('_DEO_MODE_DEV_') && _DEO_MODE_DEV_ === true){
-            Configuration::updateValue(DeoHelper::getConfigName('DEBUG_MODE'), 1);
+            DeoHelper::updateValue(DeoHelper::getConfigName('DEBUG_MODE'), 1);
         }else{
-            Configuration::updateValue(DeoHelper::getConfigName('DEBUG_MODE'), 0);
-            Configuration::updateValue(DeoHelper::getConfigName('PANELTOOL'), 0);
+            DeoHelper::updateValue(DeoHelper::getConfigName('DEBUG_MODE'), 0);
+            DeoHelper::updateValue(DeoHelper::getConfigName('PANELTOOL'), 0);
         }
 
         return !$error;
     }
+
 
     private function hookModule($id_module, $module_hooks, $shop)
     {
@@ -1037,7 +1043,7 @@ class DeoDataSample
         $configAllShop = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT DISTINCT name FROM `'._DB_PREFIX_.'configuration`'.$where);
         $result = array();
         foreach ($configAllShop as &$config) {
-            $config['value'] = Configuration::get($config['name']);
+            $config['value'] = DeoHelper::get($config['name']);
         }
 
         return $configAllShop;
@@ -1065,21 +1071,21 @@ class DeoDataSample
 
         
         if (!(Tools::strpos(_PS_BASE_URL_, 'localhost') == false)){
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_FACEBOOK_APPID'), '441506616218023');
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_GOOGLE_CLIENTID'), '1038085221664-a11l6ld3cq8b3qcbejud1bsp8gsf5m0j.apps.googleusercontent.com');
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_TWITTER_APIKEY'), 'D3dke82MFDXLrc9VdRhR44xGB');
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_TWITTER_APISECRET'), 'rIBr8P4GY2njPgU4uDgMxKTgeNg4wU0bZ2CVsBrFwpJkqnWznL');
+            DeoHelper::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_FACEBOOK_APPID'), '441506616218023');
+            DeoHelper::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_GOOGLE_CLIENTID'), '1038085221664-a11l6ld3cq8b3qcbejud1bsp8gsf5m0j.apps.googleusercontent.com');
+            DeoHelper::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_TWITTER_APIKEY'), 'D3dke82MFDXLrc9VdRhR44xGB');
+            DeoHelper::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_TWITTER_APISECRET'), 'rIBr8P4GY2njPgU4uDgMxKTgeNg4wU0bZ2CVsBrFwpJkqnWznL');
         }else if (!(Tools::strpos(_PS_BASE_URL_, 'demo-everything.com') ==  false)){
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_FACEBOOK_APPID'), '569418377248645');
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_GOOGLE_CLIENTID'), '200750373187-epmrgb7bmu743ottmmfdk891fk30md19.apps.googleusercontent.com');
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_TWITTER_APIKEY'), 'yefSI71I6nM9eROWYv3imoLVS');
-            Configuration::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_TWITTER_APISECRET'), 'uHGB0xGTs3F2NlO0vBdw0KAbzi7ttRxsRH6pzyPcgWgYKhABH2');
+            DeoHelper::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_FACEBOOK_APPID'), '569418377248645');
+            DeoHelper::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_GOOGLE_CLIENTID'), '200750373187-epmrgb7bmu743ottmmfdk891fk30md19.apps.googleusercontent.com');
+            DeoHelper::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_TWITTER_APIKEY'), 'yefSI71I6nM9eROWYv3imoLVS');
+            DeoHelper::updateValue(DeoHelper::getConfigName('SOCIAL_LOGIN_TWITTER_APISECRET'), 'uHGB0xGTs3F2NlO0vBdw0KAbzi7ttRxsRH6pzyPcgWgYKhABH2');
         }
 
 
         // disable debug mode
         if (!(Tools::strpos(_PS_BASE_URL_, 'localhost') == false)){
-            Configuration::updateValue(DeoHelper::getConfigName('DEBUG_MODE'), 0);
+            DeoHelper::updateValue(DeoHelper::getConfigName('DEBUG_MODE'), 0);
         }
 
 

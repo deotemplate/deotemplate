@@ -595,7 +595,7 @@ class AdminDeoShortcodeController extends ModuleAdminControllerCore
                         array_push($widgets_modules, $item);
                     }
                 }
-                Configuration::updateValue(DeoHelper::getConfigName('SHORTCODE_WIDGETS_MODULES'), json_encode($widgets_modules));
+                DeoHelper::updateValue(DeoHelper::getConfigName('SHORTCODE_WIDGETS_MODULES'), json_encode($widgets_modules));
             }
 
             $elements = json_decode(DeoHelper::getConfig('SHORTCODE_ELEMENTS'));
@@ -606,7 +606,7 @@ class AdminDeoShortcodeController extends ModuleAdminControllerCore
                         array_push($elements, $item);
                     }
                 }
-                Configuration::updateValue(DeoHelper::getConfigName('SHORTCODE_ELEMENTS'), json_encode($elements));
+                DeoHelper::updateValue(DeoHelper::getConfigName('SHORTCODE_ELEMENTS'), json_encode($elements));
             }
 
             $product_lists = json_decode(DeoHelper::getConfig('SHORTCODE_PRODUCT_LISTS', json_encode(array())));
@@ -617,7 +617,7 @@ class AdminDeoShortcodeController extends ModuleAdminControllerCore
                         array_push($product_lists, $item);
                     }
                 }
-                Configuration::updateValue(DeoHelper::getConfigName('SHORTCODE_PRODUCT_LISTS'), json_encode($product_lists));
+                DeoHelper::updateValue(DeoHelper::getConfigName('SHORTCODE_PRODUCT_LISTS'), json_encode($product_lists));
             }
 
             // print_r($data_position->deoshortcode->widgets_modules);

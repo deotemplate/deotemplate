@@ -86,7 +86,7 @@ class AdminDeoDeveloperConfigureController extends ModuleAdminController
         if (Tools::isSubmit('submitAddconfiguration')) {
             # SAVING CONFIGURATION
             $posts = Tools::getValue('INPUTS_FIELDS');
-            Configuration::updateValue('INPUTS_FIELDS', $posts);
+            DeoHelper::updateValue('INPUTS_FIELDS', $posts);
             $posts = json_decode($posts);
 
             foreach ($posts as $key => $post) {
@@ -95,7 +95,7 @@ class AdminDeoDeveloperConfigureController extends ModuleAdminController
                 if ($key == 'INPUTS_FIELDS'){
                     continue;
                 }
-                Configuration::updateValue($key, $value);
+                DeoHelper::updateValue($key, $value);
             }
 
             $this->confirmations[] = 'Your configurations have been saved successfully.';
@@ -431,7 +431,7 @@ class AdminDeoDeveloperConfigureController extends ModuleAdminController
             }
 
             if (Configuration::hasKey($input['name'])){
-                $fields_value[$input['name']] = Configuration::get($input['name']);
+                $fields_value[$input['name']] = DeoHelper::get($input['name']);
             }else{
                 if (isset($input['default'])){
                     $fields_value[$input['name']] = $input['default'];

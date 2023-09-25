@@ -340,11 +340,141 @@ class DeoHelper
 		}
 		return $theme_key;
 	}
-	
+
 	/**
-	 * Create name config
-	 * config_name from theme
-	 * config_name from module, not exist config.xml
+	 * check key configuration exist
+	 */
+	public static function hasKey($key, $idLang = null, $idShopGroup = null, $idShop = null)
+	{
+        if (Shop::isFeatureActive()) {
+	        if ($idShop === null) {
+	            $idShop = Shop::getContextShopID(true);
+	        }
+
+	        if ($idShopGroup === null) {
+	            $idShopGroup = Shop::getContextShopGroupID(true);
+	        }
+        }
+
+        return Configuration::hasKey($key, $idLang, $idShopGroup, $idShop);
+	}
+
+
+	/**
+	 * get value configuration
+	 */
+	public static function get($key, $idLang = null, $idShopGroup = null, $idShop = null, $default = false)
+	{
+		if (Shop::isFeatureActive()) {
+	        if ($idShop === null) {
+	            $idShop = Shop::getContextShopID(true);
+	        }
+
+	        if ($idShopGroup === null) {
+	            $idShopGroup = Shop::getContextShopGroupID(true);
+	        }
+		}
+
+		// var_dump($key,$idShop,$idShopGroup);
+		// echo "<br>";
+		if (self::hasKey($key, $idLang, $idShopGroup, $idShop)){
+			$result = Configuration::get($key, $idLang, $idShopGroup, $idShop, $default);
+		}else{
+			$result = Configuration::get($key, $idLang, $default);
+		}
+
+		return $result;
+	}
+
+
+	/**
+	 * get several configuration values (in one language only).
+	 */
+	public static function getMultiple($keys, $idLang = null, $idShopGroup = null, $idShop = null)
+	{
+		if (Shop::isFeatureActive()) {
+	        if ($idShop === null) {
+	            $idShop = Shop::getContextShopID(true);
+	        }
+
+	        if ($idShopGroup === null) {
+	            $idShopGroup = Shop::getContextShopGroupID(true);
+	        }
+		}
+
+	
+		if (self::hasKey($key, $idLang, $idShopGroup, $idShop)){
+			$result = Configuration::getMultiple($key, $idLang, $idShopGroup, $idShop);
+		}else{
+			$result = Configuration::getMultiple($key, $idLang);
+		}
+
+		return $result;
+	}
+	
+
+	/**
+	 * get update value configuration
+	 */
+	public static function updateValue($key, $values, $html = false, $idShopGroup = null, $idShop = null)
+	{
+		if (Shop::isFeatureActive()) {
+	        if ($idShop === null) {
+	            $idShop = Shop::getContextShopID(true);
+	        }
+
+	        if ($idShopGroup === null) {
+	            $idShopGroup = Shop::getContextShopGroupID(true);
+	        }
+		}
+
+		return Configuration::updateValue($key, $values, $html, $idShopGroup, $idShop);
+	}
+
+	/**
+	 * get ID configuration by key name
+	 */
+	public static function getIdByName($key, $idShopGroup = null, $idShop = null)
+	{
+		if (Shop::isFeatureActive()) {
+	        if ($idShop === null) {
+	            $idShop = Shop::getContextShopID(true);
+	        }
+
+	        if ($idShopGroup === null) {
+	            $idShopGroup = Shop::getContextShopGroupID(true);
+	        }
+		}
+
+		return Configuration::getIdByName($key, $idShopGroup, $idShop);
+	}
+
+
+	/**
+	 * get delete configuration by ID
+	 */
+	public static function deleteById($key)
+	{
+		$id = self::getIdByName($key);
+		return Configuration::deleteById($id);
+	}
+
+
+	/**
+	 * get delete configuration by key name
+	 */
+	public static function deleteByName($key)
+	{
+		if (Shop::isFeatureActive()) {
+			$id = self::getIdByName($key);
+			return self::deleteById($id);
+		}else{
+			return Configuration::deleteByName($key);
+		}
+	}
+
+	/**
+	 * get configuration name with prefix DEO
 	 */
 	public static function getConfigName($name)
 	{
@@ -352,47 +482,11 @@ class DeoHelper
 	}
 	
 	/**
-	 * return config in table 'Configuration'
-	 * config from theme
-	 * config from module, not exist config.xml
+	 * get configuration value with prefix DEO
 	 */
-	public static function getConfig($name, $idShopGroup = null, $idShop = null, $default = null)
+	public static function getConfig($key, $default = null)
 	{
-		if ($default){
-			return Configuration::get(self::getConfigName($name), $default);
-		}else{
-			return Configuration::get(self::getConfigName($name));
-		}
-		
-		// if ($idShopGroup === null && Shop::isFeatureActive()) {
-		//     $idShopGroup = (int) Shop::getContextShopGroupID(true);
-		// }
-
-		// if ($idShop === null && Shop::isFeatureActive()) {
-		//     $idShop = (int) Shop::getContextShopID(true);
-		// }
-
-		// return Configuration::get(self::getConfigName($name), null, $idShopGroup, $idShop, $default);
-	}
-	
-	public static function getPostConfig($name)
-	{
-		return trim(Tools::getValue(self::getConfigName($name)));
-	}
-	
-	public static function setConfig($name, $value, $html = false, $idShopGroup = null, $idShop = null)
-	{
-		return Configuration::updateValue(self::getConfigName($name));
-
-		// if ($idShopGroup === null && Shop::isFeatureActive()) {
-		//     $idShopGroup = (int) Shop::getContextShopGroupID(true);
-		// }
-
-		// if ($idShop === null && Shop::isFeatureActive()) {
-		//     $idShop = (int) Shop::getContextShopID(true);
-		// }
-
-		// Configuration::updateValue(self::getConfigName($name), $value, $html, $idShopGroup, $idShop);
+		return self::get(self::getConfigName($key), null, null, null, $default);
 	}
 	
 	public static function autoUpdateModule()
@@ -1071,10 +1165,10 @@ class DeoHelper
 		// @mkdir(_PS_ROOT_DIR_.'/override/controllers/front/listing/', 0755, true);
 		// Tools::copy(_PS_ROOT_DIR_.'/override/controllers/front/index.php', _PS_ROOT_DIR_.'/override/controllers/front/listing/index.php');
 
-		if (($correct && !Configuration::get('DEOTEMPLATE_OVERRIDED')) || ($correct && $quickstart)){
+		if (($correct && !DeoHelper::get('DEOTEMPLATE_OVERRIDED')) || ($correct && $quickstart)){
 			$instance_module = DeoTemplate::getInstance();
 			$instance_module->installOverrides();
-			Configuration::updateValue('DEOTEMPLATE_OVERRIDED', 1);
+			DeoHelper::updateValue('DEOTEMPLATE_OVERRIDED', 1);
 		}
 
 

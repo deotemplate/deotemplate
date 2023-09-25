@@ -335,13 +335,20 @@ class AdminDeoThemeConfigureController extends ModuleAdminController
                 'class' => 'fixed-width-xl',
                 'form_group_class' => 'tab_general',
             ),
-
             array(
                 'type' => 'html',
                 'label' => $this->l('Compress Images Themes'),
                 'name' => 'default_html',
                 'html_content' => '<button class="button btn btn-success" name="submitCompressImage" id="submitCompressImage" type="submit">'.$this->l('Compress Images').'</button>',
                 'desc' => $this->l('Only compress images uploaded by our template'),
+                'form_group_class' => 'tab_general',
+            ),
+            array(
+                'type' => 'html',
+                'label' => $this->l('Import Sample Data'),
+                'name' => 'default_html',
+                'html_content' => '<button class="button btn btn-warning" name="submitImportSampleData" id="submitImportSampleData" type="submit">'.$this->l('Import Sample Data').'</button>',
+                'desc' => $this->l('Replace data sample data to current settings with our template. Becareful: Current settings with our template will be lost and restore to default'),
                 'form_group_class' => 'tab_general',
             ),
         );
@@ -1547,7 +1554,7 @@ class AdminDeoThemeConfigureController extends ModuleAdminController
             array(
                 'type' => 'html',
                 'name' => 'default_html',
-                'html_content' => '<button class="button btn btn-success" name="submit_rtl_leo" id="submit_rtl_leo" type="submit">2. Use class RTL of theme</button>',
+                'html_content' => '<button class="button btn btn-success" name="submit_rtl" id="submit_rtl" type="submit">2. Use class RTL of theme</button>',
                 'form_group_class' => 'tab_rtl',
             ),
             array(
@@ -1652,10 +1659,13 @@ class AdminDeoThemeConfigureController extends ModuleAdminController
         } else if (Tools::isSubmit('submitCompressImage')) {
             DeoHelper::processCompressImages();
             $this->confirmations[] = 'Compress images successful.';
+        } else if (Tools::isSubmit('submitImportSampleData')) {
+            $dataSample->processImport('deotemplate');
+            Tools::redirectAdmin(self::$currentIndex.'&token='.Tools::getValue('token'));
         } else if (Tools::isSubmit('submit_rtl_prestashop')) {
             $this->generateRTL();
             $this->confirmations[] = DeoHelper::getThemeName() . ' theme generate RTL stylesheet';
-        } else if (Tools::isSubmit('submit_rtl_leo')) {
+        } else if (Tools::isSubmit('submit_rtl')) {
             $this->removeRTL();
             $this->confirmations[] = DeoHelper::getThemeName() . ' theme use class RTL of theme';
         } else if (Tools::isSubmit('submitCopyImageChildTheme')) {
@@ -1739,7 +1749,7 @@ class AdminDeoThemeConfigureController extends ModuleAdminController
                     $value = Tools::getValue(trim($input['name']).'_'.$lang['id_lang']);
                     $data[$lang['id_lang']] = $value ? $value : $input['default'];
                 }
-                Configuration::updateValue(trim($input['name']), $data);
+                DeoHelper::updateValue(trim($input['name']), $data);
             } else {
                 if (isset($input['save']) && $input['save']) {
                     // NOT SAVE
@@ -1748,10 +1758,10 @@ class AdminDeoThemeConfigureController extends ModuleAdminController
                         $input_name_conf = Tools::str_replace_once('[]', '', $input['name']);
                         $value = (!empty(Tools::getValue(trim($input_name_conf)))) ? Tools::getValue(trim($input_name_conf)) : array();
                         $value = json_encode($value);
-                        Configuration::updateValue(trim($input_name_conf), $value);
+                        DeoHelper::updateValue(trim($input_name_conf), $value);
                     }else{
-                        $value = Tools::getValue(trim($input['name']), Configuration::get($input['name']));
-                        Configuration::updateValue(trim($input['name']), $value);
+                        $value = Tools::getValue(trim($input['name']), DeoHelper::get($input['name']));
+                        DeoHelper::updateValue(trim($input['name']), $value);
                     }
                 }
 
@@ -1889,8 +1899,8 @@ class AdminDeoThemeConfigureController extends ModuleAdminController
                     foreach ($languages as $lang) {
                         if (Tools::getIsset($input['name'])){
                             $val = Tools::getValue($input['name']);
-                        }else if (Configuration::hasKey($input['name'])){
-                            $val = Configuration::get($input['name'], $lang['id_lang']);
+                        }else if (DeoHelper::hasKey($input['name'])){
+                            $val = DeoHelper::get($input['name'], $lang['id_lang']);
                         }
                         $input['default'] = isset($input['default']) ? $input['default'] : '';
                         $this->fields_values[$input['name']][$lang['id_lang']] = isset($val) ? $val : $input['default'];
@@ -1900,14 +1910,14 @@ class AdminDeoThemeConfigureController extends ModuleAdminController
                         $input_name_conf = Tools::str_replace_once('[]', '', $input['name']);
                         if (Tools::getIsset($input_name_conf)){
                             $val = Tools::getValue($input_name_conf);
-                        }else if (Configuration::hasKey($input_name_conf)){
-                            $val = Configuration::get($input_name_conf);
+                        }else if (DeoHelper::hasKey($input_name_conf)){
+                            $val = DeoHelper::get($input_name_conf);
                         }
                     }else{
                         if (Tools::getIsset($input['name'])){
                             $val = Tools::getValue($input['name']);
-                        }else if (Configuration::hasKey($input['name'])){
-                            $val = Configuration::get($input['name']);
+                        }else if (DeoHelper::hasKey($input['name'])){
+                            $val = DeoHelper::get($input['name']);
                         }
                     }
 

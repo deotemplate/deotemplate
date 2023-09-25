@@ -389,7 +389,7 @@ class DeoWidgetProductlist extends DeoWidgetBaseModel
         //             case 'random':
         //                 $random = true;
         //                 $products = $this->getProducts('WHERE  p.id_product > 0', $langID, 1, $plimit, $orderby, $orderway, false, true, $random, $plimit);
-        //                 Configuration::updateValue('BTMEGAMENU_CURRENT_RANDOM_CACHE', '1');
+        //                 DeoHelper::updateValue('BTMEGAMENU_CURRENT_RANDOM_CACHE', '1');
         //                 break;
         //         }
         //         break;

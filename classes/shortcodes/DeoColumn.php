@@ -193,14 +193,14 @@ class DeoColumn extends DeoShortCodeBase
                 'front' => Dispatcher::getModuleControllers('front'),
             );
             
-            Configuration::updateValue(DeoHelper::getConfigName('CACHE_FRONT_CONTROLLER_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers)));
-            Configuration::updateValue(DeoHelper::getConfigName('CACHE_FRONT_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['admin'])));
-            Configuration::updateValue(DeoHelper::getConfigName('CACHE_ADMIN_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['front'])));
+            DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_FRONT_CONTROLLER_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers)));
+            DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_FRONT_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['admin'])));
+            DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_ADMIN_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['front'])));
         } else {
             if (DeoHelper::getConfig('CACHE_FRONT_CONTROLLER_EXCEPTION') === false) {
                 # First Time : write to config
                 $controllers = Dispatcher::getControllers(_PS_FRONT_CONTROLLER_DIR_);
-                Configuration::updateValue(DeoHelper::getConfigName('CACHE_FRONT_CONTROLLER_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers)));
+                DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_FRONT_CONTROLLER_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers)));
             } else {
                 # Second Time : read from config
                 $controllers = json_decode(DeoHelper::correctDeCodeData(DeoHelper::getConfig('CACHE_FRONT_CONTROLLER_EXCEPTION')), true);
@@ -209,7 +209,7 @@ class DeoColumn extends DeoShortCodeBase
             if (DeoHelper::getConfig('CACHE_FRONT_MODULE_EXCEPTION') === false) {
                 # First Time : write to config
                 $controllers_modules['admin'] = Dispatcher::getModuleControllers('admin');
-                Configuration::updateValue(DeoHelper::getConfigName('CACHE_FRONT_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['admin'])));
+                DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_FRONT_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['admin'])));
             } else {
                 # Second Time : read from config
                 $controllers_modules['admin'] = json_decode(DeoHelper::correctDeCodeData(DeoHelper::getConfig('CACHE_FRONT_MODULE_EXCEPTION')), true);
@@ -218,7 +218,7 @@ class DeoColumn extends DeoShortCodeBase
             if (DeoHelper::getConfig('CACHE_ADMIN_MODULE_EXCEPTION') === false) {
                 # First Time : write to config
                 $controllers_modules['front'] = Dispatcher::getModuleControllers('front');
-                Configuration::updateValue(DeoHelper::getConfigName('CACHE_ADMIN_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['front'])));
+                DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_ADMIN_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['front'])));
             } else {
                 # Second Time : read from config
                 $controllers_modules['front'] = json_decode(DeoHelper::correctDeCodeData(DeoHelper::getConfig('CACHE_ADMIN_MODULE_EXCEPTION')), true);

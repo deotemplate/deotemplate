@@ -204,7 +204,7 @@ if (!class_exists('DeoShortCodeBase')) {
                         }
                         $fields_values[$input['name']] = $value;
                     } else {
-                        $v = Tools::getValue($input['name'], Configuration::get($input['name']));
+                        $v = Tools::getValue($input['name'], DeoHelper::get($input['name']));
                         $fields_values[$input['name']] = $v ? $v : $input['default'];
                     }
                 }

@@ -754,40 +754,64 @@ if (!class_exists("DeoPageSetup")) {
 			return true;
 		}
 
-		public static function installSample()
+		public static function installSampleModule()
 		{
 			$theme_name = DeoHelper::getInstallationThemeName();
 			if (file_exists(_PS_ALL_THEMES_DIR_.$theme_name.'/samples/deotemplate.xml')) {
 				return false;
 			}
 
+			$id_shop = Context::getContext()->shop->id;
+
 			// install root blog category
-			$rows = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT id_deoblog_category FROM `'._DB_PREFIX_.'deoblog_category`');
+			$rows = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT m.id_deoblog_category FROM '._DB_PREFIX_.'deoblog_category m LEFT JOIN '._DB_PREFIX_.'deoblog_category_shop bs ON m.id_deoblog_category = bs.id_deoblog_category WHERE bs.id_shop = '.(int)($id_shop));
+
 			if (count($rows) <= 0) {
-				$res = (bool)Db::getInstance()->execute('
+				$res = (bool) Db::getInstance()->execute('
 					INSERT INTO `'._DB_PREFIX_.'deoblog_category`(`image`,`id_parent`,`is_root`) VALUES(\'\', 0, 1)
 				');
+				$last_id = Db::getInstance()->Insert_ID();
+
 				$languages = Language::getLanguages(false);
 				foreach ($languages as $lang) {
-					$res &= (bool)Db::getInstance()->execute('
-						INSERT INTO `'._DB_PREFIX_.'deoblog_category_lang`(`id_deoblog_category`,`id_lang`,`title`) VALUES(1, '.(int)$lang['id_lang'].', \'Root\')
+					$res &= (bool) Db::getInstance()->execute('
+						INSERT INTO `'._DB_PREFIX_.'deoblog_category_lang`(`id_deoblog_category`,`id_lang`,`title`) VALUES('.$last_id.', '.(int) $lang['id_lang'].', \'Root\')
 					');
 				}
 
 				$context = Context::getContext();
-				$res &= (bool)Db::getInstance()->execute('
-					INSERT INTO `'._DB_PREFIX_.'deoblog_category_shop`(`id_deoblog_category`,`id_shop`) VALUES( 1, '.(int)($context->shop->id).' )
+				$res &= (bool) Db::getInstance()->execute('
+					INSERT INTO `'._DB_PREFIX_.'deoblog_category_shop`(`id_deoblog_category`,`id_shop`) VALUES('.$last_id.', '.(int) $id_shop.')
 				');
 			}
 
 			// Install sample title review
 			$rows = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT id_deofeature_product_review_criterion FROM `'._DB_PREFIX_.'deofeature_product_review_criterion`');
 			if (count($rows) <= 0) {
-				$res = (bool)Db::getInstance()->execute('
-					INSERT INTO `'._DB_PREFIX_.'deofeature_product_review_criterion` VALUES (1, 1, 1)');
+				$res = (bool) Db::getInstance()->execute('
+					INSERT INTO `'._DB_PREFIX_.'deofeature_product_review_criterion`(`id_deofeature_product_review_criterion_type`,`active`) VALUES (1, 1)');
+				$last_id = Db::getInstance()->Insert_ID();
+
 				$languages = Language::getLanguages(false);
 				foreach ($languages as $lang) {
-					$res &= (bool)Db::getInstance()->execute('INSERT INTO `'._DB_PREFIX_.'deofeature_product_review_criterion_lang` VALUES(1, '.(int)$lang['id_lang'].', \'Quality\')');
+					$res &= (bool) Db::getInstance()->execute('INSERT INTO `'._DB_PREFIX_.'deofeature_product_review_criterion_lang`(`id_deofeature_product_review_criterion`,`id_lang`,`name`) VALUES('.$last_id.', '.(int)$lang['id_lang'].', \'Quality\')');
+				}
+			}
+		}
+
+		public static function uninstallSampleModule()
+		{
+			$id_shop = Context::getContext()->shop->id;
+			// uninstall root blog category
+			$rows = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT m.id_deoblog_category FROM '._DB_PREFIX_.'deoblog_category m LEFT JOIN '._DB_PREFIX_.'deoblog_category_shop bs ON m.id_deoblog_category = bs.id_deoblog_category WHERE bs.id_shop = '.(int)($id_shop));
+			if (count($rows) > 0) {
+				foreach ($rows as $row) {
+					$res = (bool)Db::getInstance()->execute('
+						DELETE FROM '._DB_PREFIX_.'deoblog_category WHERE id_deoblog_category = '.(int)$row['id_deoblog_category']);
+					$res = (bool)Db::getInstance()->execute('
+						DELETE FROM '._DB_PREFIX_.'deoblog_category_lang WHERE id_deoblog_category = '.(int)$row['id_deoblog_category']);
+					$res = (bool)Db::getInstance()->execute('
+						DELETE FROM '._DB_PREFIX_.'deoblog_category_shop WHERE id_deoblog_category = '.(int)$row['id_deoblog_category']);
 				}
 			}
 		}

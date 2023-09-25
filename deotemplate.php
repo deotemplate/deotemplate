@@ -92,7 +92,6 @@ class DeoTemplate extends Module implements WidgetInterface
 		} else {
 			$this->is_gen_rtl = false;
 		}
-
 	}
 
 
@@ -146,12 +145,12 @@ class DeoTemplate extends Module implements WidgetInterface
 		}
 
 		# NOT LOAD DATASAMPLE AGAIN
-		Configuration::updateValue('INSTALLED_DEOTEMPLATE', 1);
+		DeoHelper::updateValue('INSTALLED_DEOTEMPLATE', 1);
 		
 		# REMOVE FILE INDEX.PHP FOR TRANSLATE
 		DeoPageSetup::processTranslateTheme();
 			   
-		Configuration::updateValue('DEOTEMPLATE_OVERRIDED', 1);
+		DeoHelper::updateValue('DEOTEMPLATE_OVERRIDED', 1);
 
 		return true;
 	}
@@ -178,13 +177,13 @@ class DeoTemplate extends Module implements WidgetInterface
 			return false;
 		}
 
-		Configuration::deleteByName('INSTALLED_DEOTEMPLATE', 0);
+		DeoHelper::deleteByName('INSTALLED_DEOTEMPLATE', 0);
 
 		// remove overrider folder
 		// $this->uninstallOverrides();
 		
 		// remove config check override for shortcode
-		Configuration::updateValue('DEOTEMPLATE_OVERRIDED', 0);
+		DeoHelper::updateValue('DEOTEMPLATE_OVERRIDED', 0);
 		
 		return true;
 	}
@@ -677,7 +676,7 @@ class DeoTemplate extends Module implements WidgetInterface
 				'deo_language' => Language::getLanguages(false),
 			)
 		);
-		Configuration::updateValue('shortcode_url_add', $this->context->link->getAdminLink('AdminDeoShortcode'));
+		DeoHelper::updateValue('shortcode_url_add', $this->context->link->getAdminLink('AdminDeoShortcode'));
 
 		// review
 		$this->context->controller->addJS(DeoHelper::getJsAdminDir().'feature/back.js');
@@ -728,7 +727,7 @@ class DeoTemplate extends Module implements WidgetInterface
 		// 	foreach ($result as $key => $value) {
 		// 		$new_array[$value['id_deotemplate_positions']][] = $value;
 		// 		$name_position_params = DeoHelper::getConfigName($value['hook_name'].'_'.$value['id_deotemplate_positions'].'_'.Language::getIsoById($id_lang));
-		// 		// if (!Configuration::hasKey($name_position_params)){
+		// 		// if (!DeoHelper::hasKey($name_position_params)){
 		// 			DeoShortCodesBuilder::$is_front_office = 1;
 		// 	        DeoShortCodesBuilder::$is_gen_html = 1;
 		// 	        DeoShortCodesBuilder::$profile_param = array();
@@ -736,13 +735,13 @@ class DeoTemplate extends Module implements WidgetInterface
 		// 	        DeoShortCodesBuilder::$hook_name = $value['hook_name'];
 		// 	        $parseJson = $shortcode_builder->parseToJson($value['params']);
 		// 			// $shortcode_tags = DeoShortCodesBuilder::$shortcode_tags;
-		// 			Configuration::updateValue($name_position_params, json_encode($parseJson));
+		// 			DeoHelper::updateValue($name_position_params, json_encode($parseJson));
 		// 			// print_r($parseJson);
 		// 	  		// die();
 		// 		// }
 				
 		// 		// $deo_html_content = $model->parseData($value['hook_name'], $this->hook_index_data[$hook_name], $this->profile_param);
-		// 		// Configuration::updateValue($name_position_params, Tools::htmlentitiesUTF8($value));
+		// 		// DeoHelper::updateValue($name_position_params, Tools::htmlentitiesUTF8($value));
 		// 		unset($value[$key]);
 		// 	}
 		// 	$this->data_template = $new_array;
@@ -2874,8 +2873,8 @@ class DeoTemplate extends Module implements WidgetInterface
 		$this->smarty->smarty->assign(array(
 			'js_dir' => _PS_JS_DIR_,
 			'deotemplate_module_dir' => $this->_path,
-			'shortcode_url_add' => Configuration::get('shortcode_url_add').'&adddeotemplate_shortcode',
-			'shortcode_url' => Configuration::get('shortcode_url_add'),
+			'shortcode_url_add' => DeoHelper::get('shortcode_url_add').'&adddeotemplate_shortcode',
+			'shortcode_url' => DeoHelper::get('shortcode_url_add'),
 			'list_shortcode' => DeoTemplateShortcodeModel::getListShortCode(),
 		));
 		return $this->display(__FILE__, 'list_shortcode.tpl');
@@ -3020,7 +3019,7 @@ class DeoTemplate extends Module implements WidgetInterface
 	// 		// $id_lang = (int) $this->context->language->id;
 	// 		// $name_position_params = DeoHelper::getConfigName($hook_name.'_'.$id_deotemplate_positions.'_'.Language::getIsoById($id_lang));
 	// 		// // $name_position_params = DeoHelper::getConfigName('DISPLAYTOP_14_EN');
-	// 		// $data = Configuration::get($name_position_params);
+	// 		// $data = DeoHelper::get($name_position_params);
 	// 		// $data = (isset($data) && $data) ? json_decode($data, true) : array();
 	// 		// $deo_html_content = $model->parseJsonToHtml($data);
 
@@ -3426,7 +3425,7 @@ class DeoTemplate extends Module implements WidgetInterface
 		}
 		
 		# WHEN INSTALL MODULE, NOT NEED RESTORE DATABASE IN THEME
-		if (Configuration::get('INSTALLED_DEOTEMPLATE')) {
+		if (DeoHelper::get('INSTALLED_DEOTEMPLATE')) {
 			# INSERT DATABASE FROM THEME_DATASAMPLE
 			if (file_exists(_PS_MODULE_DIR_.'deotemplate/libs/DeoDataSample.php')) {
 				require_once(_PS_MODULE_DIR_.'deotemplate/libs/DeoDataSample.php');
@@ -3441,7 +3440,7 @@ class DeoTemplate extends Module implements WidgetInterface
 			}
 
 			# INSTALL SAMPLE IF NOT EXIST FOLDER samples.xml
-			DeoPageSetup::installSample();
+			DeoPageSetup::installSampleModule();
 		}
 
 	}
@@ -3595,12 +3594,12 @@ class DeoTemplate extends Module implements WidgetInterface
 	public function hookDisplayBackOfficeHeader()
 	{
 		// create cache for widget module if not exist
-		$deo_cache_module = Configuration::get('DEO_CACHE_MODULE');
+		$deo_cache_module = DeoHelper::get('DEO_CACHE_MODULE');
 		if ($deo_cache_module === false || $deo_cache_module === '') {
 			$list_modules = DeoHelper::getModules();
 
 			$deo_cache_module = DeoHelper::correctEnCodeData(json_encode($list_modules));
-			Configuration::updateValue('DEO_CACHE_MODULE', $deo_cache_module);
+			DeoHelper::updateValue('DEO_CACHE_MODULE', $deo_cache_module);
 		}
 
 		DeoHelper::autoUpdateModule();
@@ -3830,45 +3829,6 @@ class DeoTemplate extends Module implements WidgetInterface
 		return $this->profile_data;
 	}
 
-	/**
-	 * Get Grade By product
-	 *
-	 * @return array Grades
-	 */
-	public static function getGradeByProducts($list_product)
-	{
-		$list_product = DeoHelper::addonValidInt( $list_product );         # We validate id_categories in DeoHelper::addonValidInt function . This function is used at any where
-		$validate = Configuration::get('PRODUCT_COMMENTS_MODERATE');
-		$id_lang = (int)Context::getContext()->language->id;
-
-		return (Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
-		SELECT pc.`id_product_comment`, pcg.`grade`, pccl.`name`, pcc.`id_product_comment_criterion`, pc.`id_product`
-		FROM `'._DB_PREFIX_.'product_comment` pc
-		LEFT JOIN `'._DB_PREFIX_.'product_comment_grade` pcg ON (pcg.`id_product_comment` = pc.`id_product_comment`)
-		LEFT JOIN `'._DB_PREFIX_.'product_comment_criterion` pcc ON (pcc.`id_product_comment_criterion` = pcg.`id_product_comment_criterion`)
-		LEFT JOIN `'._DB_PREFIX_.'product_comment_criterion_lang` pccl ON (pccl.`id_product_comment_criterion` = pcg.`id_product_comment_criterion`)
-		WHERE pc.`id_product` in ('.pSQL($list_product).')
-		AND pccl.`id_lang` = '.(int)$id_lang.
-						($validate == '1' ? ' AND pc.`validate` = 1' : '')));
-	}
-
-	/**
-	 * Return number of comments and average grade by products
-	 *
-	 * @return array Info
-	 */
-	public static function getGradedCommentNumber($list_product)
-	{
-		$list_product = DeoHelper::addonValidInt( $list_product );         # We validate id_categories in DeoHelper::addonValidInt function . This function is used at any where
-		$validate = (int)Configuration::get('PRODUCT_COMMENTS_MODERATE');
-
-		$result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
-		SELECT COUNT(pc.`id_product`) AS nbr, pc.`id_product`
-		FROM `'._DB_PREFIX_.'product_comment` pc
-		WHERE `id_product` in ('.pSQL($list_product).')'.($validate == '1' ? ' AND `validate` = 1' : '').'
-		AND `grade` > 0 GROUP BY pc.`id_product`');
-		return $result;
-	}
 
 	public function hookProductMoreImg($list_pro)
 	{
@@ -4161,7 +4121,7 @@ class DeoTemplate extends Module implements WidgetInterface
 		if (isset($cookie[$this->themeCookieName.'_'.$key])) {
 			return $cookie[$this->themeCookieName.'_'.$key];
 		}else{
-			if (Configuration::hasKey(DeoHelper::getConfigName($key))){
+			if (DeoHelper::hasKey(DeoHelper::getConfigName($key))){
 				setcookie($this->themeCookieName.'_'.$key, DeoHelper::getConfig($key), time() + (86400 * 30), '/');
 			}
 		}

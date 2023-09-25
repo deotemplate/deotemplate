@@ -340,7 +340,7 @@ class AdminDeoProfilesController extends ModuleAdminController
                     if ($file_content = Tools::file_get_contents($this->profile_css_folder.$old_key.'.css')){
                         DeoSetting::writeFile($this->profile_css_folder, $profile_key.'.css', $file_content);
                     }
-
+                     
                     AdminDeoShortcodesController::duplicateData($id, $id_new);
                     $this->redirect_after = self::$currentIndex.'&token='.$this->token;
                     $this->redirect();
@@ -835,14 +835,13 @@ class AdminDeoProfilesController extends ModuleAdminController
                 'form_group_class' => 'tab_layout hide',
             ),
         );
-
         $params = json_decode($this->object->params);
         $inputs = array_merge($inputs_general, $inputs_breadcrumb, $inputs_mobile_mode, $inputs_ajax_cart, $inputs_layout);
 
         if (Tools::isSubmit('updatedeotemplate_profiles')) {
             $pfile = new DeoTemplateProfilesModel();
 
-            $id_positions = array($this->object->content,$this->object->header, $this->object->footer);
+            $id_positions = array('content' => $this->object->content,'header' => $this->object->header, 'footer' => $this->object->footer);
             $list_position = $pfile->getPositionsForProfile($id_positions);
 
             $data_position = array(
@@ -894,10 +893,8 @@ class AdminDeoProfilesController extends ModuleAdminController
                 );
 
                 $inputs = array_merge($inputs, $inputs_key_customize);
-
-                $inputs_customize = $this->fetchCustomize($data_position, $this->fields_value);
+                $inputs_customize = $this->fetchCustomize($id_positions, $data_position, $this->fields_value);
                 $inputs = !empty($inputs_customize) ? array_merge($inputs, $inputs_customize) : $inputs;
-
                 $this->fields_value['customize'] = isset($params->customize) ? $params->customize : '0';
             }else{
                 $this->fields_value['customize'] = '0';
@@ -1020,7 +1017,7 @@ class AdminDeoProfilesController extends ModuleAdminController
         if (DeoHelper::getConfig('CACHE_FRONT_CONTROLLER_EXCEPTION') === false) {
             # First Time : write to config
             $controllers_core = Dispatcher::getControllers(_PS_FRONT_CONTROLLER_DIR_);
-            Configuration::updateValue(DeoHelper::getConfigName('CACHE_FRONT_CONTROLLER_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_core)));
+            DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_FRONT_CONTROLLER_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_core)));
         } else {
             # Second Time : read from config
             $controllers_core = json_decode(DeoHelper::correctDeCodeData(DeoHelper::getConfig('CACHE_FRONT_CONTROLLER_EXCEPTION')), true);
@@ -1040,7 +1037,7 @@ class AdminDeoProfilesController extends ModuleAdminController
         if (DeoHelper::getConfig('CACHE_ADMIN_MODULE_EXCEPTION') === false) {
             # First Time : write to config
             $controllers_modules = Dispatcher::getModuleControllers('front');
-            Configuration::updateValue(DeoHelper::getConfigName('CACHE_ADMIN_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules)));
+            DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_ADMIN_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules)));
         } else {
             # Second Time : read from config
             $controllers_modules = json_decode(DeoHelper::correctDeCodeData(DeoHelper::getConfig('CACHE_ADMIN_MODULE_EXCEPTION')), true);
@@ -1061,7 +1058,7 @@ class AdminDeoProfilesController extends ModuleAdminController
     }
 
 
-    public function fetchCustomize($data, &$fields_value)
+    public function fetchCustomize($id_positions, $data, &$fields_value)
     {
         $result = array();
         foreach ($data as $key => $type) {
@@ -1086,7 +1083,7 @@ class AdminDeoProfilesController extends ModuleAdminController
                     $inputs[] =  array(
                         'type' => 'html',
                         'name' => 'default_html',
-                        'html_content' => '<div class="alert alert-info">'.$name_group.' <a href="javascript:void(0)" class="reset-customize pull-right" id="'.$key.$type.'">'.$this->l('Reset to default').'</a></div>',
+                        'html_content' => '<div class="alert alert-info"><b>'.$name_group.'</b> <a href="javascript:void(0)" class="reset-customize pull-right" id="'.$key.$type.'">'.$this->l('Reset to default').'</a><p class="help-block">You do not want to use same settings customize color with other homepage builder please <a href="'. Context::getContext()->link->getAdminLink('AdminDeoPositions').'&updatedeotemplate_positions&id_deotemplate_positions='.$id_positions[$key].'">Change Position Key</a></p></div>',
                         'form_group_class' => 'tab_customize',
                     );
 

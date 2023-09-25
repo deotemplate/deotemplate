@@ -302,7 +302,7 @@ class DeoTemplateModel extends ObjectModel
             //     $hooks = DeoSetting::getHook($position);
             //     foreach ($hooks as $hook) {
             //         $name_hook_params = DeoHelper::getConfigName($hook.'_'.$profile[$position].'_'.Language::getIsoById($id_lang));
-            //         $data_template[] = json_decode(Tools::htmlentitiesDecodeUTF8(Configuration::get($name_hook_params)), true);
+            //         $data_template[] = json_decode(Tools::htmlentitiesDecodeUTF8(DeoHelper::get($name_hook_params)), true);
             //         // print_r($name_hook_params);
             //     }
             // }
