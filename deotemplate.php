@@ -144,8 +144,6 @@ class DeoTemplate extends Module implements WidgetInterface
 			DeoHelper::processDebugMode(false);
 		}
 
-		# NOT LOAD DATASAMPLE AGAIN
-		DeoHelper::updateValue('INSTALLED_DEOTEMPLATE', 1);
 		
 		# REMOVE FILE INDEX.PHP FOR TRANSLATE
 		DeoPageSetup::processTranslateTheme();
@@ -176,8 +174,6 @@ class DeoTemplate extends Module implements WidgetInterface
 			echo "not uninstall";
 			return false;
 		}
-
-		DeoHelper::deleteByName('INSTALLED_DEOTEMPLATE', 0);
 
 		// remove overrider folder
 		// $this->uninstallOverrides();
@@ -3423,25 +3419,22 @@ class DeoTemplate extends Module implements WidgetInterface
 		if ($hook_from_theme == false) {
 			$this->registerDeoHook();
 		}
-		
-		# WHEN INSTALL MODULE, NOT NEED RESTORE DATABASE IN THEME
-		if (DeoHelper::get('INSTALLED_DEOTEMPLATE')) {
-			# INSERT DATABASE FROM THEME_DATASAMPLE
-			if (file_exists(_PS_MODULE_DIR_.'deotemplate/libs/DeoDataSample.php')) {
-				require_once(_PS_MODULE_DIR_.'deotemplate/libs/DeoDataSample.php');
-				$sample = new DeoDataSample();
-				$sample->processImport($this->name);
-			}
-			
-			# REMOVE FILE INDEX.PHP FOR TRANSLATE
-			if (file_exists(_PS_MODULE_DIR_.'deotemplate/libs/setup.php')) {
-				require_once(_PS_MODULE_DIR_.'deotemplate/libs/setup.php');
-				DeoPageSetup::processTranslateTheme();
-			}
 
-			# INSTALL SAMPLE IF NOT EXIST FOLDER samples.xml
-			DeoPageSetup::installSampleModule();
+		# INSERT DATABASE FROM THEME_DATASAMPLE
+		if (file_exists(_PS_MODULE_DIR_.'deotemplate/libs/DeoDataSample.php')) {
+			require_once(_PS_MODULE_DIR_.'deotemplate/libs/DeoDataSample.php');
+			$sample = new DeoDataSample();
+			$sample->processImport($this->name);
 		}
+		
+		# REMOVE FILE INDEX.PHP FOR TRANSLATE
+		if (file_exists(_PS_MODULE_DIR_.'deotemplate/libs/setup.php')) {
+			require_once(_PS_MODULE_DIR_.'deotemplate/libs/setup.php');
+			DeoPageSetup::processTranslateTheme();
+		}
+
+		# INSTALL SAMPLE IF NOT EXIST FOLDER samples.xml
+		DeoPageSetup::installSampleModule();
 
 	}
 	
