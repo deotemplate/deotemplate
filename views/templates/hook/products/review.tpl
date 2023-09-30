@@ -4,7 +4,7 @@
  *  @license   http://deotemplate.com - prestashop template provider
 *}
 {if (isset($nbReviews) && $nbReviews > 0) || (isset($show_zero_review) && $show_zero_review)}
-	<div class="deo-product-list-reviews{if isset($show_count) && $show_count} show_count{/if}{if isset($show_text_count) && $show_text_count} show_text_count{/if}{if isset($show_zero_review) && $show_zero_review} show_zero_review{/if}" {if (isset($nbReviews) && $nbReviews > 0)}itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating"{/if}>
+	<div class="deo-product-list-reviews{if isset($show_count) && $show_count} show_count{/if}{if isset($show_text_count) && $show_text_count} show_text_count{/if}{if isset($show_zero_review) && $show_zero_review} show_zero_review{/if}" {if (isset($nbReviews) && $nbReviews > 0) || (isset($show_zero_review) && $show_zero_review)}itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating"{/if}>
 		<div class="deo-product-list-reviews-wraper">
 			{if (int)$averageTotal != (float)$averageTotal}
 				{$averageTotal = (float)$averageTotal}
