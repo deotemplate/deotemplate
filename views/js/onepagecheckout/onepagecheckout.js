@@ -1244,7 +1244,7 @@ function handleStates(selectEl, states) {
 	selectEl.children('option:not(:first)').remove();
 
 	$.each(states, function (i, item) {
-		if ("1" === item.active) {
+		if (item.active) {
 			$(selectEl).append($('<option>', {
 				value: item.id_state,
 				text: item.name
