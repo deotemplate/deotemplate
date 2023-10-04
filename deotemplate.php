@@ -4337,7 +4337,6 @@ class DeoTemplate extends Module implements WidgetInterface
 				require_once(_PS_MODULE_DIR_.'deotemplate/libs/DeoDataSample.php');
 				$sample = new DeoDataSample();
 				DeoHelper::$id_shop = $shop->id;
-				DeoHelper::$id_shop = $shop->id;
 				$sample->_id_shop = $shop->id;
 				$sample->processImport('deotemplate');
 			}

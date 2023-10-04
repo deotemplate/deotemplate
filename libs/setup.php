@@ -806,12 +806,30 @@ if (!class_exists("DeoPageSetup")) {
 			$rows = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT m.id_deoblog_category FROM '._DB_PREFIX_.'deoblog_category m LEFT JOIN '._DB_PREFIX_.'deoblog_category_shop bs ON m.id_deoblog_category = bs.id_deoblog_category WHERE bs.id_shop = '.(int)($id_shop));
 			if (count($rows) > 0) {
 				foreach ($rows as $row) {
+					$id_deoblog_category = (int)$row['id_deoblog_category'];
 					$res = (bool)Db::getInstance()->execute('
-						DELETE FROM '._DB_PREFIX_.'deoblog_category WHERE id_deoblog_category = '.(int)$row['id_deoblog_category']);
+						DELETE FROM '._DB_PREFIX_.'deoblog_category WHERE id_deoblog_category = '.$id_deoblog_category);
 					$res = (bool)Db::getInstance()->execute('
-						DELETE FROM '._DB_PREFIX_.'deoblog_category_lang WHERE id_deoblog_category = '.(int)$row['id_deoblog_category']);
+						DELETE FROM '._DB_PREFIX_.'deoblog_category_lang WHERE id_deoblog_category = '.$id_deoblog_category);
 					$res = (bool)Db::getInstance()->execute('
-						DELETE FROM '._DB_PREFIX_.'deoblog_category_shop WHERE id_deoblog_category = '.(int)$row['id_deoblog_category']);
+						DELETE FROM '._DB_PREFIX_.'deoblog_category_shop WHERE id_deoblog_category = '.$id_deoblog_category);
+
+					$rows_blog = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT id_deoblog FROM '._DB_PREFIX_.'deoblog WHERE id_deoblog_category = '.$id_deoblog_category);
+					if (count($rows_blog) > 0) {
+						foreach ($rows_blog as $row_blog) {
+							$id_deoblog = (int)$row_blog['id_deoblog'];
+							$res = (bool)Db::getInstance()->execute('
+								DELETE FROM '._DB_PREFIX_.'deoblog WHERE id_deoblog = '.$id_deoblog);
+							$res = (bool)Db::getInstance()->execute('
+								DELETE FROM '._DB_PREFIX_.'deoblog WHERE id_deoblog = '.$id_deoblog);
+							$res = (bool)Db::getInstance()->execute('
+								DELETE FROM '._DB_PREFIX_.'deoblog WHERE id_deoblog = '.$id_deoblog);
+
+							$comment = new DeoBlogComment($id_deoblog);
+                			$comment->delete();
+						}
+					}
+
 				}
 			}
 		}
