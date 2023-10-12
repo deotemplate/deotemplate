@@ -45,7 +45,7 @@ if (!class_exists('DeoShortCodeBase')) {
             $this->str_relace_html_admin = DeoHelper::getStrReplaceHtmlAdmin();
             // Not run with multi_shop (ex block carousel cant get image in backend multi_shop)
             $this->theme_img_module = DeoHelper::getImgThemeUrl();
-            $this->theme_dir = _PS_THEME_DIR_;
+            $this->theme_dir = DeoHelper::getThemeDir();
         }
         /*
          * if file is not exist in theme folder, will get it in module folder, this function only apply for font end
@@ -53,9 +53,9 @@ if (!class_exists('DeoShortCodeBase')) {
 
         public function getDirOfFile($path_theme, $file, $path_module = '')
         {
-            if (file_exists(_PS_THEME_DIR_.$path_theme.'/'.$file)) {
+            if (file_exists(DeoHelper::getThemeDir().$path_theme.'/'.$file)) {
                 // validate module
-                return _PS_THEME_DIR_.$path_theme.'/'.$file;
+                return DeoHelper::getThemeDir().$path_theme.'/'.$file;
             } else {
                 if ($path_module) {
                     return _PS_MODULE_DIR_.'deotemplate/'.$path_module.$file;
@@ -409,7 +409,7 @@ if (!class_exists('DeoShortCodeBase')) {
 
             $assign['comparator_max_item'] = (int)Configuration::get('PS_COMPARATOR_MAX_ITEM');
             $assign['compared_products'] = array();
-            $assign['tpl_dir'] = _PS_THEME_DIR_;
+            $assign['tpl_dir'] = DeoHelper::getThemeDir();
             $assign['PS_CATALOG_MODE'] = (int) Configuration::get('PS_CATALOG_MODE');
             $assign['priceDisplay'] = ProductCore::getTaxCalculationMethod(Context::getContext()->cookie->id_customer);
             $assign['PS_STOCK_MANAGEMENT'] = (int) Configuration::get('PS_STOCK_MANAGEMENT');

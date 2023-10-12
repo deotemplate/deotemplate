@@ -16,7 +16,7 @@ class AdminDeoTranslateController extends ModuleAdminController
 	public function __construct()
 	{
 		parent::__construct();
-		$this->theme_dir = _PS_THEME_DIR_;
+		$this->theme_dir = DeoHelper::getThemeDir();
 		$this->bootstrap = true;
 		$this->max_image_size = (int)Configuration::get('PS_PRODUCT_PICTURE_MAX_SIZE');
 		$this->themeName = DeoHelper::getThemeName();

@@ -202,7 +202,7 @@ class DeoHelper
 			
 			$context->smarty->assign(array(
 				'currency'          			=> $currency,
-				'tpl_dir'             			=> _PS_THEME_DIR_,           
+				'tpl_dir'             			=> DeoHelper::getThemeDir(),           
 				'tpl_uri'             			=> _THEME_DIR_,
 				'link' 							=> $context->link,                           
 				'link_deo' 						=> $context->link,                          
@@ -324,20 +324,13 @@ class DeoHelper
 		return $js_folder;
 	}
 	
-	public static function getThemeKey($module_key = 'deo_module')
+	public static function getThemeKey()
 	{
 		static $theme_key;
-		if (!$theme_key) {
-			#CASE : load theme_key from ROOT/THEMES/THEME_NAME/config.xml
-			$xml = DeoFrameworkHelper::getThemeInfo(DeoHelper::getThemeName());
-			if (isset($xml->theme_key)) {
-				$theme_key = trim((string)$xml->theme_key);
-			}
+		if (!isset($theme_key)) {
+			$theme_key = DeoHelper::getThemeName();
 		}
-		if (!$theme_key && !empty($module_key)) {
-			#CASE : default load from module_key
-			$theme_key = $module_key;
-		}
+		
 		return $theme_key;
 	}
 
@@ -900,9 +893,9 @@ class DeoHelper
 			 * =>
 			 * => D:\localhost\prestashop\
 			 */
-			$directories = array(_PS_THEME_DIR_, _PS_PARENT_THEME_DIR_, _PS_ROOT_DIR_);
+			$directories = array(DeoHelper::getThemeDir(), _PS_PARENT_THEME_DIR_, _PS_ROOT_DIR_);
 			if (!self::isRelease()) {
-				$directories = array(_PS_THEME_DIR_.'assets/css/',_PS_THEME_DIR_, _PS_PARENT_THEME_DIR_, _PS_ROOT_DIR_);
+				$directories = array(DeoHelper::getThemeDir().'assets/css/',DeoHelper::getThemeDir(), _PS_PARENT_THEME_DIR_, _PS_ROOT_DIR_);
 			}
 		}
 		
@@ -1055,6 +1048,10 @@ class DeoHelper
 			copy($source, $target);
 		}
 	}
+
+	public static function getThemeDir(){
+		return _PS_ALL_THEMES_DIR_.Context::getContext()->shop->theme_name.'/';
+	}
 	
 	public static function getTemplate($tpl_name, $override_folder = '')
 	{
@@ -1114,7 +1111,7 @@ class DeoHelper
 	}
 
 	public static function checkFileOverrideExist($uri){
-		if (file_exists(_PS_THEME_DIR_.$uri)){
+		if (file_exists(DeoHelper::getThemeDir().$uri)){
 			return _PS_THEME_URI_.$uri;
 		}else if(file_exists(_PS_ROOT_DIR_.'/'.$uri)){
 			return _PS_ROOT_URI_.'/'.$uri;
@@ -1123,8 +1120,8 @@ class DeoHelper
 	}
 
 	public static function checkDirFileOverrideExist($uri){
-		if (file_exists(_PS_THEME_DIR_.$uri)){
-			return _PS_THEME_DIR_.$uri;
+		if (file_exists(DeoHelper::getThemeDir().$uri)){
+			return DeoHelper::getThemeDir().$uri;
 		}else if(file_exists(_PS_ROOT_DIR_.'/'.$uri)){
 			return _PS_ROOT_DIR_.'/'.$uri;
 		}
@@ -1239,27 +1236,27 @@ class DeoHelper
 				'module_profiles' => _PS_ROOT_DIR_.'/modules/deotemplate/views/templates/front/profiles/',
 				'module_onepagecheckout' => _PS_ROOT_DIR_.'/modules/deotemplate/views/templates/front/onepagecheckout/',
 				
-				'theme_deo_image' => _PS_THEME_DIR_.'assets/img/modules/deotemplate/images/',          // DeoHelper::getImgThemeDir()
-				'theme_deo_icon' => _PS_THEME_DIR_.'assets/img/modules/deotemplate/icon/',             // DeoHelper::getImgThemeDir('icon')
-				'theme_profile_logo' => _PS_THEME_DIR_.'profiles/images/',
-				'theme_profile_js' => _PS_THEME_DIR_.'modules/deotemplate/js/profiles/',
-				'theme_profile_css' => _PS_THEME_DIR_.'modules/deotemplate/css/profiles/',
-				'theme_position_js' => _PS_THEME_DIR_.'modules/deotemplate/js/positions/',
-				'theme_position_css' => _PS_THEME_DIR_.'modules/deotemplate/css/positions/',
-				'theme_product_lists_css' => _PS_THEME_DIR_.'modules/deotemplate/css/product_lists/',
-				'theme_export_profile' => _PS_THEME_DIR_.'profiles_export/',
-				'theme_download_profile' => _PS_THEME_DIR_.'profiles_download/',
-				'theme_image_deotemplate' => _PS_THEME_DIR_.'assets/img/modules/deotemplate/',
-				'theme_products' => _PS_THEME_DIR_.'products/',
-				'theme_details' => _PS_THEME_DIR_.'details/',
-				'theme_profiles' => _PS_THEME_DIR_.'profiles/',
-				'theme_onepagecheckout' => _PS_THEME_DIR_.'onepagecheckout/',
+				'theme_deo_image' => DeoHelper::getThemeDir().'assets/img/modules/deotemplate/images/',          // DeoHelper::getImgThemeDir()
+				'theme_deo_icon' => DeoHelper::getThemeDir().'assets/img/modules/deotemplate/icon/',             // DeoHelper::getImgThemeDir('icon')
+				'theme_profile_logo' => DeoHelper::getThemeDir().'profiles/images/',
+				'theme_profile_js' => DeoHelper::getThemeDir().'modules/deotemplate/js/profiles/',
+				'theme_profile_css' => DeoHelper::getThemeDir().'modules/deotemplate/css/profiles/',
+				'theme_position_js' => DeoHelper::getThemeDir().'modules/deotemplate/js/positions/',
+				'theme_position_css' => DeoHelper::getThemeDir().'modules/deotemplate/css/positions/',
+				'theme_product_lists_css' => DeoHelper::getThemeDir().'modules/deotemplate/css/product_lists/',
+				'theme_export_profile' => DeoHelper::getThemeDir().'profiles_export/',
+				'theme_download_profile' => DeoHelper::getThemeDir().'profiles_download/',
+				'theme_image_deotemplate' => DeoHelper::getThemeDir().'assets/img/modules/deotemplate/',
+				'theme_products' => DeoHelper::getThemeDir().'products/',
+				'theme_details' => DeoHelper::getThemeDir().'details/',
+				'theme_profiles' => DeoHelper::getThemeDir().'profiles/',
+				'theme_onepagecheckout' => DeoHelper::getThemeDir().'onepagecheckout/',
 			);
 			if (version_compare(_PS_VERSION_, '1.7.4.0', '>=') || version_compare(Configuration::get('PS_VERSION_DB'), '1.7.4.0', '>=')) {
-				$data['theme_products'] = _PS_THEME_DIR_.'modules/deotemplate/views/templates/front/products/';
-				$data['theme_details'] = _PS_THEME_DIR_.'modules/deotemplate/views/templates/front/details/';
-				$data['theme_profiles'] = _PS_THEME_DIR_.'modules/deotemplate/views/templates/front/profiles/';
-				$data['theme_onepagecheckout'] = _PS_THEME_DIR_.'modules/deotemplate/views/templates/front/onepagecheckout/';
+				$data['theme_products'] = DeoHelper::getThemeDir().'modules/deotemplate/views/templates/front/products/';
+				$data['theme_details'] = DeoHelper::getThemeDir().'modules/deotemplate/views/templates/front/details/';
+				$data['theme_profiles'] = DeoHelper::getThemeDir().'modules/deotemplate/views/templates/front/profiles/';
+				$data['theme_onepagecheckout'] = DeoHelper::getThemeDir().'modules/deotemplate/views/templates/front/onepagecheckout/';
 			}
 		}
 		
@@ -1400,14 +1397,14 @@ class DeoHelper
 	public static function saveCustomJsAndCss($key, $old_key = '')
 	{
 		if ($old_key) {
-			Tools::deleteFile(_PS_THEME_DIR_.DeoHelper::getCssDir().'positions/'.$old_key.'.css');
-			Tools::deleteFile(_PS_THEME_DIR_.DeoHelper::getJsDir().'positions/'.$old_key.'.js');
+			Tools::deleteFile(DeoHelper::getThemeDir().DeoHelper::getCssDir().'positions/'.$old_key.'.css');
+			Tools::deleteFile(DeoHelper::getThemeDir().DeoHelper::getJsDir().'positions/'.$old_key.'.js');
 		}
 		if (Tools::getValue('js') != '') {
-			DeoSetting::writeFile(_PS_THEME_DIR_.DeoHelper::getJsDir().'positions/', $key.'.js', Tools::getValue('js'));
+			DeoSetting::writeFile(DeoHelper::getThemeDir().DeoHelper::getJsDir().'positions/', $key.'.js', Tools::getValue('js'));
 		}
 		if (Tools::getValue('css') != '') {
-			DeoSetting::writeFile(_PS_THEME_DIR_.DeoHelper::getCssDir().'positions/', $key.'.css', Tools::getValue('css'));
+			DeoSetting::writeFile(DeoHelper::getThemeDir().DeoHelper::getCssDir().'positions/', $key.'.css', Tools::getValue('css'));
 		}
 	}
 

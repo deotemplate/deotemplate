@@ -37,8 +37,8 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 		$this->tpl_path = _PS_ROOT_DIR_.'/modules/'.$this->module_name.'/views/templates/admin';
 		parent::__construct();
 		$this->multishop_context = false;
-		$this->theme_dir = _PS_THEME_DIR_;
-		DeoHelper::loadShortCode(_PS_THEME_DIR_);
+		$this->theme_dir = DeoHelper::getThemeDir();
+		DeoHelper::loadShortCode(DeoHelper::getThemeDir());
 	}
 
 	public function initPageHeaderToolbar()

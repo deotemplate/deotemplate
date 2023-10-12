@@ -93,11 +93,11 @@ class AdminDeoProductsController extends ModuleAdminControllerCore
                 'icon' => 'icon-trash'
             )
         );
-        $this->theme_dir = _PS_THEME_DIR_;
+        $this->theme_dir = DeoHelper::getThemeDir();
 
         $this->_where = ' AND ps.id_shop='.(int)$this->context->shop->id;
         $this->theme_name = Context::getContext()->shop->theme_name;
-        $this->product_lists_css_folder = _PS_THEME_DIR_.DeoHelper::getCssDir().'products/';
+        $this->product_lists_css_folder = DeoHelper::getThemeDir().DeoHelper::getCssDir().'products/';
         $this->module_path = __PS_BASE_URI__.'modules/'.$this->module_name.'/';
         // $this->module_path_resource = $this->module_path.'views/';
         $this->str_search = array('_APAMP_', '_APQUOT_', '_APAPOST_', '_APTAB_', '_APNEWLINE_', '_APENTER_', '_APOBRACKET_', '_APCBRACKET_', '_APOCBRACKET_', '_APCCBRACKET_');

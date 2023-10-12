@@ -134,7 +134,7 @@ class DeoTemplateAjaxModuleFrontController extends ModuleFrontController
             );
 
             $uri = DeoHelper::getCssDir().'skins/skin-font.css';
-            $filecontent = Tools::file_get_contents(_PS_THEME_DIR_.'/'.$uri);
+            $filecontent = Tools::file_get_contents(DeoHelper::getThemeDir().'/'.$uri);
             $filecontent = str_replace(["font-family-base", "font-family-heading"], [$primary_font, $second_font], $filecontent);
 
             $result['success'] = true;
@@ -154,7 +154,7 @@ class DeoTemplateAjaxModuleFrontController extends ModuleFrontController
             );
 
             $uri = DeoHelper::getCssDir().'skins/skin-color.css';
-            $filecontent = Tools::file_get_contents(_PS_THEME_DIR_.'/'.$uri);
+            $filecontent = Tools::file_get_contents(DeoHelper::getThemeDir().'/'.$uri);
             $filecontent = str_replace(["#1bbc9b", "#169a7f", "27, 188, 155", "22, 154, 127"], [$primary_color, $second_color, $match_primary_color[1], $match_second_color[1]], $filecontent);
 
             $result['success'] = true;

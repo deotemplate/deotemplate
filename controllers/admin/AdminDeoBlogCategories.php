@@ -56,7 +56,7 @@ class AdminDeoBlogCategoriesController extends ModuleAdminController
         // update new direction for media
         $media_dir = DeoHelper::getMediaDir();
         $this->context->controller->addCss(__PS_BASE_URI__.'js/jquery/ui/themes/base/jquery.ui.tabs.css');
-        if (file_exists(_PS_THEME_DIR_.'css/modules/deotemplate/assets/admin/blog.css')) {
+        if (file_exists(DeoHelper::getThemeDir().'css/modules/deotemplate/assets/admin/blog.css')) {
             $this->context->controller->addCss(__PS_BASE_URI__.'modules/deotemplate/assets/admin/blog.css');
         } else {
             $this->context->controller->addCss(__PS_BASE_URI__.$media_dir.'css/admin/blog.css');
@@ -107,13 +107,13 @@ class AdminDeoBlogCategoriesController extends ModuleAdminController
         $this->context->controller->addCss(DeoHelper::getCssAdminDir().'tagify.css');
 
         $media_dir = DeoHelper::getMediaDir();
-        if (file_exists(_PS_THEME_DIR_.'js/modules/deotemplate/assets/admin/jquery.nestable.js')) {
+        if (file_exists(DeoHelper::getThemeDir().'js/modules/deotemplate/assets/admin/jquery.nestable.js')) {
             $this->context->controller->addJS(__PS_BASE_URI__.'modules/deotemplate/assets/admin/jquery.nestable.js');
         } else {
             $this->context->controller->addJS(__PS_BASE_URI__.$media_dir.'js/admin/jquery.nestable.js');
         }
 
-        if (file_exists(_PS_THEME_DIR_.'js/modules/deotemplate/assets/admin/blog.js')) {
+        if (file_exists(DeoHelper::getThemeDir().'js/modules/deotemplate/assets/admin/blog.js')) {
             $this->context->controller->addJS(__PS_BASE_URI__.'modules/deotemplate/assets/admin/blog.js');
         } else {
             $this->context->controller->addJS(__PS_BASE_URI__.$media_dir.'js/admin/blog.js');

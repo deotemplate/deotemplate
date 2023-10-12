@@ -115,7 +115,7 @@ if (!class_exists("DeoFrameworkHelper")) {
 
         public static function getThemeInfo()
         {
-            $xml = _PS_THEME_DIR_.'/config.xml';
+            $xml = DeoHelper::getThemeDir().'/config.xml';
 
             $output = array();
 
@@ -168,7 +168,7 @@ if (!class_exists("DeoFrameworkHelper")) {
         public static function getUserProfiles()
         {
 
-            $folder = _PS_THEME_DIR_.'/css/customize/*.css';
+            $folder = DeoHelper::getThemeDir().'/css/customize/*.css';
             $dirs = glob($folder);
             $output = array();
             if ($dirs)
@@ -182,7 +182,7 @@ if (!class_exists("DeoFrameworkHelper")) {
 
         public static function getLayoutDirections()
         {
-            $folder = _PS_THEME_DIR_.'/layout/*';
+            $folder = DeoHelper::getThemeDir().'/layout/*';
             $dirs = glob($folder, GLOB_ONLYDIR);
             $output = array();
             foreach ($dirs as $dir) {
@@ -196,7 +196,7 @@ if (!class_exists("DeoFrameworkHelper")) {
         public static function getSkins()
         {
             $folders = array();
-            $folders[] = _PS_THEME_DIR_.DeoHelper::getCssDir().'skins/*';
+            $folders[] = DeoHelper::getThemeDir().DeoHelper::getCssDir().'skins/*';
             $output = array();
             foreach ($folders as $folder) {
                 $dirs = glob($folder, GLOB_ONLYDIR);
@@ -250,7 +250,7 @@ if (!class_exists("DeoFrameworkHelper")) {
         {
             $result = array();
             foreach ($data as $key => $type) {
-                $uri_file = _PS_THEME_DIR_.DeoHelper::getJsDir().'customize/'.$key.$type.'.json';
+                $uri_file = DeoHelper::getThemeDir().DeoHelper::getJsDir().'customize/'.$key.$type.'.json';
                 // echo $uri_file;
                 if (file_exists($uri_file)) {
                     $inputs = $default = array();

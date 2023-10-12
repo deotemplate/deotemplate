@@ -87,7 +87,7 @@ class DeoTemplate extends Module implements WidgetInterface
 
 		$this->redirectFriendUrl();
 
-		if (file_exists(_PS_THEME_DIR_ . 'modules/deotemplate/css/styles_rtl.css') || file_exists(_PS_THEME_DIR_ . '/assets/css/modules/deotemplate/css/styles_rtl.css')) {
+		if (file_exists(DeoHelper::getThemeDir() . 'modules/deotemplate/css/styles_rtl.css') || file_exists(DeoHelper::getThemeDir() . '/assets/css/modules/deotemplate/css/styles_rtl.css')) {
 			$this->is_gen_rtl = true;
 		} else {
 			$this->is_gen_rtl = false;
@@ -717,7 +717,7 @@ class DeoTemplate extends Module implements WidgetInterface
 
 		// 	$result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
 		// 	$new_array = array();
-		// 	DeoHelper::loadShortCode(_PS_THEME_DIR_);
+		// 	DeoHelper::loadShortCode(DeoHelper::getThemeDir());
 
 		// 	// echo "<pre>";
 		// 	foreach ($result as $key => $value) {
@@ -750,7 +750,7 @@ class DeoTemplate extends Module implements WidgetInterface
 		// var_dump($controller_page_name) ;
 		if (isset(Context::getContext()->controller->controller_type) && in_array(Context::getContext()->controller->controller_type, array('front', 'modulefront'))) {
 			# WORK AT FRONTEND
-			DeoHelper::loadShortCode(_PS_THEME_DIR_);
+			DeoHelper::loadShortCode(DeoHelper::getThemeDir());
 
 			$this->profile_data = DeoTemplateProfilesModel::getActiveProfile('index');
 			$this->profile_param = json_decode($this->profile_data['params'], true);
@@ -2892,7 +2892,7 @@ class DeoTemplate extends Module implements WidgetInterface
 				
 				if (!empty($shortcode_code)) {
 					if (empty(DeoShortCodesBuilder::$shortcode_tags)) {
-						DeoHelper::loadShortCode(_PS_THEME_DIR_);
+						DeoHelper::loadShortCode(DeoHelper::getThemeDir());
 					}
 					
 					DeoHelper::setGlobalVariable($this->context);
@@ -3241,7 +3241,7 @@ class DeoTemplate extends Module implements WidgetInterface
 	public function hookDisplayDeoPanelTool($params)
 	{
 		$product_lists = $product_pages = $skins = $customize = array();
-		$panelTool = DeoHelper::getConfig('PANELTOOL');
+		$panelTool = (int) DeoHelper::getConfig('PANELTOOL');
 		if ($panelTool) {
 			$id_shop = $this->context->shop->id;
 			// get product detail layout
@@ -3761,14 +3761,14 @@ class DeoTemplate extends Module implements WidgetInterface
 					$name = $item['position'].$item['position_key'];
 					if (DeoHelper::getConfig('PANELTOOL')) {
 						$uri = DeoHelper::getCssDir().'positions/'.$name.'.css';
-						if (DeoHelper::checkDirFileOverrideExist($uri) && filesize(_PS_THEME_DIR_.$uri)){
+						if (DeoHelper::checkDirFileOverrideExist($uri) && filesize(DeoHelper::getThemeDir().$uri)){
 							if ($uri = DeoHelper::checkFileOverrideExist($uri)){
 								$array_css[] = $uri;
 							}
 						}
 
 						$uri = DeoHelper::getCssDir().'customize/'.$name.'.css';
-						if (DeoHelper::checkDirFileOverrideExist($uri) && filesize(_PS_THEME_DIR_.$uri)){
+						if (DeoHelper::checkDirFileOverrideExist($uri) && filesize(DeoHelper::getThemeDir().$uri)){
 							$uri = DeoHelper::checkFileOverrideExist($uri);
 							if ($uri && isset($this->profile_param['customize']) && $this->profile_param['customize']){
 								$array_css[] = $uri;

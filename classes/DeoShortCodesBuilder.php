@@ -457,7 +457,7 @@ if (!class_exists('DeoShortCodesBuilder')) {
             if (file_exists(_PS_MODULE_DIR_.'deotemplate/views/templates/hook/'.$type.'.tpl')) {
                 Tools::copy(_PS_MODULE_DIR_.'deotemplate/views/templates/hook/'.$type.'.tpl', $theme_dir.'modules/deotemplate/views/templates/hook/'.$val.'/'.$type.'.tpl');
             } else {
-                $theme_dir_ori = _PS_THEME_DIR_;
+                $theme_dir_ori = DeoHelper::getThemeDir();
                 Tools::copy(_PS_MODULE_DIR_.'deotemplate/views/templates/hook/DeoGeneral.tpl', $theme_dir_ori.'modules/deotemplate/views/templates/hook/'.$val.'/'.$type.'.tpl');
             }
         }

@@ -30,7 +30,7 @@ class DeoBlogImage
             $infor_image = pathinfo($image_link);
             Tools::copy($orginal_file, $img_url.'/'.$id_deoblog_category.'.'.$infor_image['extension']);
         }else{
-            $orginal_file = _PS_THEME_DIR_.'assets/img/modules/deotemplate/'.$image;
+            $orginal_file = DeoHelper::getThemeDir().'assets/img/modules/deotemplate/'.$image;
 
             if (!file_exists($orginal_file)){
                 return false;
@@ -78,7 +78,7 @@ class DeoBlogImage
                 }
             }
         }else{
-            $orginal_file = _PS_THEME_DIR_.'assets/img/modules/deotemplate/'.$image;
+            $orginal_file = DeoHelper::getThemeDir().'assets/img/modules/deotemplate/'.$image;
             if (!file_exists($orginal_file)){
                 return false;
             }

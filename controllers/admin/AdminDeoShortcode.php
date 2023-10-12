@@ -64,9 +64,9 @@ class AdminDeoShortcodeController extends ModuleAdminControllerCore
         $this->module_name = 'deotemplate';
         $this->tpl_path = _PS_ROOT_DIR_.'/modules/'.$this->module_name.'/views/templates/admin';
         self::$language = Language::getLanguages(false);
-        $this->theme_dir = _PS_THEME_DIR_;
+        $this->theme_dir = DeoHelper::getThemeDir();
         $this->tpl_controller_path = _PS_ROOT_DIR_.'/modules/'.$this->module_name.'/views/templates/admin/deo_shortcode/';
-        DeoHelper::loadShortCode(_PS_THEME_DIR_);
+        DeoHelper::loadShortCode(DeoHelper::getThemeDir());
     }
     
     public function initContent()

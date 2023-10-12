@@ -123,10 +123,10 @@ class AdminDeoProfilesController extends ModuleAdminController
         $this->_where = ' AND sa.id_shop='.(int)$this->context->shop->id;
         $this->theme_name = Context::getContext()->shop->theme_name;
         
-        $this->profile_css_folder = _PS_THEME_DIR_.DeoHelper::getCssDir().'profiles/';
-        $this->profile_js_folder = _PS_THEME_DIR_.DeoHelper::getJsDir().'profiles/';
-        $this->position_customize_css_folder = _PS_THEME_DIR_.DeoHelper::getCssDir().'customize/';
-        $this->position_customize_setting_folder = _PS_THEME_DIR_.DeoHelper::getJsDir().'customize/';
+        $this->profile_css_folder = DeoHelper::getThemeDir().DeoHelper::getCssDir().'profiles/';
+        $this->profile_js_folder = DeoHelper::getThemeDir().DeoHelper::getJsDir().'profiles/';
+        $this->position_customize_css_folder = DeoHelper::getThemeDir().DeoHelper::getCssDir().'customize/';
+        $this->position_customize_setting_folder = DeoHelper::getThemeDir().DeoHelper::getJsDir().'customize/';
 
         
         if (!is_dir($this->profile_css_folder)) {

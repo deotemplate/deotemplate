@@ -84,7 +84,7 @@ class AdminDeoOnepagecheckoutController extends ModuleAdminControllerCore
 				'icon' => 'icon-trash'
 			)
 		);
-		$this->theme_dir = _PS_THEME_DIR_;
+		$this->theme_dir = DeoHelper::getThemeDir();
 
 		$this->_where = ' AND ps.id_shop='.(int)$this->context->shop->id;
 		$this->theme_name = Context::getContext()->shop->theme_name;

@@ -87,11 +87,11 @@ class AdminDeoPositionsController extends ModuleAdminControllerCore
         );
         $this->_where = ' AND ps.id_shop='.(int)$this->context->shop->id;
 
-        $this->theme_dir           = _PS_THEME_DIR_;
-        $this->position_css_folder = _PS_THEME_DIR_.DeoHelper::getCssDir().'positions/';
-        $this->position_js_folder  = _PS_THEME_DIR_.DeoHelper::getJsDir().'positions/';
-        $this->position_customize_css_folder = _PS_THEME_DIR_.DeoHelper::getCssDir().'customize/';
-        $this->position_customize_setting_folder = _PS_THEME_DIR_.DeoHelper::getJsDir().'customize/';
+        $this->theme_dir           = DeoHelper::getThemeDir();
+        $this->position_css_folder = DeoHelper::getThemeDir().DeoHelper::getCssDir().'positions/';
+        $this->position_js_folder  = DeoHelper::getThemeDir().DeoHelper::getJsDir().'positions/';
+        $this->position_customize_css_folder = DeoHelper::getThemeDir().DeoHelper::getCssDir().'customize/';
+        $this->position_customize_setting_folder = DeoHelper::getThemeDir().DeoHelper::getJsDir().'customize/';
         
         if (!is_dir($this->position_css_folder)) {
             @mkdir($this->position_css_folder, 0755, true);

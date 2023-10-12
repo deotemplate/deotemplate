@@ -43,7 +43,7 @@ class AdminDeoThemeConfigureController extends ModuleAdminController
     public function __construct()
     {
         parent::__construct();
-        $this->theme_dir = _PS_THEME_DIR_;
+        $this->theme_dir = DeoHelper::getThemeDir();
         $this->folder_name = Tools::getIsset('imgDir') ? Tools::getValue('imgDir') : 'images';
         $this->bootstrap = true;
         $this->max_image_size = (int)Configuration::get('PS_PRODUCT_PICTURE_MAX_SIZE');
@@ -1867,10 +1867,10 @@ class AdminDeoThemeConfigureController extends ModuleAdminController
             $rgb_primary_color = preg_match('/\((.*?)\)/i', DeoHelper::convertHexToRgb($primary_color), $match_primary_color);
             $rgb_second_color = preg_match('/\((.*?)\)/i', DeoHelper::convertHexToRgb($second_color), $match_second_color);
             $uri_skin_original = DeoHelper::getCssDir().'skins/skin-color.css';
-            $file_skin = Tools::file_get_contents(_PS_THEME_DIR_.'/'.$uri_skin_original);
+            $file_skin = Tools::file_get_contents(DeoHelper::getThemeDir().'/'.$uri_skin_original);
             $file_skin = str_replace(["#1bbc9b", "#169a7f", "27, 188, 155", "22, 154, 127"], [$primary_color, $second_color, $match_primary_color[1], $match_second_color[1]], $file_skin);
             if ($file_content = $file_skin){
-                DeoSetting::writeFile(_PS_THEME_DIR_.DeoHelper::getCssDir().'skins', 'skin-custom.css', $file_content);
+                DeoSetting::writeFile(DeoHelper::getThemeDir().DeoHelper::getCssDir().'skins', 'skin-custom.css', $file_content);
             }
         }
 
@@ -1880,10 +1880,10 @@ class AdminDeoThemeConfigureController extends ModuleAdminController
         $second_font = Tools::getValue(DeoHelper::getConfigName('SECOND_CUSTOM_FONT'));
         if ($primary_font && $second_font){
             $uri_font_original = DeoHelper::getCssDir().'skins/skin-font.css';
-            $file_font = Tools::file_get_contents(_PS_THEME_DIR_.'/'.$uri_font_original);
+            $file_font = Tools::file_get_contents(DeoHelper::getThemeDir().'/'.$uri_font_original);
             $file_font = str_replace(["font-family-base", "font-family-heading"], [$primary_font, $second_font], $file_font);
             if ($file_content = $file_font){
-                DeoSetting::writeFile(_PS_THEME_DIR_.DeoHelper::getCssDir().'skins', 'font-custom.css', $file_content);
+                DeoSetting::writeFile(DeoHelper::getThemeDir().DeoHelper::getCssDir().'skins', 'font-custom.css', $file_content);
             }
         }
     }

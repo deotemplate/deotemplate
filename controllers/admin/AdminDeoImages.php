@@ -22,7 +22,7 @@ class AdminDeoImagesController extends ModuleAdminController
     public function __construct()
     {
         parent::__construct();
-        $this->theme_dir = _PS_THEME_DIR_;
+        $this->theme_dir = DeoHelper::getThemeDir();
         $this->folder_name = Tools::getIsset('imgDir') ? Tools::getValue('imgDir') : 'images';
         $this->bootstrap = true;
         $this->max_image_size = (int)Configuration::get('PS_PRODUCT_PICTURE_MAX_SIZE');
