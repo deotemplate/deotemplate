@@ -66,20 +66,20 @@ class DeoWidgetCategory extends DeoWidgetBaseModel
         $href = Context::getContext()->link->getAdminLink('AdminDeoImages').'&ajax=1&action=manageimage&imgDir=icon';
 
         $tree_html = $tree->render();
-		$orderby = array(
-			array(
-				'order' => 'position',
-				'name' => $this->l('Position')
-			),
-			array(
-				'order' => 'depth',
-				'name' => $this->l('Depth')
-			),
-			array(
-				'order' => 'name',
-				'name' => $this->l('Name')
-			)
-		);
+		// $orderby = array(
+		// 	array(
+		// 		'order' => 'position',
+		// 		'name' => $this->l('Position')
+		// 	),
+		// 	array(
+		// 		'order' => 'depth',
+		// 		'name' => $this->l('Depth')
+		// 	),
+		// 	array(
+		// 		'order' => 'name',
+		// 		'name' => $this->l('Name')
+		// 	)
+		// );
 
 		$new_field = array(
 			'legend' => array(
@@ -128,17 +128,17 @@ class DeoWidgetCategory extends DeoWidgetBaseModel
 					'desc' => $this->l('Level depth from category slected').'<br>'.$this->l('Depth have to > 0'),
 					'default' => '1',
 				),
-				array(
-					'type' => 'select',
-					'label' => $this->l('Order By:'),
-					'name' => 'orderby',
-					'default' => 'position',
-					'options' => array(
-						'query' => $orderby,
-						'id' => 'order',
-						'name' => 'name'
-					)
-				),
+				// array(
+				// 	'type' => 'select',
+				// 	'label' => $this->l('Order By:'),
+				// 	'name' => 'orderby',
+				// 	'default' => 'position',
+				// 	'options' => array(
+				// 		'query' => $orderby,
+				// 		'id' => 'order',
+				// 		'name' => 'name'
+				// 	)
+				// ),
 				array(
 					'type' => 'switch',
 					'label' => $this->l('Disable HTML tree structure'),
@@ -248,18 +248,18 @@ class DeoWidgetCategory extends DeoWidgetBaseModel
 		}
 
 		$sql_filter = '';
-		$sql_sort = '';
-		if (isset($setting['orderby']) && $setting['orderby']) {
-			if ($setting['orderby'] == 'depth') {
-				$sql_sort = ' ORDER BY c.`level_depth` ASC';
-			}
-			if ($setting['orderby'] == 'position') {
-				$sql_sort = ' ORDER BY c.`level_depth` ASC, category_shop.`position` ASC';
-			}
-			if ($setting['orderby'] == 'name') {
-				$sql_sort = ' ORDER BY c.`level_depth` ASC, cl.`name` ASC';
-			}
-		}
+		// $sql_sort = '';
+		// if (isset($setting['orderby']) && $setting['orderby']) {
+		// 	if ($setting['orderby'] == 'depth') {
+		// 		$sql_sort = ' ORDER BY c.`level_depth` ASC';
+		// 	}
+		// 	if ($setting['orderby'] == 'position') {
+		// 		$sql_sort = ' ORDER BY c.`level_depth` ASC, category_shop.`position` ASC';
+		// 	}
+		// 	if ($setting['orderby'] == 'name') {
+		// 		$sql_sort = ' ORDER BY c.`level_depth` ASC, cl.`name` ASC';
+		// 	}
+		// }
 		$catids = (isset($setting['categorybox']) && $setting['categorybox']) ? ($setting['categorybox']) : array();
 		$result = array();
 		$limit = (isset($setting['limit']) && $setting['limit']) ? ((int)$setting['limit']) : 0;
@@ -300,7 +300,7 @@ class DeoWidgetCategory extends DeoWidgetBaseModel
 
 		// validate module
 		unset($sql_filter);
-		unset($sql_sort);
+		// unset($sql_sort);
 
 		$output = array('type' => 'category', 'data' => $setting);
 		return $output;
@@ -441,7 +441,7 @@ class DeoWidgetCategory extends DeoWidgetBaseModel
 				'img_cat',
 				'disable_html_tree_structure',
 				'cate_depth',
-				'orderby',
+				// 'orderby',
 				'limit',
 				'quantity',
 				'description',

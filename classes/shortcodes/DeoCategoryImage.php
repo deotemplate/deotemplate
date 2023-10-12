@@ -55,20 +55,20 @@ class DeoCategoryImage extends DeoShortCodeBase
         } else {
             $tree->setRootCategory($root->id)->setUseCheckBox(true)->setSelectedCategories($selected_cat)->setInputName('categorybox');
         }
-        $orderby = array(
-            array(
-                'order' => 'position',
-                'name' => $this->l('Position')
-            ),
-            array(
-                'order' => 'depth',
-                'name' => $this->l('Depth')
-            ),
-            array(
-                'order' => 'name',
-                'name' => $this->l('Name')
-            )
-        );
+        // $orderby = array(
+        //     array(
+        //         'order' => 'position',
+        //         'name' => $this->l('Position')
+        //     ),
+        //     array(
+        //         'order' => 'depth',
+        //         'name' => $this->l('Depth')
+        //     ),
+        //     array(
+        //         'order' => 'name',
+        //         'name' => $this->l('Name')
+        //     )
+        // );
         
         $path_image = DeoHelper::getImgThemeUrl();
         Context::getContext()->smarty->assign('path_image', $path_image);
@@ -305,17 +305,17 @@ class DeoCategoryImage extends DeoShortCodeBase
                 'desc' => $this->l('Level depth from category slected').'<br>'.$this->l('Depth have to > 0'),
                 'form_group_class' => 'group_normal-image-category',
             ),
-            array(
-                'type' => 'select',
-                'label' => $this->l('Order By:'),
-                'name' => 'orderby',
-                'default' => 'position',
-                'options' => array(
-                    'query' => $orderby,
-                    'id' => 'order',
-                    'name' => 'name'
-                )
-            ),
+            // array(
+            //     'type' => 'select',
+            //     'label' => $this->l('Order By:'),
+            //     'name' => 'orderby',
+            //     'default' => 'position',
+            //     'options' => array(
+            //         'query' => $orderby,
+            //         'id' => 'order',
+            //         'name' => 'name'
+            //     )
+            // ),
             array(
                 'type' => 'text',
                 'label' => $this->l('Limit'),
@@ -437,18 +437,18 @@ class DeoCategoryImage extends DeoShortCodeBase
         }
 
         $sql_filter = '';
-        $sql_sort = '';
-        if (isset($form_atts['orderby']) && $form_atts['orderby']) {
-            if ($form_atts['orderby'] == 'depth') {
-                $sql_sort = ' ORDER BY c.`level_depth` ASC';
-            }
-            if ($form_atts['orderby'] == 'position') {
-                $sql_sort = ' ORDER BY c.`level_depth` ASC, category_shop.`position` ASC';
-            }
-            if ($form_atts['orderby'] == 'name') {
-                $sql_sort = ' ORDER BY c.`level_depth` ASC, cl.`name` ASC';
-            }
-        }
+        // $sql_sort = '';
+        // if (isset($form_atts['orderby']) && $form_atts['orderby']) {
+        //     if ($form_atts['orderby'] == 'depth') {
+        //         $sql_sort = ' ORDER BY c.`level_depth` ASC';
+        //     }
+        //     if ($form_atts['orderby'] == 'position') {
+        //         $sql_sort = ' ORDER BY c.`level_depth` ASC, category_shop.`position` ASC';
+        //     }
+        //     if ($form_atts['orderby'] == 'name') {
+        //         $sql_sort = ' ORDER BY c.`level_depth` ASC, cl.`name` ASC';
+        //     }
+        // }
         $catids = (isset($form_atts['categorybox']) && $form_atts['categorybox']) ? ($form_atts['categorybox']) : '';
         $catids = explode(',', $catids);
         $result = array();
@@ -542,7 +542,7 @@ class DeoCategoryImage extends DeoShortCodeBase
         
         // validate module
         unset($sql_filter);
-        unset($sql_sort);
+        // unset($sql_sort);
         return $assign;
     }
 
