@@ -1371,12 +1371,12 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 		$groups['params']['controller_id'] = (isset($groups['params']['controller_id']) && $groups['params']['controller_id']) ? $groups['params']['controller_id'] : '';
 		$params .= '[DeoRow'.DeoShortCodesBuilder::converParamToAttr($groups['params'], 'DeoRow', $this->theme_dir).']';
 		//check exception page
-		$this->saveExceptionConfig($hook, $groups['params']['specific_type'], $groups['params']['controller_pages'], $groups['params']['controller_id']);
+		// $this->saveExceptionConfig($hook, $groups['params']['specific_type'], $groups['params']['controller_pages'], $groups['params']['controller_id']);
 		foreach ($groups['columns'] as $columns) {
 			$columns['params']['specific_type'] = (isset($columns['params']['specific_type']) && $columns['params']['specific_type']) ? $columns['params']['specific_type'] : '';
 			$columns['params']['controller_pages'] = (isset($columns['params']['controller_pages']) && $columns['params']['controller_pages']) ? $columns['params']['controller_pages'] : '';
 			$columns['params']['controller_id'] = (isset($columns['params']['controller_id']) && $columns['params']['controller_id']) ? $columns['params']['controller_id'] : '';
-			$this->saveExceptionConfig($hook, $columns['params']['specific_type'], $columns['params']['controller_pages'], $columns['params']['controller_id']);
+			// $this->saveExceptionConfig($hook, $columns['params']['specific_type'], $columns['params']['controller_pages'], $columns['params']['controller_id']);
 			$params .= '[DeoColumn'.DeoShortCodesBuilder::converParamToAttr($columns['params'], 'DeoColumn', $this->theme_dir).']';
 			foreach ($columns['widgets'] as $widgets) {
 				if ($widgets['type'] == 'DeoTabs' || $widgets['type'] == 'DeoAccordions') {

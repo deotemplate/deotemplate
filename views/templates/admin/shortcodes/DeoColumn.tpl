@@ -8,11 +8,11 @@
 <p><select size="25" name="controller_pages_select" class="em_list" multiple="multiple">
 
 <option disabled="disabled">{$_core_}</option>
-{foreach from=$controllers key=k item=v}
-    {if in_array($k, $arr_controllers)}
-        <option value="{$k}" selected="selected">{$k}</option>
+{foreach from=$controllers key=k item=page}
+    {if in_array($page, $arr_controllers)}
+        <option value="{$page}" selected="selected">{$page}</option>
     {else}
-        <option value="{$k}">{$k}</option>
+        <option value="{$page}">{$page}</option>
     {/if}
 {/foreach}
 
@@ -23,9 +23,9 @@
         {foreach $modules_controllers item=cont}
             {assign var=key value="module-`$module`-`$cont`"}
             {if in_array($key, $arr_controllers)}
-                <option value="module-{$module}-{$cont}" selected="selected">module__{$module}__{$cont}</option>
+                <option value="module-{$module}-{$cont}" selected="selected">module_{$module}_{$cont}</option>
             {else}
-                <option value="module-{$module}-{$cont}">module__{$module}__{$cont}</option>
+                <option value="module-{$module}-{$cont}">module_{$module}_{$cont}</option>
             {/if}
         {/foreach}
     {/foreach}

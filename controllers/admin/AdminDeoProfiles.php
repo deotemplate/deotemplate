@@ -1013,21 +1013,13 @@ class AdminDeoProfilesController extends ModuleAdminController
         $controllers_modules = array();
         $arr_controllers_core = array();
         $arr_controllers_modules = array();
-        
-        if (DeoHelper::getConfig('CACHE_FRONT_CONTROLLER_EXCEPTION') === false) {
-            # First Time : write to config
-            $controllers_core = Dispatcher::getControllers(_PS_FRONT_CONTROLLER_DIR_);
-            DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_FRONT_CONTROLLER_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_core)));
-        } else {
-            # Second Time : read from config
-            $controllers_core = json_decode(DeoHelper::correctDeCodeData(DeoHelper::getConfig('CACHE_FRONT_CONTROLLER_EXCEPTION')), true);
-        }
 
-        foreach ($controllers_core as $controller => $controller_name) {
-            if ($controller == 'index') continue;
+        $other_pages = DeoSetting::getPages();
+        foreach ($other_pages as $page) {
+            if ($page == 'index') continue;
             $arr_controllers_core[] = array(
-                'id' => $controller,
-                'name' => $controller,
+                'id' => $page,
+                'name' => $page,
                 'val' => '1'
             );
         }

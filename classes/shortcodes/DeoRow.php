@@ -446,17 +446,16 @@ class DeoRow extends DeoShortCodeBase
         $controllers_modules = array();
         $controllers_modules['admin'] = array();
         $controllers_modules['front'] = array();
-        
         if (Tools::getValue('reloadControllerException')) {
-            $controllers = Dispatcher::getControllers(_PS_FRONT_CONTROLLER_DIR_);
+            $controllers = DeoSetting::getPages();
             $controllers_modules = array(
-                'admin' => Dispatcher::getModuleControllers('admin'),
+                // 'admin' => Dispatcher::getModuleControllers('admin'),
                 'front' => Dispatcher::getModuleControllers('front'),
             );
             
             DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_FRONT_CONTROLLER_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers)));
-            DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_FRONT_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['admin'])));
-            DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_ADMIN_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['front'])));
+            DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_FRONT_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['front'])));
+            // DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_ADMIN_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['admin'])));
         } else {
             if (DeoHelper::getConfig('CACHE_FRONT_CONTROLLER_EXCEPTION') === false) {
                 # First Time : write to config
@@ -469,30 +468,31 @@ class DeoRow extends DeoShortCodeBase
             
             if (DeoHelper::getConfig('CACHE_FRONT_MODULE_EXCEPTION') === false) {
                 # First Time : write to config
-                $controllers_modules['admin'] = Dispatcher::getModuleControllers('admin');
-                DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_FRONT_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['admin'])));
+                $controllers_modules['front'] = Dispatcher::getModuleControllers('front');
+                DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_FRONT_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['front'])));
             } else {
                 # Second Time : read from config
-                $controllers_modules['admin'] = json_decode(DeoHelper::correctDeCodeData(DeoHelper::getConfig('CACHE_FRONT_MODULE_EXCEPTION')), true);
+                $controllers_modules['front'] = json_decode(DeoHelper::correctDeCodeData(DeoHelper::getConfig('CACHE_FRONT_MODULE_EXCEPTION')), true);
             }
             
-            if (DeoHelper::getConfig('CACHE_ADMIN_MODULE_EXCEPTION') === false) {
-                # First Time : write to config
-                $controllers_modules['front'] = Dispatcher::getModuleControllers('front');
-                DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_ADMIN_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['front'])));
-            } else {
-                # Second Time : read from config
-                $controllers_modules['front'] = json_decode(DeoHelper::correctDeCodeData(DeoHelper::getConfig('CACHE_ADMIN_MODULE_EXCEPTION')), true);
-            }
+            // if (DeoHelper::getConfig('CACHE_ADMIN_MODULE_EXCEPTION') === false) {
+            //     # First Time : write to config
+            //     $controllers_modules['admin'] = Dispatcher::getModuleControllers('admin');
+            //     DeoHelper::updateValue(DeoHelper::getConfigName('CACHE_ADMIN_MODULE_EXCEPTION'), DeoHelper::correctEnCodeData(json_encode($controllers_modules['admin'])));
+            // } else {
+            //     # Second Time : read from config
+            //     $controllers_modules['admin'] = json_decode(DeoHelper::correctDeCodeData(DeoHelper::getConfig('CACHE_ADMIN_MODULE_EXCEPTION')), true);
+            // }
         }
         
         $controller = Tools::getValue('controller_pages');
         $arr_controllers = explode(',', $controller);
         $arr_controllers = array_map('trim', $arr_controllers);
 
-        $modules_controllers_type = array('front' => $this->l('Front modules controller'), 'admin' => $this->l('Admin modules controller'));
+        $modules_controllers_type = array('front' => $this->l('Front modules controller'));
+        // $modules_controllers_type = array('front' => $this->l('Front modules controller'), 'admin' => $this->l('Admin modules controller'));
         Context::getContext()->smarty->assign(array(
-            '_core_' => $this->l('________________________________________ CORE ________________________________________'),
+            '_core_' => $this->l('________________________________________ Core pages ________________________________________'),
             'controller' => $controller,
             'arr_controllers' => $arr_controllers,
             'controllers' => $controllers,

@@ -1100,6 +1100,19 @@ class DeoSetting
 		);
 	}
 
+	public static function getPages()
+	{
+		$pages = [
+            'address', 'addresses', 'authentication', 'manufacturer', 'cart', 'category', 'cms', 'contact',
+            'discount', 'guest-tracking', 'history', 'identity', 'index', 'my-account',
+            'order-confirmation', 'order-detail', 'order-follow', 'order', 'order-return',
+            'order-slip', 'pagenotfound', 'password', 'pdf-invoice', 'pdf-order-return', 'pdf-order-slip',
+            'prices-drop', 'product', 'registration', 'search', 'sitemap', 'stores', 'supplier',
+        ];
+
+        return $pages;
+    }
+
 	public static function requireShortCode($short_code, $theme_dir = '')
 	{
 		if (file_exists($theme_dir.'modules/deotemplate/classes/shortcodes/'.$short_code)) {
