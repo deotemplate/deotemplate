@@ -746,9 +746,10 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 				$result_profile['footer'] = $profile_obj->footer;
 				$result_profile['product'] = $profile_obj->product;
 				$result_profile['page'] = $profile_obj->page;
+				$result_profile['data_shop'] = $profile_obj->data_shop;
 			}
 		}
-		if (isset($result_profile) && $result_profile) {
+		if (isset($result_profile) && $result_profile && $result_profile['data_shop']['id_shop'] == $this->context->shop->id) {
 			$positions_dum = array();
 			// Get default config - data of current position
 			$positions_dum['mobile'] = $result_profile['mobile'] ? $model->getAllItemsByPosition('mobile', $result_profile['mobile'], $id_profile) : array('content' => $this->extractHookDefault(DeoHelper::getConfig('LIST_MOBILE_HOOK')), 'dataForm' => array());
