@@ -36,7 +36,7 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 		// $this->module_path_resource = $this->module_path.'views/';
 		$this->tpl_path = _PS_ROOT_DIR_.'/modules/'.$this->module_name.'/views/templates/admin';
 		parent::__construct();
-		$this->multishop_context = false;
+		// $this->multishop_context = true;
 		$this->theme_dir = DeoHelper::getThemeDir();
 		DeoHelper::loadShortCode(DeoHelper::getThemeDir());
 	}
@@ -727,6 +727,7 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 		$right_sidebar = false;
 		$model = new DeoTemplateModel();
 		$id_profile = Tools::getValue('id_deotemplate_profiles');
+
 		if (!$id_profile) {
 			$result_profile = DeoTemplateProfilesModel::getActiveProfile('index');
 			//if empty default profile redirect to other
@@ -737,6 +738,10 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 			$id_profile = $result_profile['id_deotemplate_profiles'];
 		} else {
 			$profile_obj = new DeoTemplateProfilesModel($id_profile);
+			echo "<pre>";
+			print_r($this->context->shop);
+			echo "</pre>";
+			die();
 			if ($profile_obj->id) {
 				$result_profile['id_deotemplate_profiles'] = $profile_obj->id;
 				$result_profile['name'] = $profile_obj->name;
