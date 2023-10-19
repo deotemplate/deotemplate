@@ -738,10 +738,6 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 			$id_profile = $result_profile['id_deotemplate_profiles'];
 		} else {
 			$profile_obj = new DeoTemplateProfilesModel($id_profile);
-			echo "<pre>";
-			print_r($this->context->shop);
-			echo "</pre>";
-			die();
 			if ($profile_obj->id) {
 				$result_profile['id_deotemplate_profiles'] = $profile_obj->id;
 				$result_profile['name'] = $profile_obj->name;
