@@ -1104,6 +1104,11 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 			
 	private function importData($language, $lang_id)
 	{
+		if (!isset($file['save_path'])){
+			$this->errors[] = $this->trans('That is not the file for module, please select other file.', array(), 'Admin.Notifications.Error');
+			return 'ERORR_ALL';
+		}
+		
 		$upload_file = new Uploader('importFile');
 		$upload_file->setAcceptTypes(array('xml'));
 		$file = $upload_file->process();
