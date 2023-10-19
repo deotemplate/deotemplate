@@ -233,9 +233,9 @@ class DeoHelper
 			// Not exit image or icon
 			$folder = rtrim($folder, '/');
 			if(empty($folder)){
-				$img_theme_url[$folder] = _THEME_IMG_DIR_.'modules/deotemplate/';
+				$img_theme_url[$folder] = DeoHelper::getThemeUri().'assets/img/'.'modules/deotemplate/';
 			}else{
-				$img_theme_url[$folder] = _THEME_IMG_DIR_.'modules/deotemplate/'.$folder .'/';
+				$img_theme_url[$folder] = DeoHelper::getThemeUri().'assets/img/'.'modules/deotemplate/'.$folder .'/';
 			}
 		}
 		return $img_theme_url[$folder];
@@ -1053,6 +1053,11 @@ class DeoHelper
 		return _PS_ALL_THEMES_DIR_.Context::getContext()->shop->theme_name.'/';
 	}
 	
+	public static function getThemeUri()
+	{
+		return __PS_BASE_URI__.'themes/'.Context::getContext()->shop->theme->getName().'/';
+	}
+
 	public static function getTemplate($tpl_name, $override_folder = '')
 	{
 		$module_name = 'deotemplate';

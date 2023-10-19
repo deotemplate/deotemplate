@@ -550,9 +550,6 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 		$this->context->controller->addJS(__PS_BASE_URI__.'js/jquery/ui/jquery.ui.dialog.min.js');
 		$this->context->controller->addJS(__PS_BASE_URI__.'js/jquery/ui/jquery.ui.draggable.min.js');
 		$this->context->controller->addJS(__PS_BASE_URI__.'js/jquery/ui/jquery.ui.droppable.min.js');
-		$this->context->controller->addJS(__PS_BASE_URI__.$media_dir.'js/megamenu/admin/form.js');
-		$this->context->controller->addCss(__PS_BASE_URI__.$media_dir.'css/megamenu/admin/liveeditor.css');
-		$this->context->controller->addJS(__PS_BASE_URI__.$media_dir.'js/megamenu/admin/liveeditor.js');
 
 		// load js + css for widget
 		$this->context->controller->addJS(_PS_JS_DIR_.'tiny_mce/tiny_mce.js');
@@ -561,10 +558,10 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 		$this->context->controller->addCSS(__PS_BASE_URI__.$media_dir.'css/megamenu/admin/jquery-validation-1.9.0/screen.css');
 		$this->context->controller->addCSS(__PS_BASE_URI__.$media_dir.'css/megamenu/admin/admin.css');
 		$this->context->controller->addJS(__PS_BASE_URI__.$media_dir.'js/megamenu/admin/show.js');
-
-		if (file_exists(DeoHelper::getThemeDir().DeoHelper::getCssDir().'megamenu/typo.css')) {
-			$this->context->controller->addCSS(_THEME_DIR_.DeoHelper::getCssDir().'megamenu/typo.css');
-		}
+		$this->context->controller->addJS(__PS_BASE_URI__.$media_dir.'js/megamenu/admin/form.js');
+		$this->context->controller->addCss(__PS_BASE_URI__.$media_dir.'css/megamenu/admin/liveeditor.css');
+		$this->context->controller->addJS(__PS_BASE_URI__.$media_dir.'js/megamenu/admin/liveeditor.js');
+		$this->context->controller->addCSS(DeoHelper::getThemeUri().DeoHelper::getCssDir().'megamenu/typo.css');
 
 		// show modal select image
 		$bo_theme = ((Validate::isLoadedObject($this->context->employee) && $this->context->employee->bo_theme) ? $this->context->employee->bo_theme : 'default');
