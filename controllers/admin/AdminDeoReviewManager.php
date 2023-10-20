@@ -55,6 +55,24 @@ class AdminDeoReviewManagerController extends ModuleAdminController
     
     public function renderForm()
     {
+        // if (Shop::isFeatureActive() || Shop::getTotalShops(false, null) >= 2) {
+        //     $shop_context = Shop::getContext();
+        //     $context = Context::getContext();
+
+        //     $noShopSelection = $shop_context == Shop::CONTEXT_ALL || ($context->controller->multishop_context_group == false && $shop_context == Shop::CONTEXT_GROUP);
+        //     if ($noShopSelection) {
+        //         // $current_shop_value = '';
+        //         $this->errors[] = $this->l('We not support this setting for All Stores');
+        //         return false;
+        //     } elseif ($shop_context == Shop::CONTEXT_GROUP) {
+        //         // $current_shop_value = 'g-' . Shop::getContextShopGroupID();
+        //         $this->errors[] = $this->l('We not support this setting for Group Stores');
+        //         return false;
+        //     } else {
+        //         // $current_shop_value = 's-' . Shop::getContextShopID();
+        //     }
+        // }
+
         if (Validate::isLoadedObject($this->object)) {
             $this->display = 'edit';
         } else {
@@ -128,7 +146,7 @@ class AdminDeoReviewManagerController extends ModuleAdminController
         
         $this->fields_form = array(
             'legend' => array(
-                'title' => $this->l('Add new criterion'),
+                'title' => $this->l('Review Criterion'),
                 'icon' => 'icon-cogs',
             ),
             'input' => array(

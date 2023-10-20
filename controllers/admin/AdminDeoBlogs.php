@@ -88,6 +88,31 @@ class AdminDeoBlogsController extends ModuleAdminController
     
     public function renderForm()
     {   
+        if (Shop::isFeatureActive() || Shop::getTotalShops(false, null) >= 2) {
+            $shop_context = Shop::getContext();
+            $context = Context::getContext();
+
+            $noShopSelection = $shop_context == Shop::CONTEXT_ALL || ($context->controller->multishop_context_group == false && $shop_context == Shop::CONTEXT_GROUP);
+            if ($noShopSelection) {
+                // $current_shop_value = '';
+                $this->errors[] = $this->l('We not support this setting for All Stores');
+                return false;
+            } elseif ($shop_context == Shop::CONTEXT_GROUP) {
+                // $current_shop_value = 'g-' . Shop::getContextShopGroupID();
+                $this->errors[] = $this->l('We not support this setting for Group Stores');
+                return false;
+            } else {
+                // $current_shop_value = 's-' . Shop::getContextShopID();
+            }
+
+            if (Tools::getIsset('id_deoblog')) {
+                if ($this->object->data_shop['id_shop'] != Context::getContext()->shop->id){
+                    $this->errors[] = $this->l('This ID is not exist in this store!');
+                    return false;
+                }
+            }
+        }
+
         $bo_theme = ((Validate::isLoadedObject($this->context->employee) && $this->context->employee->bo_theme) ? $this->context->employee->bo_theme : 'default');
         if (!file_exists(_PS_BO_ALL_THEMES_DIR_.$bo_theme.DIRECTORY_SEPARATOR.'template')) {
             $bo_theme = 'default';

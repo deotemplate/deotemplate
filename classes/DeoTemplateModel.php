@@ -236,11 +236,10 @@ class DeoTemplateModel extends ObjectModel
                 $data_lang[$row['id_deotemplate']]['params'][$row['id_lang']] = $row['params'];
             }
         }
-        //$data_hook = array_flip(DeoSetting::getHookHome());
-        // var_dump(DeoHelper::getConfigName('LIST_' . Tools::strtoupper($pos).'_HOOK'));
-        // die();
+        
         $hook_config = DeoHelper::getConfig('LIST_' . Tools::strtoupper($pos).'_HOOK');
-        $hook_config = explode(',', $hook_config ? $hook_config : DeoSetting::getHook($pos));
+        $hook_config = ($hook_config != '' && $hook_config) ? explode(',', $hook_config) : DeoSetting::getHook($pos);
+ 
         $data_hook = array_flip($hook_config);
         foreach ($data_lang as $row) {
             //process params

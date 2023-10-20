@@ -78,7 +78,7 @@ if (!class_exists("DeoPageSetup")) {
 				),
 				array(
 					'class_name' => 'AdminDeoReviewManager',
-					'name' => 'Review Product',
+					'name' => 'Reviews Product',
 				),
 				array(
 					'class_name' => 'AdminDeoBlogDashboard',

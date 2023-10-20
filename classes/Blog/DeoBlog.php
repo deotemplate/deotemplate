@@ -41,6 +41,7 @@ class DeoBlog extends ObjectModel
         'table' => 'deoblog',
         'primary' => 'id_deoblog',
         'multilang' => true,
+        'multishop' => true,
         'fields' => array(
             'id_deoblog_category' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'),
             'image' => array('type' => self::TYPE_STRING, 'validate' => 'isCatalogName'),
@@ -68,6 +69,27 @@ class DeoBlog extends ObjectModel
         'objectNodeName' => 'content',
         'objectsNodeName' => 'content_management_system',
     );
+
+    public function __construct($id = null, $id_lang = null, $id_shop = null, Context $context = null)
+    {
+        // validate module
+        unset($context);
+        parent::__construct($id, $id_lang, $id_shop);
+        $this->loadDataShop();
+    }
+
+    public function loadDataShop()
+    {
+        if ($this->def['multishop'] == true) {
+            $sql = 'SELECT * FROM ' ._DB_PREFIX_.$this->def['table'] . '_shop WHERE ' .$this->def['primary'] . ' =' .(int)$this->id;
+            $this->data_shop = Db::getInstance()->getRow($sql);
+            
+            if (isset($this->data_shop['active'])) {
+                $this->active = $this->data_shop['active'];
+            }
+        }
+    }
+
     public static function findByRewrite($parrams)
     {
         $id_lang = (int)Context::getContext()->language->id;

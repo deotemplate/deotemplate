@@ -678,6 +678,24 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 
 	public function renderList()
 	{
+		if (Shop::isFeatureActive() || Shop::getTotalShops(false, null) >= 2) {
+			$shop_context = Shop::getContext();
+			$context = Context::getContext();
+
+			$noShopSelection = $shop_context == Shop::CONTEXT_ALL || ($context->controller->multishop_context_group == false && $shop_context == Shop::CONTEXT_GROUP);
+			if ($noShopSelection) {
+				// $current_shop_value = '';
+				$this->errors[] = $this->l('We not support this setting for All Stores');
+				return false;
+			} elseif ($shop_context == Shop::CONTEXT_GROUP) {
+				// $current_shop_value = 'g-' . Shop::getContextShopGroupID();
+				$this->errors[] = $this->l('We not support this setting for Group Stores');
+				return false;
+			} else {
+				// $current_shop_value = 's-' . Shop::getContextShopID();
+			}
+		}
+
 		$this->context->controller->addJqueryUI('ui.sortable');
 		$this->context->controller->addJqueryUI('ui.draggable');
 		$this->context->controller->addJqueryUI('ui.droppable');
@@ -1037,6 +1055,7 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 			return $tpl->fetch();
 		} else {
 			$this->errors[] = $this->l('Your Profile ID is not exist!');
+			return false;
 		}
 	}
 	

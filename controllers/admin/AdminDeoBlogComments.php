@@ -76,6 +76,34 @@ class AdminDeoBlogCommentsController extends ModuleAdminController
 
     public function renderForm()
     {
+        if (Shop::isFeatureActive() || Shop::getTotalShops(false, null) >= 2) {
+            $shop_context = Shop::getContext();
+            $context = Context::getContext();
+
+            $noShopSelection = $shop_context == Shop::CONTEXT_ALL || ($context->controller->multishop_context_group == false && $shop_context == Shop::CONTEXT_GROUP);
+            if ($noShopSelection) {
+                // $current_shop_value = '';
+                $this->errors[] = $this->l('We not support this setting for All Stores');
+                return false;
+            } elseif ($shop_context == Shop::CONTEXT_GROUP) {
+                // $current_shop_value = 'g-' . Shop::getContextShopGroupID();
+                $this->errors[] = $this->l('We not support this setting for Group Stores');
+                return false;
+            } else {
+                // $current_shop_value = 's-' . Shop::getContextShopID();
+            }
+
+            if (Tools::getIsset('id_deoblog_comment')) {
+                $sql = 'SELECT id_shop FROM ' ._DB_PREFIX_.'deoblog_comment WHERE id_deoblog_comment = '.Tools::getValue('id_deoblog_comment');
+                $data_shop = Db::getInstance()->getRow($sql);
+
+                if ($data_shop['id_shop'] != Context::getContext()->shop->id){
+                    $this->errors[] = $this->l('This ID is not exist in this store!');
+                    return false;
+                }
+            }
+        }
+
         if (!$this->loadObject(true)) {
             if (Validate::isLoadedObject($this->object)) {
                 $this->display = 'edit';

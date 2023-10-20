@@ -58,6 +58,19 @@ class DeoTemplateDetailsModel extends ObjectModel
         // validate module
         unset($context);
         parent::__construct($id, $id_lang, $id_shop);
+        $this->loadDataShop();
+    }
+
+    public function loadDataShop()
+    {
+        if ($this->def['multishop'] == true) {
+            $sql = 'SELECT * FROM ' ._DB_PREFIX_.$this->def['table'] . '_shop WHERE ' .$this->def['primary'] . ' =' .(int)$this->id;
+            $this->data_shop = Db::getInstance()->getRow($sql);
+            
+            if (isset($this->data_shop['active'])) {
+                $this->active = $this->data_shop['active'];
+            }
+        }
     }
 
     public function add($autodate = true, $null_values = false)

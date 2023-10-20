@@ -611,9 +611,8 @@ class DeoTemplate extends Module implements WidgetInterface
 		if ($order_by == 'orderprice') {
 			Tools::orderbyPrice($result, $order_way);
 		}
-		// print_r($result);
-		// die();
-		if (!$result) {
+
+		if (empty($result)) {
 			return array();
 		}
 
@@ -628,36 +627,60 @@ class DeoTemplate extends Module implements WidgetInterface
 		$assembler = new ProductAssembler(Context::getContext());
 		$presenterFactory = new ProductPresenterFactory(Context::getContext());
 		$presentationSettings = $presenterFactory->getPresentationSettings();
-		$presenter = new ProductListingPresenter(
-			new ImageRetriever(
-				Context::getContext()->link
-			),
-			Context::getContext()->link,
-			new PriceFormatter(),
-			new ProductColorsRetriever(),
-			Context::getContext()->getTranslator()
-		);
+		if (version_compare(_PS_VERSION_, '1.7.5', '>=')) {
+            $presenter = new \PrestaShop\PrestaShop\Adapter\Presenter\Product\ProductListingPresenter(
+                new ImageRetriever(
+                    Context::getContext()->link
+                ),
+                $this->context->link,
+                new PriceFormatter(),
+                new ProductColorsRetriever(),
+               	Context::getContext()->getTranslator()
+            );
+        } else {
+            $presenter = new \PrestaShop\PrestaShop\Core\Product\ProductListingPresenter(
+                new ImageRetriever(
+                    Context::getContext()->link
+                ),
+                Context::getContext()->link,
+                new PriceFormatter(),
+                new ProductColorsRetriever(),
+              	Context::getContext()->getTranslator()
+            );
+        }
+
 		
 		$products_for_template = array();
 		foreach ($products as $rawProduct)
 		{
-			$product_temp = $presenter->present(
+			$products_for_template[] = $presenter->present(
 				$presentationSettings,
 				$assembler->assembleProduct($rawProduct),
 				Context::getContext()->language
 			);
+
+			// $product_temp = $presenter->present(
+			// 	$presentationSettings,
+			// 	$assembler->assembleProduct($rawProduct),
+			// 	Context::getContext()->language
+			// );
 			
 			# FIX 1.7.5.0
-			if(is_object($product_temp) && method_exists($product_temp, 'jsonSerialize'))
-			{
-				$product_temp = $product_temp->jsonSerialize();
-			}
+			// if(is_object($product_temp) && method_exists($product_temp, 'jsonSerialize'))
+			// {
+			// 	$product_temp = $product_temp->jsonSerialize();
+			// }
 			
 			# ADD SHORTCODE TO PRODUCT DESCRIPTION AND PRODUCT SHORT DESCRIPTION
 			// $product_temp['description'] = $this->buildShortCode($product_temp['description']);
 			// $product_temp['description_short'] = $this->buildShortCode($product_temp['description_short']);
-			$products_for_template[] = $product_temp;
+			// $products_for_template[] = $product_temp;
 		}
+
+		// echo '<pre>';
+		// print_r($products_for_template);
+		// echo '</pre>';
+		// die();
 		return $products_for_template;
 	}
 

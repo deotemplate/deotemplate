@@ -56,6 +56,7 @@ class DeoBlogCategory extends ObjectModel
         'table' => 'deoblog_category',
         'primary' => 'id_deoblog_category',
         'multilang' => true,
+        'multishop' => true,
         'fields' => array(
             'image' => array('type' => self::TYPE_STRING, 'validate' => 'isCatalogName'),
             'use_image_link' => array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
@@ -79,6 +80,26 @@ class DeoBlogCategory extends ObjectModel
             'randkey' => array('type' => self::TYPE_STRING, 'lang' => false, 'size' => 255),
         ),
     );
+
+    public function __construct($id = null, $id_lang = null, $id_shop = null, Context $context = null)
+    {
+        // validate module
+        unset($context);
+        parent::__construct($id, $id_lang, $id_shop);
+        $this->loadDataShop();
+    }
+
+    public function loadDataShop()
+    {
+        if ($this->def['multishop'] == true) {
+            $sql = 'SELECT * FROM ' ._DB_PREFIX_.$this->def['table'] . '_shop WHERE ' .$this->def['primary'] . ' =' .(int)$this->id;
+            $this->data_shop = Db::getInstance()->getRow($sql);
+            
+            if (isset($this->data_shop['active'])) {
+                $this->active = $this->data_shop['active'];
+            }
+        }
+    }
 
     public static function findByRewrite($parrams)
     {

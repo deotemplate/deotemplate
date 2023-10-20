@@ -249,6 +249,7 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 			}
 		}
 
+
 		$this->context->controller->addCss(DeoHelper::getCssAdminDir().'admin/imagemanager.css');
 		$this->context->controller->addJs(DeoHelper::getJsAdminDir().'admin/imagemanager.js');
 		// $this->displaySuccessMessage();
@@ -284,6 +285,32 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 		}
 
 		if (Tools::getValue('configuregroup')){
+			if (Shop::isFeatureActive() || Shop::getTotalShops(false, null) >= 2) {
+				$shop_context = Shop::getContext();
+				$context = Context::getContext();
+
+				$noShopSelection = $shop_context == Shop::CONTEXT_ALL || ($context->controller->multishop_context_group == false && $shop_context == Shop::CONTEXT_GROUP);
+				if ($noShopSelection) {
+					// $current_shop_value = '';
+					$this->errors[] = $this->l('We not support this setting for All Stores');
+					return false;
+				} elseif ($shop_context == Shop::CONTEXT_GROUP) {
+					// $current_shop_value = 'g-' . Shop::getContextShopGroupID();
+					$this->errors[] = $this->l('We not support this setting for Group Stores');
+					return false;
+				} else {
+					// $current_shop_value = 's-' . Shop::getContextShopID();
+				}
+
+				$sql = 'SELECT id_shop FROM ' ._DB_PREFIX_.'deomegamenu_group WHERE id_deomegamenu_group = '.Tools::getValue('id_group');
+            	$data_shop = Db::getInstance()->getRow($sql);
+
+				if ($data_shop['id_shop'] != Context::getContext()->shop->id){
+					$this->errors[] = $this->l('This ID is not exist in this store!');
+					return false;
+				}
+			}
+
 			$return = $this->renderGroupConfig();
 			return $return;
 		}else{
@@ -386,11 +413,6 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 				}
 			}
 		}
-
-		// echo "<pre>";
-		// print_r($this->group_data);
-		// print_r($this->getGroupFieldsValues());
-		// die('</pre>');
 
 		// build form 
 		$description = $this->l('Add New Group');
