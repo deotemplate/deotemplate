@@ -230,7 +230,7 @@ class DeoBlog extends ObjectModel
         }
 
         $query = '
-            SELECT b.`id_deoblog`, b.`id_deoblog_category`, b.`rate_image`, b.`image_link`, b.`use_image_link`, b.`image`, b.`id_employee`, b.`author_name`, b.`date_add`, b.`views`, l.`link_rewrite`, l.`meta_keywords`, l.`description`, l.`meta_title` as title, blc.`link_rewrite` as category_link_rewrite , blc.`title` as category_title
+            SELECT DISTINCT b.`id_deoblog`, b.`id_deoblog_category`, b.`rate_image`, b.`image_link`, b.`use_image_link`, b.`image`, b.`id_employee`, b.`author_name`, b.`date_add`, b.`views`, l.`link_rewrite`, l.`meta_keywords`, l.`description`, l.`meta_title` as title, blc.`link_rewrite` as category_link_rewrite , blc.`title` as category_title
             FROM  '._DB_PREFIX_.'deoblog b
             LEFT JOIN '._DB_PREFIX_.'deoblog_lang l ON b.id_deoblog = l.id_deoblog 
             LEFT JOIN '._DB_PREFIX_.'deoblog_shop s ON  b.id_deoblog = s.id_deoblog
@@ -266,7 +266,7 @@ class DeoBlog extends ObjectModel
         if (!is_null($nb_products) && !is_null($page_number)){
             $query .= ' LIMIT '.(int)(($page_number - 1) * $nb_products).', '.(int)$nb_products;
         }
-             
+        
         $data = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
         return $data;
