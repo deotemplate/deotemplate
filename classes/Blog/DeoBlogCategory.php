@@ -107,11 +107,11 @@ class DeoBlogCategory extends ObjectModel
         $id_shop = (int)Context::getContext()->shop->id;
         $id = 0;
         if (isset($parrams['link_rewrite']) && $parrams['link_rewrite']) {
-            $sql = 'SELECT cl.id_deoblog_category FROM '._DB_PREFIX_.'deoblog_category_lang cl';
-            $sql .= ' INNER JOIN '._DB_PREFIX_.'deoblog_category_shop cs on cl.id_deoblog_category=cs.id_deoblog_category AND id_shop='.$id_shop;
-            $sql .= ' INNER JOIN '._DB_PREFIX_.'deoblog_category      cc on cl.id_deoblog_category=cc.id_deoblog_category AND cl.id_deoblog_category != cc.id_parent';  # FIX : PARENT IS NOT THIS CATEGORY
-            //$sql .= ' WHERE id_lang = ' . $id_lang ." AND link_rewrite = '".$parrams['link_rewrite']."'";
-            $sql .= " AND link_rewrite = '".pSQL($parrams['link_rewrite'])."'";
+            $sql = 'SELECT bcl.id_deoblog_category 
+                    FROM '._DB_PREFIX_.'deoblog_category_lang bcl
+                    INNER JOIN '._DB_PREFIX_.'deoblog_category bc on bc.id_deoblog_category=bcl.id_deoblog_category 
+                    INNER JOIN '._DB_PREFIX_.'deoblog_category_shop bcs on bcs.id_shop=bc.id_shop 
+                    WHERE bcl.id_lang='.$id_lang.' AND bcs.id_shop='.$id_shop.' AND bc.id_deoblog_category != bc.id_parent AND bcl.link_rewrite = '.pSQL($parrams['link_rewrite']);
 
             if ($row = Db::getInstance()->getRow($sql)) {
                 $id = $row['id_deoblog_category'];
@@ -215,54 +215,20 @@ class DeoBlogCategory extends ObjectModel
         return $parentdeoblog_category->level_depth + 1;
     }
 
-    public function updatePosition($way, $position)
-    {
-        $sql = 'SELECT cp.`id_deoblog_category`, cp.`position`, cp.`id_parent`
-            FROM `'._DB_PREFIX_.'deoblog_category` cp
-            WHERE cp.`id_parent` = '.(int)$this->id_parent.'
-            ORDER BY cp.`position` ASC';
-        !$res = Db::getInstance()->executeS($sql);
-        if ($res) {
-            return false;
-        }
-        
-        foreach ($res as $menu) {
-            if ((int)$menu['id_deoblog_category'] == (int)$this->id) {
-                $moved_menu = $menu;
-            }
-        }
-
-        if (!isset($moved_menu) || !isset($position)) {
-            return false;
-        }
-        // < and > statements rather than BETWEEN operator
-        // since BETWEEN is treated differently according to databases
-        return (Db::getInstance()->execute('
-            UPDATE `'._DB_PREFIX_.'deoblog_category`
-            SET `position`= `position` '.($way ? '- 1' : '+ 1').'
-            WHERE `position`
-            '.($way ? '> '.(int)$moved_menu['position'].' AND `position` <= '.(int)$position : '< '.(int)$moved_menu['position'].' AND `position` >= '.(int)$position).'
-            AND `id_parent`='.(int)$moved_menu['id_parent']) && Db::getInstance()->execute('
-            UPDATE `'._DB_PREFIX_.'deoblog_category`
-            SET `position` = '.(int)$position.'
-            WHERE `id_parent` = '.(int)$moved_menu['id_parent'].'
-            AND `id_deoblog_category`='.(int)$moved_menu['id_deoblog_category']));
-    }
-
     public static function cleanPositions($id_parent)
     {
         $result = Db::getInstance()->executeS('
-        SELECT `id_deoblog_category`
-        FROM `'._DB_PREFIX_.'deoblog_category`
-        WHERE `id_parent` = '.(int)$id_parent.'
-        ORDER BY `position`');
+                SELECT `id_deoblog_category`
+                FROM `'._DB_PREFIX_.'deoblog_category`
+                WHERE `id_parent` = '.(int)$id_parent.'
+                ORDER BY `position`');
         $sizeof = count($result);
+
         for ($i = 0; $i < $sizeof; ++$i) {
-            $sql = '
-            UPDATE `'._DB_PREFIX_.'deoblog_category`
-            SET `position` = '.(int)$i.'
-            WHERE `id_parent` = '.(int)$id_parent.'
-            AND `id_deoblog_category` = '.(int)$result[$i]['id_deoblog_category'];
+            $sql = 'UPDATE `'._DB_PREFIX_.'deoblog_category`
+                    SET `position` = '.(int)$i.'
+                    WHERE `id_parent` = '.(int)$id_parent.'
+                    AND `id_deoblog_category` = '.(int)$result[$i]['id_deoblog_category'];
             Db::getInstance()->execute($sql);
         }
         return true;
@@ -271,23 +237,6 @@ class DeoBlogCategory extends ObjectModel
     public static function getLastPosition($id_parent)
     {
         return (Db::getInstance()->getValue('SELECT MAX(position)+1 FROM `'._DB_PREFIX_.'deoblog_category` WHERE `id_parent` = '.(int)$id_parent));
-    }
-
-    public function getInfo($id_deoblog_category, $id_lang = null, $id_shop = null)
-    {
-        if (!$id_lang) {
-            $id_lang = Context::getContext()->language->id;
-        }
-        if (!$id_shop) {
-            $id_shop = Context::getContext()->shop->id;
-        }
-        $sql = 'SELECT m.*, md.title, md.description, md.content_text
-                FROM '._DB_PREFIX_.'megamenu m
-                LEFT JOIN '._DB_PREFIX_.'deoblog_category_lang md ON m.id_deoblog_category = md.id_deoblog_category AND md.id_lang = '.(int)$id_lang
-                .' JOIN '._DB_PREFIX_.'deoblog_category_shop bs ON m.id_deoblog_category = bs.id_deoblog_category AND bs.id_shop = '.(int)($id_shop);
-        $sql .= ' WHERE m.id_deoblog_category='.(int)$id_deoblog_category;
-
-        return Db::getInstance()->executeS($sql);
     }
 
     public function getChild($id_deoblog_category = null, $id_lang = null, $id_shop = null, $active = false)
@@ -299,19 +248,20 @@ class DeoBlogCategory extends ObjectModel
             $id_shop = Context::getContext()->shop->id;
         }
 
-        $sql = ' SELECT m.*, md.*
-                FROM '._DB_PREFIX_.'deoblog_category m
-                LEFT JOIN '._DB_PREFIX_.'deoblog_category_lang md ON m.id_deoblog_category = md.id_deoblog_category AND md.id_lang = '.(int)$id_lang
-                .' JOIN '._DB_PREFIX_.'deoblog_category_shop bs ON m.id_deoblog_category = bs.id_deoblog_category AND bs.id_shop = '.(int)($id_shop);
+        $sql = 'SELECT bc.*, bcl.*
+                FROM '._DB_PREFIX_.'deoblog_category bc
+                LEFT JOIN '._DB_PREFIX_.'deoblog_category_lang bcl ON bc.id_deoblog_category = bcl.id_deoblog_category  
+                LEFT JOIN '._DB_PREFIX_.'deoblog_category_shop bcs ON bc.id_deoblog_category = bcs.id_deoblog_category
+                WHERE bcl.id_lang = '.(int)$id_lang.' AND bcs.id_shop = '.(int)$id_shop.'';
         if ($active) {
-            $sql .= ' WHERE m.`active`=1 ';
+            $sql .= ' AND bc.`active`=1 ';
         }
 
         if ($id_deoblog_category != null) {
             # validate module
-            $sql .= ' WHERE id_parent='.(int)$id_deoblog_category;
+            $sql .= ' AND bc.id_parent='.(int)$id_deoblog_category;
         }
-        $sql .= ' ORDER BY `position` ';
+        $sql .= ' ORDER BY bc.`position` ';
         return Db::getInstance()->executeS($sql);
     }
 
@@ -324,19 +274,21 @@ class DeoBlogCategory extends ObjectModel
             $id_shop = Context::getContext()->shop->id;
         }
 
-        $sql = ' SELECT m.*, md.*, m.id_deoblog_category AS id_category
-                FROM '._DB_PREFIX_.'deoblog_category m
-                LEFT JOIN '._DB_PREFIX_.'deoblog_category_lang md ON m.id_deoblog_category = md.id_deoblog_category AND md.id_lang = '.(int)$id_lang.' 
-                LEFT JOIN '._DB_PREFIX_.'deoblog_category_shop bs ON m.id_deoblog_category = bs.id_deoblog_category AND bs.id_shop = '.(int)($id_shop);
+        $sql = 'SELECT bc.*, bcl.*, bc.id_deoblog_category AS id_category
+                FROM '._DB_PREFIX_.'deoblog_category bc
+                LEFT JOIN '._DB_PREFIX_.'deoblog_category_lang bcl ON bc.id_deoblog_category = bcl.id_deoblog_category 
+                LEFT JOIN '._DB_PREFIX_.'deoblog_category_shop bcs ON bc.id_deoblog_category = bcs.id_deoblog_category 
+                WHERE bcl.id_lang='.(int)$id_lang.' AND bcs.id_shop='.(int)$id_shop;
+
         if ($active) {
-            $sql .= ' WHERE m.`active`=1 ';
+            $sql .= 'AND bc.`active`=1 ';
         }
 
         if ($id_deoblog_category != null) {
             # validate module
-            $sql .= ' WHERE id_parent='.(int)$id_deoblog_category;
+            $sql .= ' AND bc.id_parent='.(int)$id_deoblog_category;
         }
-        $sql .= ' ORDER BY `position` ';
+        $sql .= ' ORDER BY bc.`position` ';
 
         return Db::getInstance()->executeS($sql);
     }
@@ -350,10 +302,10 @@ class DeoBlogCategory extends ObjectModel
     {
         $id_shop = Context::getContext()->shop->id;
 
-        $sql = 'SELECT m.id_deoblog_category AS id_category 
-                FROM '._DB_PREFIX_.'deoblog_category m 
-                LEFT JOIN '._DB_PREFIX_.'deoblog_category_shop bs ON m.id_deoblog_category = bs.id_deoblog_category 
-                WHERE m.`is_root`=1 AND bs.id_shop = '.(int)($id_shop);
+        $sql = 'SELECT bc.id_deoblog_category AS id_category 
+                FROM '._DB_PREFIX_.'deoblog_category bc 
+                LEFT JOIN '._DB_PREFIX_.'deoblog_category_shop bcs ON bc.id_deoblog_category = bcs.id_deoblog_category 
+                WHERE bc.`is_root`=1 AND bcs.id_shop = '.(int)($id_shop);
 
         $result = Db::getInstance()->executeS($sql);
 

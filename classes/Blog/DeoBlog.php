@@ -172,13 +172,10 @@ class DeoBlog extends ObjectModel
      * @param Array $condition ( default array )
      * @param Boolean $is_active ( default false )
      */
-    public static function getListBlogs($id_category, $id_lang, $page_number, $nb_products, $order_by, $order_way, $condition = array(), $is_active = false, $id_shop = null)
+    public static function getListBlogs($id_category, $id_lang, $page_number, $nb_products, $order_by, $order_way, $condition = array(), $is_active = false)
     {
         # module validation
-        if (!$id_shop) {
-            $id_shop = DeoHelper::getIDShop();
-        }
-
+        $id_shop = DeoHelper::getIDShop();
         if (empty($id_lang)) {
             $id_lang = (int) Context::getContext()->language->id;
         }
@@ -191,23 +188,18 @@ class DeoBlog extends ObjectModel
 
 
         $where = '';
-
         if ($id_category) {
             # validate module
             $where .= ' AND b.id_deoblog_category='.(int)$id_category;
-        }
-        if ($id_shop) {
-            # validate module
-            $where .= ' AND s.id_shop='.(int)$id_shop;
         }
         
         if (isset($condition['type'])) {
             switch ($condition['type']) {
                 case 'author':
                     if (isset($condition['id_employee'])) {
-                        $where .= ' AND id_employee='.(int)$condition['id_employee'].' AND (author_name = "" OR author_name is null)';
+                        $where .= ' AND b.id_employee='.(int)$condition['id_employee'].' AND (b.author_name = "" OR b.author_name IS NULL)';
                     } else {
-                        $where .= ' AND author_name LIKE "%'.pSQL($condition['author_name']).'%"';
+                        $where .= ' AND b.author_name LIKE "%'.pSQL($condition['author_name']).'%"';
                     }
                     break;
 
@@ -236,16 +228,17 @@ class DeoBlog extends ObjectModel
             # validate module
             $where .= ' AND b.active=1';
         }
+
         $query = '
-        SELECT b.`id_deoblog`, b.`id_deoblog_category`, b.`rate_image`, b.`image_link`, b.`use_image_link`, b.`image`, b.`id_employee`, b.`author_name`, b.`date_add`, b.`views`, l.`link_rewrite`, l.`meta_keywords`, l.`description`, l.`meta_title` as title, blc.`link_rewrite` as category_link_rewrite , blc.`title` as category_title
-        FROM  '._DB_PREFIX_.'deoblog b
-        LEFT JOIN '._DB_PREFIX_.'deoblog_lang l ON (b.id_deoblog = l.id_deoblog) and  l.id_lang='.(int)$id_lang.' 
-        LEFT JOIN '._DB_PREFIX_.'deoblog_shop s ON  (b.id_deoblog = s.id_deoblog) and s.id_shop='.(int)$id_shop.' 
-        LEFT JOIN '._DB_PREFIX_.'deoblog_category bc ON  bc.id_deoblog_category = b.id_deoblog_category '.' 
-        LEFT JOIN '._DB_PREFIX_.'deoblog_category_lang blc ON blc.id_deoblog_category=bc.id_deoblog_category and blc.id_lang='.(int)$id_lang
-                .' '.Shop::addSqlAssociation('blog', 'b').'
-        WHERE l.id_lang = '.(int)$id_lang.$where.'
-         ';
+            SELECT b.`id_deoblog`, b.`id_deoblog_category`, b.`rate_image`, b.`image_link`, b.`use_image_link`, b.`image`, b.`id_employee`, b.`author_name`, b.`date_add`, b.`views`, l.`link_rewrite`, l.`meta_keywords`, l.`description`, l.`meta_title` as title, blc.`link_rewrite` as category_link_rewrite , blc.`title` as category_title
+            FROM  '._DB_PREFIX_.'deoblog b
+            LEFT JOIN '._DB_PREFIX_.'deoblog_lang l ON b.id_deoblog = l.id_deoblog 
+            LEFT JOIN '._DB_PREFIX_.'deoblog_shop s ON  b.id_deoblog = s.id_deoblog
+            LEFT JOIN '._DB_PREFIX_.'deoblog_category bc ON  bc.id_deoblog_category = b.id_deoblog_category '.' 
+            LEFT JOIN '._DB_PREFIX_.'deoblog_category_lang blc ON blc.id_deoblog_category=bc.id_deoblog_category '.Shop::addSqlAssociation('blog', 'b').'
+            WHERE l.id_lang='.(int)$id_lang.' AND s.id_shop='.(int)$id_shop.$where.' ';
+
+       
 
         if (empty($order_by) || $order_by == 'position') {
             $order_by = 'date_add';
@@ -273,7 +266,7 @@ class DeoBlog extends ObjectModel
         if (!is_null($nb_products) && !is_null($page_number)){
             $query .= ' LIMIT '.(int)(($page_number - 1) * $nb_products).', '.(int)$nb_products;
         }
-                
+             
         $data = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
         return $data;
@@ -338,141 +331,42 @@ class DeoBlog extends ObjectModel
         $query = '
         SELECT  b.id_deoblog
         FROM  '._DB_PREFIX_.'deoblog b
-        LEFT JOIN '._DB_PREFIX_.'deoblog_lang l ON (b.id_deoblog = l.id_deoblog) and  l.id_lang='.(int)$id_lang
-                .' LEFT JOIN '._DB_PREFIX_.'deoblog_shop s ON  (b.id_deoblog = s.id_deoblog) '
-                .' LEFT JOIN '._DB_PREFIX_.'deoblog_category bc ON  bc.id_deoblog_category = b.id_deoblog_category '
-                .' LEFT JOIN '._DB_PREFIX_.'deoblog_category_lang blc ON blc.id_deoblog_category=bc.id_deoblog_category and blc.id_lang='.(int)$id_lang
-                .'
-        WHERE l.id_lang = '.(int)$id_lang.$where.'
-        GROUP BY b.id_deoblog
-         ';
+        LEFT JOIN '._DB_PREFIX_.'deoblog_lang l ON b.id_deoblog = l.id_deoblog
+        LEFT JOIN '._DB_PREFIX_.'deoblog_shop s ON  b.id_deoblog = s.id_deoblog
+        LEFT JOIN '._DB_PREFIX_.'deoblog_category bc ON  bc.id_deoblog_category = b.id_deoblog_category 
+        LEFT JOIN '._DB_PREFIX_.'deoblog_category_lang blc ON blc.id_deoblog_category=bc.id_deoblog_category
+        WHERE l.id_lang = '.(int)$id_lang.$where.' AND blc.id_lang='.(int)$id_lang.' AND l.id_lang='.(int)$id_lang.' 
+        GROUP BY b.id_deoblog ';
 
         $data = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
 
         return count($data);
     }
 
-    public static function listblog($id_lang = null, $id_block = false, $active = true, $id_shop = null)
-    {
-        if (!$id_shop) {
-            $context = Context::getContext();
-            $id_shop = $context->shop->id;
-        }
-
-        if (empty($id_lang)) {
-            $id_lang = (int)Configuration::get('PS_LANG_DEFAULT');
-        }
-
-        return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('
-        SELECT c.id_deoblog, l.meta_title
-        FROM  '._DB_PREFIX_.'blog c
-        JOIN '._DB_PREFIX_.'blog_lang l ON (c.id_deoblog = l.id_deoblog)
-                JOIN '._DB_PREFIX_.'deoblog_lang s ON (c.id_deoblog = s.id_deoblog)
-        '.Shop::addSqlAssociation('blog', 'c').'
-        '.(($id_block) ? 'JOIN '._DB_PREFIX_.'block_blog b ON (c.id_deoblog = b.id_deoblog)' : '').'
-        WHERE s.id_shop = '.(int)$id_shop.' AND l.id_lang = '.(int)$id_lang.(($id_block) ? ' AND b.id_block = '.(int)$id_block : '').($active ? ' AND c.`active` = 1 ' : '').'
-        GROUP BY c.id_deoblog
-        ORDER BY c.`position`');
-    }
-
-    public function updatePosition($way, $position)
-    {
-        $sql = 'SELECT cp.`id_deoblog`, cp.`position`, cp.`id_deoblog_category`
-            FROM `'._DB_PREFIX_.'blog` cp
-            WHERE cp.`id_deoblog_category` = '.(int)$this->id_deoblog_category.'
-            ORDER BY cp.`position` ASC';
-        if (!$res = Db::getInstance()->executeS($sql)) {
-            return false;
-        }
-
-        foreach ($res as $blog) {
-            if ((int)$blog['id_deoblog'] == (int)$this->id) {
-                $moved_blog = $blog;
-            }
-        }
-
-        if (!isset($moved_blog) || !isset($position)) {
-            return false;
-        }
-
-        // < and > statements rather than BETWEEN operator
-        // since BETWEEN is treated differently according to databases
-        return (Db::getInstance()->execute('
-            UPDATE `'._DB_PREFIX_.'blog`
-            SET `position`= `position` '.($way ? '- 1' : '+ 1').'
-            WHERE `position`
-            '.($way ? '> '.(int)$moved_blog['position'].' AND `position` <= '.(int)$position : '< '.(int)$moved_blog['position'].' AND `position` >= '.(int)$position).'
-            AND `id_deoblog_category`='.(int)$moved_blog['id_deoblog_category']) && Db::getInstance()->execute('
-            UPDATE `'._DB_PREFIX_.'blog`
-            SET `position` = '.(int)$position.'
-            WHERE `id_deoblog` = '.(int)$moved_blog['id_deoblog'].'
-            AND `id_deoblog_category`='.(int)$moved_blog['id_deoblog_category']));
-    }
 
     public static function cleanPositions($id_category)
     {
-        $sql = '
-        SELECT `id_deoblog`
-        FROM `'._DB_PREFIX_.'deoblog`
-        WHERE `id_deoblog_category` = '.(int)$id_category.'
-        ORDER BY `position`';
+        $sql = 'SELECT `id_deoblog`
+                FROM `'._DB_PREFIX_.'deoblog` 
+                WHERE `id_deoblog_category` = '.(int)$id_category.' 
+                ORDER BY `position`';
 
         $result = Db::getInstance()->executeS($sql);
 
         for ($i = 0, $total = count($result); $i < $total; ++$i) {
-            $sql = 'UPDATE `'._DB_PREFIX_.'deoblog`
-                    SET `position` = '.(int)$i.'
-                    WHERE `id_deoblog_category` = '.(int)$id_category.'
-                        AND `id_deoblog` = '.(int)$result[$i]['id_deoblog'];
+            $sql = 'UPDATE `'._DB_PREFIX_.'deoblog` SET `position` = '.(int)$i.'
+                    WHERE `id_deoblog_category` = '.(int)$id_category.' AND `id_deoblog` = '.(int)$result[$i]['id_deoblog'];
             Db::getInstance()->execute($sql);
         }
+
         return true;
     }
 
     public static function getLastPosition($id_category)
     {
-        $sql = '
-        SELECT MAX(position) + 1
-        FROM `'._DB_PREFIX_.'deoblog`
-        WHERE `id_deoblog_category` = '.(int)$id_category;
+        $sql = 'SELECT MAX(position) + 1 FROM `'._DB_PREFIX_.'deoblog` 
+                WHERE `id_deoblog_category` = '.(int)$id_category;
 
         return (Db::getInstance()->getValue($sql));
-    }
-
-    public static function getblogPages($id_lang = null, $id_deoblog_category = null, $active = true, $id_shop = null)
-    {
-        $sql = new DbQuery();
-        $sql->select('*');
-        $sql->from('blog', 'c');
-        if ($id_lang) {
-            $sql->innerJoin('blog_lang', 'l', 'c.id_deoblog = l.id_deoblog AND l.id_lang = '.(int)$id_lang);
-        }
-
-        if ($id_shop) {
-            $sql->innerJoin('blog_shop', 'cs', 'c.id_deoblog = cs.id_deoblog AND cs.id_shop = '.(int)$id_shop);
-        }
-
-        if ($active) {
-            $sql->where('c.active = 1');
-        }
-
-        if ($id_deoblog_category) {
-            $sql->where('c.id_deoblog_category = '.(int)$id_deoblog_category);
-        }
-
-        $sql->orderBy('position');
-
-        return Db::getInstance()->executeS($sql);
-    }
-
-    public static function getUrlRewriteInformations($id_deoblog)
-    {
-        $sql = 'SELECT l.`id_lang`, c.`link_rewrite`
-                FROM `'._DB_PREFIX_.'deoblog_lang` AS c
-                LEFT JOIN  `'._DB_PREFIX_.'lang` AS l ON c.`id_lang` = l.`id_lang`
-                WHERE c.`id_deoblog` = '.(int)$id_deoblog.'
-                AND l.`active` = 1';
-
-        return Db::getInstance()->executeS($sql);
     }
 }

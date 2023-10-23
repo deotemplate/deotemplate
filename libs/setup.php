@@ -397,16 +397,26 @@ if (!class_exists("DeoPageSetup")) {
 			$res &= Db::getInstance()->execute($drop.'
 				CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'deoblog_comment` (
 					`id_deoblog_comment` int(11) NOT NULL AUTO_INCREMENT,
-					`id_shop` int(11) NOT NULL DEFAULT \'0\',
 					`id_deoblog` int(11) unsigned NOT NULL,
 					`comment` text NOT NULL,
 					`active` tinyint(1) NOT NULL DEFAULT \'0\',
 					`date_add` datetime DEFAULT NULL,
 					`user` varchar(255) NOT NULL,
 					`email` varchar(255) NOT NULL,
-					PRIMARY KEY (`id_deoblog_comment`,`id_shop`),
+					PRIMARY KEY (`id_deoblog_comment`),
 					KEY `FK_blog_comment` (`id_deoblog`)
 				) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8; 
+			');
+
+			if ($reset == 1) {
+				$drop = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'deoblog_comment_shop`;';
+			}
+			$res &= Db::getInstance()->execute($drop.'
+				CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'deoblog_comment_shop` (
+					`id_deoblog_comment` int(10) UNSIGNED NOT NULL,
+					`id_shop` int(10) UNSIGNED NOT NULL,
+					PRIMARY KEY(`id_shop`,`id_deoblog_comment`)
+				) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;
 			');
 
 			if ($reset == 1) {
@@ -487,6 +497,17 @@ if (!class_exists("DeoPageSetup")) {
 			');
 
 			if ($reset == 1) {
+				$drop = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'deofeature_product_review_shop`;';
+			}
+			$res &= (bool)Db::getInstance()->execute($drop.'
+				CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'deofeature_product_review_shop` (
+					`id_deofeature_product_review` int(10) UNSIGNED NOT NULL,
+					`id_shop` int(10) UNSIGNED NOT NULL,
+					PRIMARY KEY(`id_shop`,`id_deofeature_product_review`)
+				) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;
+			');
+
+			if ($reset == 1) {
 				$drop = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'deofeature_product_review_criterion`;';
 			}
 			$res &= (bool)Db::getInstance()->execute($drop.'
@@ -497,6 +518,19 @@ if (!class_exists("DeoPageSetup")) {
 					PRIMARY KEY (`id_deofeature_product_review_criterion`)
 				) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;
 			');
+
+
+			if ($reset == 1) {
+				$drop = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'deofeature_product_review_criterion_shop`;';
+			}
+			$res &= (bool)Db::getInstance()->execute($drop.'
+				CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'deofeature_product_review_criterion_shop` (
+					`id_deofeature_product_review_criterion` int(10) UNSIGNED NOT NULL,
+					`id_shop` int(10) UNSIGNED NOT NULL,
+					PRIMARY KEY(`id_shop`,`id_deofeature_product_review_criterion`)
+				) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;
+			');
+
 
 			if ($reset == 1) {
 				$drop = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'deofeature_product_review_criterion_product`;';
@@ -1095,11 +1129,14 @@ if (!class_exists("DeoPageSetup")) {
 				_DB_PREFIX_.'deoblog_category_lang`, `'.
 				_DB_PREFIX_.'deoblog_category_shop`, `'.
 				_DB_PREFIX_.'deoblog_comment`, `'.
+				_DB_PREFIX_.'deoblog_comment_shop`, `'.
 				_DB_PREFIX_.'deoblog`, `'.
 				_DB_PREFIX_.'deoblog_lang`, `'.
 				_DB_PREFIX_.'deoblog_shop`, `'.
 				_DB_PREFIX_.'deofeature_product_review`, `'.
+				_DB_PREFIX_.'deofeature_product_review_shop`, `'.
 				_DB_PREFIX_.'deofeature_product_review_criterion`, `'.
+				_DB_PREFIX_.'deofeature_product_review_criterion_shop`, `'.
 				_DB_PREFIX_.'deofeature_product_review_criterion_product`, `'.
 				_DB_PREFIX_.'deofeature_product_review_criterion_lang`, `'.
 				_DB_PREFIX_.'deofeature_product_review_criterion_category`, `'.

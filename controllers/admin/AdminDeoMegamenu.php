@@ -284,7 +284,7 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 			$this->context->controller->addJs(__PS_BASE_URI__ . $admin_webpath . '/themes/' . $bo_theme . '/js/tree.js');
 		}
 
-		if (Tools::getValue('configuregroup')){
+		if (Tools::getIsset('configuregroup')) {
 			if (Shop::isFeatureActive() || Shop::getTotalShops(false, null) >= 2) {
 				$shop_context = Shop::getContext();
 				$context = Context::getContext();
@@ -302,12 +302,14 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 					// $current_shop_value = 's-' . Shop::getContextShopID();
 				}
 
-				$sql = 'SELECT id_shop FROM ' ._DB_PREFIX_.'deomegamenu_group WHERE id_deomegamenu_group = '.Tools::getValue('id_group');
-            	$data_shop = Db::getInstance()->getRow($sql);
+				if (Tools::getIsset('id_group')) {
+					$sql = 'SELECT id_shop FROM ' ._DB_PREFIX_.'deomegamenu_group WHERE id_deomegamenu_group = '.Tools::getValue('id_group');
+					$data_shop = Db::getInstance()->getRow($sql);
 
-				if ($data_shop['id_shop'] != Context::getContext()->shop->id){
-					$this->errors[] = $this->l('This ID is not exist in this store!');
-					return false;
+					if ($data_shop['id_shop'] != Context::getContext()->shop->id){
+						$this->errors[] = $this->l('This ID is not exist in this store!');
+						return false;
+					}
 				}
 			}
 
@@ -1691,7 +1693,7 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 			if (!is_array($content) || !isset($content['id_deomegamenu_group']) || $content['id_deomegamenu_group'] == '') {
 				return false;
 			}
-			$language_field = array('title', 'text', 'url', 'description', 'content_text', 'submenu_content_text');
+			$language_field = array('title', 'text', 'url', 'content_text', 'submenu_content_text');
 			$languages = Language::getLanguages();
 			$shop_id = $this->context->shop->id;
 			$lang_list = array();
@@ -1871,7 +1873,7 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 				$megamenu->cleanPositions($megamenu->id_parent);
 				$lang_id = $this->context->language->id;
 				$megamenu->content_text = $megamenu->content_text[$lang_id];
-				$megamenu->description = $megamenu->description[$lang_id];
+				// $megamenu->description = $megamenu->description[$lang_id];
 				$megamenu->text = $megamenu->text[$lang_id];
 				$megamenu->title = $megamenu->title[$lang_id];
 				$megamenu->url = $megamenu->url[$lang_id];
@@ -2205,7 +2207,7 @@ class AdminDeoMegamenuController extends ModuleAdminControllerCore
 					WHERE btm.id_group = '.(int)$id_group.'
 					ORDER BY btm.id_parent ASC');
 			
-			$language_field = array('title', 'text', 'url', 'description', 'content_text', 'submenu_content_text');
+			$language_field = array('title', 'text', 'url', 'content_text', 'submenu_content_text');
 		   
 			$lang_list = array();
 			foreach ($languages as $lang) {

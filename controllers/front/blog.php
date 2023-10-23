@@ -50,7 +50,7 @@ class DeoTemplateBlogModuleFrontController extends ModuleFrontController
     {
         include_once(_PS_MODULE_DIR_.'deotemplate/classes/Blog/DeoCaptcha.php');
         $captcha = new DeoCaptcha();
-        $this->context->cookie->leocaptch = $captcha->getCode();
+        $this->context->cookie->deocaptcha = $captcha->getCode();
         $captcha->showImage();
     }
 
@@ -118,7 +118,8 @@ class DeoTemplateBlogModuleFrontController extends ModuleFrontController
             $error = new stdClass();
             $error->error = true;
 
-            if (isset($this->context->cookie->leocaptch) && $captcha && $captcha == $this->context->cookie->leocaptch) {
+
+            if (isset($this->context->cookie->deocaptcha) && $captcha && $captcha == $this->context->cookie->deocaptcha) {
                 if ($comment->validateFields(false) && $comment->validateFieldsLang(false)) {
                     $comment->save();
                     $error->message = $this->module->l('Thanks for your comment, it will be published soon!!!', 'blog');
@@ -148,7 +149,7 @@ class DeoTemplateBlogModuleFrontController extends ModuleFrontController
             $this->captcha();
             exit();
         }
-
+        
         /* Load Css and JS File */
         DeoBlogHelper::loadMedia($this->context, $this);
 

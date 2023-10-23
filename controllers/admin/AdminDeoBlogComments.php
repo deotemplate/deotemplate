@@ -32,7 +32,9 @@ class AdminDeoBlogCommentsController extends ModuleAdminController
         parent::__construct();
         
         $this->bulk_actions = array('delete' => array('text' => $this->l('Delete selected'), 'confirm' => $this->l('Delete selected items?'), 'icon' => 'icon-trash'));
-
+        $this->_join = '
+            INNER JOIN `'._DB_PREFIX_.'deoblog_comment_shop` cs ON (cs.`id_deoblog_comment` = a.`id_deoblog_comment`)';
+        $this->_where = ' AND cs.id_shop='.(int)Context::getContext()->shop->id;
         $this->fields_list = array(
             'id_deoblog_comment' => array('title' => $this->l('ID'), 'align' => 'center', 'class' => 'fixed-width-xs'),
             'id_deoblog' => array('title' => $this->l('Blog ID'), 'align' => 'center', 'class' => 'fixed-width-xs'),
@@ -94,10 +96,7 @@ class AdminDeoBlogCommentsController extends ModuleAdminController
             }
 
             if (Tools::getIsset('id_deoblog_comment')) {
-                $sql = 'SELECT id_shop FROM ' ._DB_PREFIX_.'deoblog_comment WHERE id_deoblog_comment = '.Tools::getValue('id_deoblog_comment');
-                $data_shop = Db::getInstance()->getRow($sql);
-
-                if ($data_shop['id_shop'] != Context::getContext()->shop->id){
+               if ($this->object->data_shop['id_shop'] != Context::getContext()->shop->id){
                     $this->errors[] = $this->l('This ID is not exist in this store!');
                     return false;
                 }

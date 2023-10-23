@@ -22,6 +22,9 @@ class AdminDeoReviewManagerController extends ModuleAdminController
         $this->addRowAction('edit');
         $this->addRowAction('delete');
         $this->bulk_actions = array('delete' => array('text' => $this->l('Delete selected'), 'confirm' => $this->l('Delete selected items?'), 'icon' => 'icon-trash'));
+        $this->_join = '
+            INNER JOIN `'._DB_PREFIX_.'deofeature_product_review_criterion_shop` prcs ON (prcs.`id_deofeature_product_review_criterion` = a.`id_deofeature_product_review_criterion`)';
+        $this->_where = ' AND prcs.id_shop='.(int)Context::getContext()->shop->id;
         $this->fields_list = array(
             'id_deofeature_product_review_criterion' => array(
                 'title' => $this->l('ID'),
@@ -55,23 +58,30 @@ class AdminDeoReviewManagerController extends ModuleAdminController
     
     public function renderForm()
     {
-        // if (Shop::isFeatureActive() || Shop::getTotalShops(false, null) >= 2) {
-        //     $shop_context = Shop::getContext();
-        //     $context = Context::getContext();
+        if (Shop::isFeatureActive() || Shop::getTotalShops(false, null) >= 2) {
+            $shop_context = Shop::getContext();
+            $context = Context::getContext();
 
-        //     $noShopSelection = $shop_context == Shop::CONTEXT_ALL || ($context->controller->multishop_context_group == false && $shop_context == Shop::CONTEXT_GROUP);
-        //     if ($noShopSelection) {
-        //         // $current_shop_value = '';
-        //         $this->errors[] = $this->l('We not support this setting for All Stores');
-        //         return false;
-        //     } elseif ($shop_context == Shop::CONTEXT_GROUP) {
-        //         // $current_shop_value = 'g-' . Shop::getContextShopGroupID();
-        //         $this->errors[] = $this->l('We not support this setting for Group Stores');
-        //         return false;
-        //     } else {
-        //         // $current_shop_value = 's-' . Shop::getContextShopID();
-        //     }
-        // }
+            $noShopSelection = $shop_context == Shop::CONTEXT_ALL || ($context->controller->multishop_context_group == false && $shop_context == Shop::CONTEXT_GROUP);
+            if ($noShopSelection) {
+                // $current_shop_value = '';
+                $this->errors[] = $this->l('We not support this setting for All Stores');
+                return false;
+            } elseif ($shop_context == Shop::CONTEXT_GROUP) {
+                // $current_shop_value = 'g-' . Shop::getContextShopGroupID();
+                $this->errors[] = $this->l('We not support this setting for Group Stores');
+                return false;
+            } else {
+                // $current_shop_value = 's-' . Shop::getContextShopID();
+            }
+            
+            if (Tools::getIsset('id_deofeature_product_review_criterion')) {
+                if ($this->object->data_shop['id_shop'] != Context::getContext()->shop->id){
+                    $this->errors[] = $this->l('This ID is not exist in this store!');
+                    return false;
+                }
+            }
+        }
 
         if (Validate::isLoadedObject($this->object)) {
             $this->display = 'edit';

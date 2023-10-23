@@ -656,6 +656,61 @@ class DeoHelper
 		// change class tabs
 		Db::getInstance()->execute('UPDATE `'._DB_PREFIX_.'deotemplate_lang` SET `params` = replace(`params`, "product-tabs-", "tabs-")');
 
+
+		// Update multiple store for review
+		$result_check = Db::getInstance()->executeS('SHOW TABLES LIKE "'._DB_PREFIX_.'deofeature_product_review_criterion_shop"');
+		if (count($result_check) == 0){
+			Db::getInstance()->execute('CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'deofeature_product_review_criterion_shop` (
+				`id_deofeature_product_review_criterion` int(10) UNSIGNED NOT NULL,
+				`id_shop` int(10) UNSIGNED NOT NULL,
+				PRIMARY KEY(`id_shop`,`id_deofeature_product_review_criterion`)
+			) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;
+			');
+
+			$results = Db::getInstance()->executeS('SELECT id_deofeature_product_review_criterion FROM '._DB_PREFIX_.'deofeature_product_review_criterion');
+			if (count($results)){
+				foreach ($results as $row) {
+					Db::getInstance()->execute('INSERT INTO '._DB_PREFIX_.'deofeature_product_review_criterion_shop(id_deofeature_product_review_criterion, id_shop) VALUES ('.$row["id_deofeature_product_review_criterion"].', '.Context::getContext()->shop->id.')');
+				}
+			}
+		}
+
+		$result_check = Db::getInstance()->executeS('SHOW TABLES LIKE "'._DB_PREFIX_.'deofeature_product_review_shop"');
+		if (count($result_check) == 0){
+			Db::getInstance()->execute('CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'deofeature_product_review_shop` (
+				`id_deofeature_product_review` int(10) UNSIGNED NOT NULL,
+				`id_shop` int(10) UNSIGNED NOT NULL,
+				PRIMARY KEY(`id_shop`,`id_deofeature_product_review`)
+			) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;
+			');
+
+			$results = Db::getInstance()->executeS('SELECT id_deofeature_product_review FROM '._DB_PREFIX_.'deofeature_product_review');
+			if (count($results)){
+				foreach ($results as $row) {
+					Db::getInstance()->execute('INSERT INTO '._DB_PREFIX_.'deofeature_product_review_shop(id_deofeature_product_review, id_shop) VALUES ('.$row["id_deofeature_product_review"].', '.Context::getContext()->shop->id.')');
+				}
+			}
+		}
+
+		$result_check = Db::getInstance()->executeS('SHOW TABLES LIKE "'._DB_PREFIX_.'deoblog_comment_shop"');
+		if (count($result_check) == 0){
+			DeoFrameworkHelper::DeoRemoveColumn('deoblog_comment', 'id_shop');
+			Db::getInstance()->execute('CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'deoblog_comment_shop` (
+				`id_deoblog_comment` int(10) UNSIGNED NOT NULL,
+				`id_shop` int(10) UNSIGNED NOT NULL,
+				PRIMARY KEY(`id_shop`,`id_deoblog_comment`)
+			) ENGINE='._MYSQL_ENGINE_.' DEFAULT CHARSET=utf8;
+			');
+
+			$results = Db::getInstance()->executeS('SELECT id_deoblog_comment FROM '._DB_PREFIX_.'deoblog_comment');
+			if (count($results)){
+				foreach ($results as $row) {
+					Db::getInstance()->execute('INSERT INTO '._DB_PREFIX_.'deoblog_comment_shop(id_deoblog_comment, id_shop) VALUES ('.$row["id_deoblog_comment"].', '.Context::getContext()->shop->id.')');
+				}
+			}
+		}
+
+
 		# Empty File css -> auto delete file
 		if (version_compare(_PS_VERSION_, '1.7.1.0', '>=')) {
 			$common_folders = array(_PS_THEME_URI_.'assets/css/', _PS_THEME_URI_.'assets/js/', _PS_THEME_URI_, _PS_PARENT_THEME_URI_, __PS_BASE_URI__);

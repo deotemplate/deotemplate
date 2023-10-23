@@ -5,6 +5,12 @@
  */
 $(document).ready( function(){
 	let src =  $('#comment-form img.comment-capcha-image').attr('src');
+	// $('#comment-form img.comment-capcha-image').trigger("click");
+	$('#comment-form img.comment-capcha-image').click(function(){
+		console.log('ssss');
+		let srcn = src.replace('captchaimage','rand='+Math.random()+"&captchaimage");
+		$('#comment-form img.comment-capcha-image').attr('src', srcn);
+	})
 	$("#comment-form").submit( function() {
 		let action = $(this).attr('action');
 		let data = $(this).serialize();
@@ -22,9 +28,9 @@ $(document).ready( function(){
 					DeoTemplate.messageSuccess(data.message);
 					$('input[type=text], textarea', '#comment-form').each( function(){
 						$(this).val('');
-						let srcn = src.replace('captchaimage','rand='+Math.random()+"&captchaimage");
-						$('#comment-form img.comment-capcha-image').attr('src', srcn);
 					});
+					let srcn = src.replace('captchaimage','rand='+Math.random()+"&captchaimage");
+					$('#comment-form img.comment-capcha-image').attr('src', srcn);
 				}else {
 					DeoTemplate.messageWarning(data.message);
 				}

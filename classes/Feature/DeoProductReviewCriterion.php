@@ -21,6 +21,7 @@ class DeoProductReviewCriterion extends ObjectModel
         'table' => 'deofeature_product_review_criterion',
         'primary' => 'id_deofeature_product_review_criterion',
         'multilang' => true,
+        'multishop' => true,
         'fields' => array(
             'id_deofeature_product_review_criterion_type' =>    array('type' => self::TYPE_INT),
             'active' =>                                array('type' => self::TYPE_BOOL),
@@ -28,6 +29,37 @@ class DeoProductReviewCriterion extends ObjectModel
             'name' =>                                array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'required' => true, 'size' => 128),
         )
     );
+
+    public function __construct($id = null, $id_lang = null, $id_shop = null, Context $context = null)
+    {
+        // validate module
+        unset($context);
+        parent::__construct($id, $id_lang, $id_shop);
+        $this->loadDataShop();
+    }
+
+    public function loadDataShop()
+    {
+        if ($this->def['multishop'] == true) {
+            $sql = 'SELECT * FROM ' ._DB_PREFIX_.$this->def['table'] . '_shop WHERE ' .$this->def['primary'] . ' =' .(int)$this->id;
+            $this->data_shop = Db::getInstance()->getRow($sql);
+            
+            if (isset($this->data_shop['active'])) {
+                $this->active = $this->data_shop['active'];
+            }
+        }
+    }
+
+    public function add($autodate = true, $null_values = false)
+    {
+        $id_shop = DeoHelper::getIDShop();
+        $res = parent::add($autodate, $null_values);
+        $res &= Db::getInstance()->execute('
+                INSERT INTO `'._DB_PREFIX_.'deofeature_product_review_criterion_shop` (`id_shop`, `id_deofeature_product_review_criterion`)
+                VALUES('.(int)$id_shop.', '.(int)$this->id.')');
+        return $res;
+    }
+
 
     public function delete()
     {
@@ -148,16 +180,14 @@ class DeoProductReviewCriterion extends ObjectModel
         if (!Cache::isStored($cache_id)) {
             $result = Db::getInstance()->executeS('
                 SELECT pcc.`id_deofeature_product_review_criterion`, pccl.`name`
-                FROM `'._DB_PREFIX_.'deofeature_product_review_criterion` pcc
-                LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_criterion_lang` pccl
-                    ON (pcc.id_deofeature_product_review_criterion = pccl.id_deofeature_product_review_criterion)
-                LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_criterion_product` pccp
-                    ON (pcc.`id_deofeature_product_review_criterion` = pccp.`id_deofeature_product_review_criterion` AND pccp.`id_product` = '.(int)$id_product.')
-                LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_criterion_category` pccc
-                    ON (pcc.`id_deofeature_product_review_criterion` = pccc.`id_deofeature_product_review_criterion`)
-                LEFT JOIN `'._DB_PREFIX_.'product'.$table.'` '.$alias.'
-                    ON ('.$alias.'.id_category_default = pccc.id_category AND '.$alias.'.id_product = '.(int)$id_product.')
-                WHERE pccl.`id_lang` = '.(int)($id_lang).'
+                FROM `'._DB_PREFIX_.'deofeature_product_review_criterion` pcc 
+                LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_criterion_lang` pccl ON (pcc.id_deofeature_product_review_criterion = pccl.id_deofeature_product_review_criterion)
+                LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_criterion_product` pccp ON (pcc.`id_deofeature_product_review_criterion` = pccp.`id_deofeature_product_review_criterion` AND pccp.`id_product` = '.(int)$id_product.')
+                LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_criterion_category` pccc ON (pcc.`id_deofeature_product_review_criterion` = pccc.`id_deofeature_product_review_criterion`)
+                LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_criterion_shop` prcs ON prcs.`id_deofeature_product_review_criterion` = pcc.`id_deofeature_product_review_criterion` 
+                LEFT JOIN `'._DB_PREFIX_.'product'.$table.'` '.$alias.' ON ('.$alias.'.id_category_default = pccc.id_category AND '.$alias.'.id_product = '.(int)$id_product.')
+                WHERE pccl.`id_lang` = '.(int)($id_lang).' 
+                AND prcs.`id_shop` = '.Context::getContext()->shop->id.'
                 AND (
                     pccp.id_product IS NOT NULL
                     OR ps.id_product IS NOT NULL
@@ -184,9 +214,10 @@ class DeoProductReviewCriterion extends ObjectModel
         
         $sql = '
             SELECT pcc.`id_deofeature_product_review_criterion`, pcc.id_deofeature_product_review_criterion_type, pccl.`name`, pcc.active
-            FROM `'._DB_PREFIX_.'deofeature_product_review_criterion` pcc
+            FROM `'._DB_PREFIX_.'deofeature_product_review_criterion` pcc 
             JOIN `'._DB_PREFIX_.'deofeature_product_review_criterion_lang` pccl ON (pcc.id_deofeature_product_review_criterion = pccl.id_deofeature_product_review_criterion)
-            WHERE pccl.`id_lang` = '.(int)$id_lang.($active ? ' AND active = 1' : '').($type ? ' AND id_deofeature_product_review_criterion_type = '.(int)$type : '').'
+            LEFT JOIN `'._DB_PREFIX_.'product'.$table.'` '.$alias.' ON ('.$alias.'.id_category_default = pccc.id_category AND '.$alias.'.id_product = '.(int)$id_product.') 
+            WHERE pccl.`id_lang` = '.(int)$id_lang.($active ? ' AND active = 1' : '').($type ? ' AND id_deofeature_product_review_criterion_type = '.(int)$type : '').' AND prcs.`id_shop` = '.Context::getContext()->shop->id.' 
             ORDER BY pccl.`name` ASC';
         $criterions = Db::getInstance()->executeS($sql);
 

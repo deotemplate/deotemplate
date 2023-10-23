@@ -42,9 +42,9 @@ class DeoCompareProduct extends ObjectModel
         $results = Db::getInstance()->executeS('
         SELECT DISTINCT `id_product`
         FROM `'._DB_PREFIX_.'deofeature_compare` c
-        LEFT JOIN `'._DB_PREFIX_.'deofeature_compare_product` cp ON (cp.`id_compare` = c.`id_compare`)
+        LEFT JOIN `'._DB_PREFIX_.'deofeature_compare_product` cp ON cp.`id_compare` = c.`id_compare` 
         WHERE cp.`id_compare` = '.(int)($id_compare));
-
+        
         $compareProducts = array();
 
         if ($results) {

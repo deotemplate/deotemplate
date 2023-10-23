@@ -26,6 +26,7 @@ class DeoBlogComment extends ObjectModel
     public static $definition = array(
         'table' => 'deoblog_comment',
         'primary' => 'id_deoblog_comment',
+        'multishop' => true,
         'fields' => array(
             'id_deoblog' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'),
             'user' => array('type' => self::TYPE_STRING, 'required' => false),
@@ -33,56 +34,70 @@ class DeoBlogComment extends ObjectModel
             'comment' => array('type' => self::TYPE_STRING, 'required' => true),
             'active' => array('type' => self::TYPE_BOOL),
             'date_add' => array('type' => self::TYPE_DATE, 'validate' => 'isDate'),
-            'id_shop' => array('type' => self::TYPE_INT, 'validate' => 'isunsignedInt', 'required' => false)
         ),
     );
 
-    public function add($autodate = true, $null_values = false)
+    public function __construct($id = null, $id_lang = null, $id_shop = null, Context $context = null)
     {
-        // $this->position = self::getLastPosition((int)$this->id_deoblog_category);
-        $this->id_shop = DeoHelper::getIDShop();
-        return parent::add($autodate, $null_values);
+        // validate module
+        unset($context);
+        parent::__construct($id, $id_lang, $id_shop);
+        $this->loadDataShop();
     }
 
-    public static function countComments($id_deoblog = 0, $is_active = false, $id_shop = null)
+    public function loadDataShop()
     {
-        if (!$id_shop) {
-            $context = Context::getContext();
-            $id_shop = $context->shop->id;
+        if ($this->def['multishop'] == true) {
+            $sql = 'SELECT * FROM ' ._DB_PREFIX_.$this->def['table'] . '_shop WHERE ' .$this->def['primary'] . ' =' .(int)$this->id;
+            $this->data_shop = Db::getInstance()->getRow($sql);
+            
+            if (isset($this->data_shop['active'])) {
+                $this->active = $this->data_shop['active'];
+            }
         }
+    }
 
-        $query = ' SELECT count(id_deoblog_comment) as total FROM '._DB_PREFIX_.'deoblog_comment WHERE 1=1 ';
+    public function add($autodate = true, $null_values = false)
+    {
+        $id_shop = DeoHelper::getIDShop();
+        $res = parent::add($autodate, $null_values);
+        $res &= Db::getInstance()->execute('
+                INSERT INTO `'._DB_PREFIX_.'deoblog_comment_shop` (`id_shop`, `id_deoblog_comment`)
+                VALUES('.(int)$id_shop.', '.(int)$this->id.')');
+        return $res;
+    }
+
+    public static function countComments($id_deoblog = 0, $is_active = false)
+    {
+        $query = ' SELECT count(c.`id_deoblog_comment`) as total FROM '._DB_PREFIX_.'deoblog_comment c 
+        LEFT JOIN `'._DB_PREFIX_.'deoblog_comment_shop` cs ON cs.`id_deoblog_comment` = c.`id_deoblog_comment`
+        WHERE cs.id_shop='.(int) Context::getContext()->shop->id;
 
         if ($id_deoblog > 0) {
             # validate module
-            $query .= ' AND id_deoblog='.(int)$id_deoblog;
+            $query .= ' AND id_deoblog='.(int)Context::getContext()->shop->id;
         }
         if ($is_active) {
             # validate module
             $query .= ' AND active=1 ';
-        }
-        if ($id_shop) {
-            $query .= ' AND id_shop='.(int)$id_shop;
         }
 
         $data = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
         return $data[0]['total'];
     }
 
-    public static function getComments($id_deoblog, $limit, $id_lang, $order = null, $by = null, $id_shop = null)
+    public static function getComments($id_deoblog, $limit, $id_lang, $order = null, $by = null)
     {
         # validate module
         !is_null($limit) ? true : $limit = 10;
         unset($id_deoblog);
         unset($order);
         unset($by);
-        if (!$id_shop) {
-            $context = Context::getContext();
-            $id_shop = $context->shop->id;
-        }
+ 
         $query = ' SELECT c.* FROM '._DB_PREFIX_.'deoblog_comment c';
         // $query .= ' LEFT JOIN '._DB_PREFIX_.'deoblog_lang b ON c.id_deoblog=b.id_deoblog AND b.id_lang='.(int)$id_lang;
-        $query .= ' WHERE id_shop='.(int)$id_shop;
+        $query .= ' LEFT JOIN `'._DB_PREFIX_.'deoblog_comment_shop` cs ON cs.`id_deoblog_comment` = c.`id_deoblog_comment`';
+        $query .= ' WHERE cs.id_shop='.(int) Context::getContext()->shop->id;
         $query .= ' LIMIT '.(int)$limit;
 
         $data = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($query);
@@ -90,13 +105,8 @@ class DeoBlogComment extends ObjectModel
         return $data;
     }
 
-    public function getList($id_deoblog, $id_lang, $page_number = 0, $nb_products = 10, $order_by = null, $order_way = null, $id_shop = null)
+    public function getList($id_deoblog, $id_lang, $page_number = 0, $nb_products = 10, $order_by = null, $order_way = null)
     {
-        if (!$id_shop) {
-            $context = Context::getContext();
-            $id_shop = $context->shop->id;
-        }
-
         if (empty($id_lang)) {
             $id_lang = (int)Configuration::get('PS_LANG_DEFAULT');
         }
@@ -128,10 +138,10 @@ class DeoBlogComment extends ObjectModel
             $order_by = $order_by[1];
         }
 
-        $query = ' SELECT c.* FROM '._DB_PREFIX_.'deoblog_comment c';
-        $query .= ' WHERE 1=1 AND id_shop='.(int)$id_shop;
-
-        $query .= ' AND active=1 AND id_deoblog='.(int)$id_deoblog;
+        $query =  'SELECT c.* FROM '._DB_PREFIX_.'deoblog_comment c 
+        LEFT JOIN `'._DB_PREFIX_.'deoblog_comment_shop` cs ON cs.`id_deoblog_comment` = c.`id_deoblog_comment` 
+        WHERE cs.id_shop='.(int) Context::getContext()->shop->id.'
+        AND active=1 AND id_deoblog='.(int)$id_deoblog;
         
         $order_way = Validate::isOrderWay($order_way) ? Tools::strtoupper($order_way) : 'ASC';      // $order_way Validate::isOrderWay()
         $query .= '  ORDER BY '.(isset($order_by_prefix) ? '`'.pSQL($order_by_prefix).'`.' : '').'`'.bqSQL($order_by).'` '.pSQL($order_way)

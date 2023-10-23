@@ -49,6 +49,7 @@ class DeoProductReview extends ObjectModel
     public static $definition = array(
         'table' => 'deofeature_product_review',
         'primary' => 'id_deofeature_product_review',
+        'multishop' => true,
         'fields' => array(
             'id_product' =>        array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true),
             'id_customer' =>    array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true),
@@ -94,7 +95,8 @@ class DeoProductReview extends ObjectModel
             if (c.id_customer, CONCAT(c.`firstname`, \' \',  c.`lastname`), pc.customer_name) customer_name, pc.`content`, pc.`grade`, pc.`date_add`, pc.title
               FROM `'._DB_PREFIX_.'deofeature_product_review` pc
             LEFT JOIN `'._DB_PREFIX_.'customer` c ON c.`id_customer` = pc.`id_customer`
-            WHERE pc.`id_product` = '.(int)($id_product).($validate == '1' ? ' AND pc.`validate` = 1' : '').'
+            LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_shop` prs ON prs.`id_deofeature_product_review` = pc.`id_deofeature_product_review`
+            WHERE pc.`id_product` = '.(int)($id_product).($validate == '1' ? ' AND pc.`validate` = 1' : '').' AND  prs.`id_shop` = '.Context::getContext()->shop->id.'
             ORDER BY pc.`date_add` DESC
             '.($n ? 'LIMIT '.(int)(($p - 1) * $n).', '.(int)($n) : ''));
             Cache::store($cache_id, $result);
@@ -113,8 +115,9 @@ class DeoProductReview extends ObjectModel
         if (!Cache::isStored($cache_id)) {
             $results = Db::getInstance()->executeS('SELECT *
                 FROM `'._DB_PREFIX_.'deofeature_product_review` pc
+                LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_shop` prs ON prs.`id_deofeature_product_review` = pc.`id_deofeature_product_review`
                 WHERE pc.`id_product` = '.(int)$id_product.'
-                AND '.(!$id_guest ? 'pc.`id_customer` = '.(int)$id_customer : 'pc.`id_guest` = '.(int)$id_guest).'
+                AND '.(!$id_guest ? 'pc.`id_customer` = '.(int)$id_customer : 'pc.`id_guest` = '.(int)$id_guest).' AND prs.`id_shop` = '.Context::getContext()->shop->id.'
                 ORDER BY pc.`date_add` DESC '
                 .($get_last ? 'LIMIT 1' : ''));
 
@@ -145,8 +148,9 @@ class DeoProductReview extends ObjectModel
             LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_grade` pcg ON (pcg.`id_deofeature_product_review` = pc.`id_deofeature_product_review`)
             LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_criterion` pcc ON (pcc.`id_deofeature_product_review_criterion` = pcg.`id_deofeature_product_review_criterion`)
             LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_criterion_lang` pccl ON (pccl.`id_deofeature_product_review_criterion` = pcg.`id_deofeature_product_review_criterion`)
+            LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_shop` prs ON prs.`id_deofeature_product_review` = pc.`id_deofeature_product_review`
             WHERE pc.`id_product` = '.(int)$id_product.'
-            AND pccl.`id_lang` = '.(int)$id_lang.($validate == '1' ? ' AND pc.`validate` = 1' : '')));
+            AND prs.`id_shop` = '.Context::getContext()->shop->id.' AND pccl.`id_lang` = '.(int)$id_lang.($validate == '1' ? ' AND pc.`validate` = 1' : '')));
     }
 
     public static function getRatings($id_product)
@@ -157,9 +161,10 @@ class DeoProductReview extends ObjectModel
                 MIN(pc.`grade`) AS min,
                 MAX(pc.`grade`) AS max
             FROM `'._DB_PREFIX_.'deofeature_product_review` pc
+            LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_shop` prs ON prs.`id_deofeature_product_review` = pc.`id_deofeature_product_review`
             WHERE pc.`id_product` = '.(int)$id_product.'
-            AND pc.`deleted` = 0'.
-            ($validate == '1' ? ' AND pc.`validate` = 1' : '');
+            AND prs.`id_shop` = '.Context::getContext()->shop->id.' 
+            AND pc.`deleted` = 0'. ($validate == '1' ? ' AND pc.`validate` = 1' : '');
 
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow($sql);
     }
@@ -170,8 +175,10 @@ class DeoProductReview extends ObjectModel
 
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow('
         SELECT (SUM(pc.`grade`) / COUNT(pc.`grade`)) AS grade
-        FROM `'._DB_PREFIX_.'deofeature_product_review` pc
+        FROM `'._DB_PREFIX_.'deofeature_product_review` pc 
+        LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_shop` prs ON prs.`id_deofeature_product_review` = pc.`id_deofeature_product_review`
         WHERE pc.`id_product` = '.(int)$id_product.'
+        AND prs.`id_shop` = '.Context::getContext()->shop->id.' 
         AND pc.`deleted` = 0'.
         ($validate == '1' ? ' AND pc.`validate` = 1' : ''));
     }
@@ -218,9 +225,10 @@ class DeoProductReview extends ObjectModel
         $cache_id = 'DeoProductReview::getReviewNumber_'.(int)$id_product.'-'.$validate;
         if (!Cache::isStored($cache_id)) {
             $result = (int)Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue('
-            SELECT COUNT(`id_deofeature_product_review`) AS "nbr"
-            FROM `'._DB_PREFIX_.'deofeature_product_review` pc
-            WHERE `id_product` = '.(int)($id_product).($validate == '1' ? ' AND `validate` = 1' : ''));
+            SELECT COUNT(pc.`id_deofeature_product_review`) AS "nbr"
+            FROM `'._DB_PREFIX_.'deofeature_product_review` pc 
+            LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_shop` prs ON prs.`id_deofeature_product_review` = pc.`id_deofeature_product_review`
+            WHERE `id_product` = '.(int)($id_product).' AND prs.`id_shop` = '.Context::getContext()->shop->id.($validate == '1' ? ' AND `validate` = 1' : ''));
             Cache::store($cache_id, $result);
         }
         return Cache::retrieve($cache_id);
@@ -240,7 +248,8 @@ class DeoProductReview extends ObjectModel
         $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->getRow('
             SELECT COUNT(pc.`id_product`) AS nbr
             FROM `'._DB_PREFIX_.'deofeature_product_review` pc
-            WHERE `id_product` = '.(int)($id_product).($validate == '1' ? ' AND `validate` = 1' : '').'
+            LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_shop` prs ON prs.`id_deofeature_product_review` = pc.`id_deofeature_product_review`
+            WHERE `id_product` = '.(int)($id_product).' AND  prs.`id_shop` = '.Context::getContext()->shop->id.($validate == '1' ? ' AND `validate` = 1' : '').'
             AND `grade` > 0');
         return (int)($result['nbr']);
     }
@@ -257,7 +266,8 @@ class DeoProductReview extends ObjectModel
             FROM `'._DB_PREFIX_.'deofeature_product_review` pc
             LEFT JOIN `'._DB_PREFIX_.'customer` c ON (c.`id_customer` = pc.`id_customer`)
             LEFT JOIN `'._DB_PREFIX_.'product_lang` pl ON (pl.`id_product` = pc.`id_product` AND pl.`id_lang` = '.(int)Context::getContext()->language->id.Shop::addSqlRestrictionOnLang('pl').')
-            WHERE pc.`validate` = '.(int)$validate;
+            LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_shop` prs ON prs.`id_deofeature_product_review` = pc.`id_deofeature_product_review`
+            WHERE pc.`validate` = '.(int)$validate.' AND prs.`id_shop` = '.Context::getContext()->shop->id;
 
         $sql .= ' ORDER BY pc.`date_add` DESC';
         
@@ -279,6 +289,8 @@ class DeoProductReview extends ObjectModel
             FROM `'._DB_PREFIX_.'deofeature_product_review` pc
             LEFT JOIN `'._DB_PREFIX_.'customer` c ON (c.`id_customer` = pc.`id_customer`)
             LEFT JOIN `'._DB_PREFIX_.'product_lang` pl ON (pl.`id_product` = pc.`id_product` AND pl.`id_lang` = '.(int)Context::getContext()->language->id.Shop::addSqlRestrictionOnLang('pl').')
+            LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_shop` prs ON prs.`id_deofeature_product_review` = pc.`id_deofeature_product_review` 
+            WHERE pcs.`id_shop` = '.Context::getContext()->shop->id.' 
             ORDER BY pc.`date_add` DESC'));
     }
 
@@ -300,6 +312,16 @@ class DeoProductReview extends ObjectModel
 
         Hook::exec('actionObjectDeoProductReviewValidateAfter', array('object' => $this));
         return $success;
+    }
+
+    public function add($autodate = true, $null_values = false)
+    {
+        $id_shop = DeoHelper::getIDShop();
+        $res = parent::add($autodate, $null_values);
+        $res &= Db::getInstance()->execute('
+                INSERT INTO `'._DB_PREFIX_.'deofeature_product_review_shop` (`id_shop`, `id_deofeature_product_review`)
+                VALUES('.(int)$id_shop.', '.(int)$this->id.')');
+        return $res;
     }
 
     /**
@@ -425,6 +447,8 @@ class DeoProductReview extends ObjectModel
                 ON pcr.id_deofeature_product_review = pc.id_deofeature_product_review
             LEFT JOIN `'._DB_PREFIX_.'customer` c ON (c.`id_customer` = pc.`id_customer`)
             LEFT JOIN `'._DB_PREFIX_.'product_lang` pl ON (pl.`id_product` = pc.`id_product` AND pl.`id_lang` = '.(int)Context::getContext()->language->id.' AND pl.`id_lang` = '.(int)Context::getContext()->language->id.Shop::addSqlRestrictionOnLang('pl').')
+            LEFT JOIN `'._DB_PREFIX_.'deofeature_product_review_shop` prs ON prs.`id_deofeature_product_review` = pc.`id_deofeature_product_review` 
+            WHERE prs.`id_shop` = '.Context::getContext()->shop->id.' 
             ORDER BY pc.`date_add` DESC');
     }
 }
