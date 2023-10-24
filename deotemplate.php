@@ -628,26 +628,26 @@ class DeoTemplate extends Module implements WidgetInterface
 		$presenterFactory = new ProductPresenterFactory(Context::getContext());
 		$presentationSettings = $presenterFactory->getPresentationSettings();
 		if (version_compare(_PS_VERSION_, '1.7.5', '>=')) {
-            $presenter = new \PrestaShop\PrestaShop\Adapter\Presenter\Product\ProductListingPresenter(
-                new ImageRetriever(
-                    Context::getContext()->link
-                ),
-                $this->context->link,
-                new PriceFormatter(),
-                new ProductColorsRetriever(),
-               	Context::getContext()->getTranslator()
-            );
-        } else {
-            $presenter = new \PrestaShop\PrestaShop\Core\Product\ProductListingPresenter(
-                new ImageRetriever(
-                    Context::getContext()->link
-                ),
-                Context::getContext()->link,
-                new PriceFormatter(),
-                new ProductColorsRetriever(),
-              	Context::getContext()->getTranslator()
-            );
-        }
+		    $presenter = new \PrestaShop\PrestaShop\Adapter\Presenter\Product\ProductListingPresenter(
+		        new ImageRetriever(
+		            Context::getContext()->link
+		        ),
+		        $this->context->link,
+		        new PriceFormatter(),
+		        new ProductColorsRetriever(),
+		       	Context::getContext()->getTranslator()
+		    );
+		} else {
+		    $presenter = new \PrestaShop\PrestaShop\Core\Product\ProductListingPresenter(
+		        new ImageRetriever(
+		            Context::getContext()->link
+		        ),
+		        Context::getContext()->link,
+		        new PriceFormatter(),
+		        new ProductColorsRetriever(),
+		      	Context::getContext()->getTranslator()
+		    );
+		}
 
 		
 		$products_for_template = array();
