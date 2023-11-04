@@ -999,6 +999,10 @@
 								tab.tab('show');
 								tab.addClass('processed');
 
+								if (tabcontent.find('.slick-carousel').length == 0){
+									return;
+								}
+						
 								object.callInitSlickCarousel(tabcontent.find('.slick-carousel'));
 
 								object.processAjaxProduct();
