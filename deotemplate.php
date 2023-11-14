@@ -883,6 +883,18 @@ class DeoTemplate extends Module implements WidgetInterface
 			));
 		}
 
+		$body_classes = $this->smarty->smarty->tpl_vars['page']->value['body_classes'];
+		$layouts_page = 'layout-both-columns';
+		if (isset($body_classes['layout-full-width']) && $body_classes['layout-full-width']){
+			$layouts_page = 'layout-full-width';
+		}else if (isset($body_classes['layout-left-column']) && $body_classes['layout-left-column']){
+			$layouts_page = 'layout-left-column';
+		}else if (isset($body_classes['layout-right-column']) && $body_classes['layout-right-column']){
+			$layouts_page = 'layout-right-column';
+		}
+
+		$this->smarty->smarty->assign('layouts_page', $layouts_page);
+
 		// notification
 		$this->context->controller->addJqueryPlugin('growl', null, true);
 
@@ -901,7 +913,7 @@ class DeoTemplate extends Module implements WidgetInterface
 			$uri = DeoHelper::getCssDir().'components/cart.css';
 			$this->context->controller->registerStylesheet(sha1($uri), $uri, array('media' => 'all', 'priority' => 800));
 		}
-		if ($page_name == 'category'){
+		if ($layouts_page == 'layout-left-column' || $layouts_page == 'layout-right-column'){
 			$uri = DeoHelper::getCssDir().'components/categories.css';
 			$this->context->controller->registerStylesheet(sha1($uri), $uri, array('media' => 'all', 'priority' => 800));
 		}
@@ -1405,17 +1417,6 @@ class DeoTemplate extends Module implements WidgetInterface
 		$product_layouts_reponsive = array();
 
 
-		$body_classes = $this->smarty->smarty->tpl_vars['page']->value['body_classes'];
-		$layouts_page = 'layout-both-columns';
-		if (isset($body_classes['layout-full-width']) && $body_classes['layout-full-width']){
-			$layouts_page = 'layout-full-width';
-		}else if (isset($body_classes['layout-left-column']) && $body_classes['layout-left-column']){
-			$layouts_page = 'layout-left-column';
-		}else if (isset($body_classes['layout-right-column']) && $body_classes['layout-right-column']){
-			$layouts_page = 'layout-right-column';
-		}
-
-		$this->smarty->smarty->assign('layouts_page', $layouts_page);
 		$this->header_content .=  $this->processHeaderOnepagecheckout().$this->display(__FILE__, 'header.tpl');
 		
 		return $this->header_content;
