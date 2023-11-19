@@ -190,7 +190,7 @@ class DeoBlog extends ObjectModel
         $where = '';
         if ($id_category) {
             # validate module
-            $where .= ' AND b.id_deoblog_category='.(int)$id_category;
+            $where .= ' AND bc.id_deoblog_category='.(int)$id_category;
         }
         
         if (isset($condition['type'])) {
@@ -230,15 +230,14 @@ class DeoBlog extends ObjectModel
         }
 
         $query = '
-            SELECT DISTINCT b.`id_deoblog`, b.`id_deoblog_category`, b.`rate_image`, b.`image_link`, b.`use_image_link`, b.`image`, b.`id_employee`, b.`author_name`, b.`date_add`, b.`views`, l.`link_rewrite`, l.`meta_keywords`, l.`description`, l.`meta_title` as title, blc.`link_rewrite` as category_link_rewrite , blc.`title` as category_title
+            SELECT b.`id_deoblog`, b.`id_deoblog_category`, b.`rate_image`, b.`image_link`, b.`use_image_link`, b.`image`, b.`id_employee`, b.`author_name`, b.`date_add`, b.`views`, l.`link_rewrite`, l.`meta_keywords`, l.`description`, l.`meta_title` as title, blc.`link_rewrite` as category_link_rewrite , blc.`title` as category_title
             FROM  '._DB_PREFIX_.'deoblog b
             LEFT JOIN '._DB_PREFIX_.'deoblog_lang l ON b.id_deoblog = l.id_deoblog 
             LEFT JOIN '._DB_PREFIX_.'deoblog_shop s ON  b.id_deoblog = s.id_deoblog
             LEFT JOIN '._DB_PREFIX_.'deoblog_category bc ON  bc.id_deoblog_category = b.id_deoblog_category '.' 
             LEFT JOIN '._DB_PREFIX_.'deoblog_category_lang blc ON blc.id_deoblog_category=bc.id_deoblog_category '.Shop::addSqlAssociation('blog', 'b').'
-            WHERE l.id_lang='.(int)$id_lang.' AND s.id_shop='.(int)$id_shop.$where.' ';
-
-       
+            WHERE l.id_lang='.(int)$id_lang.' AND s.id_shop='.(int)$id_shop.$where.' 
+            GROUP BY b.`id_deoblog`';
 
         if (empty($order_by) || $order_by == 'position') {
             $order_by = 'date_add';
@@ -288,7 +287,7 @@ class DeoBlog extends ObjectModel
         $where = '';
         if ($id_category) {
             # validate module
-            $where .= ' AND b.id_deoblog_category='.(int)$id_category;
+            $where .= ' AND bc.id_deoblog_category='.(int)$id_category;
         }
         if ($is_active) {
             # validate module
@@ -329,7 +328,7 @@ class DeoBlog extends ObjectModel
             }
         }
         $query = '
-        SELECT  b.id_deoblog
+        SELECT b.id_deoblog
         FROM  '._DB_PREFIX_.'deoblog b
         LEFT JOIN '._DB_PREFIX_.'deoblog_lang l ON b.id_deoblog = l.id_deoblog
         LEFT JOIN '._DB_PREFIX_.'deoblog_shop s ON  b.id_deoblog = s.id_deoblog

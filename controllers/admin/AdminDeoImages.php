@@ -82,7 +82,7 @@ class AdminDeoImagesController extends ModuleAdminController
     {
         $path = $this->img_path;
         # CACH 1 : lay cac file anh
-        $images = glob($path.'{*.jpeg,*.JPEG,*.jpg,*.JPG,*.gif,*.GIF,*.png,*.PNG,*.svg}', GLOB_BRACE);
+        $images = glob($path.'{*.jpeg,*.JPEG,*.jpg,*.JPG,*.gif,*.GIF,*.png,*.PNG,*.svg,*.SVG,*.webp,*.WEBP}', GLOB_BRACE);
 
         if ($images === null) {
             # CACH 2 : lay cac file anh
@@ -94,7 +94,7 @@ class AdminDeoImagesController extends ModuleAdminController
                 # validate module
                 unset($key);
                 $ext = Tools::substr($image, strrpos($image, '.') + 1);
-                if (in_array($ext, array('jpg', 'jpeg', 'png', 'gif', 'JPG', 'JPEG', 'PNG', 'GIF', 'SVG'))) {
+                if (in_array($ext, array('jpg', 'jpeg', 'png', 'gif', 'JPG', 'JPEG', 'PNG', 'GIF', 'SVG', 'WEBP'))) {
                     $images[] = $image;
                 }
             }
@@ -192,7 +192,7 @@ class AdminDeoImagesController extends ModuleAdminController
                     @mkdir($this->img_path, 0755, true);
                 }
                 $image_uploader->setSavePath($this->img_path);
-                $image_uploader->setAcceptTypes(array('jpeg', 'gif', 'png', 'jpg', 'svg'))->setMaxSize($this->max_image_size);
+                $image_uploader->setAcceptTypes(array('jpeg', 'gif', 'png', 'jpg', 'svg', 'webp'))->setMaxSize($this->max_image_size);
                 $total_errors = array();
                 
                 $files = $image_uploader->process();

@@ -142,7 +142,7 @@
 
 		let file_upload_button = $('#file-upload-button');
 		let file_total_files = 0;
-		const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+		const validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/svg', 'image/webp'];
 		
 		$('#file-upload-button').off('click');
 
