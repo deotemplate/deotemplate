@@ -272,8 +272,8 @@ class DeoSetting
 
 	public static function getProductContainer()
 	{
-		$html = '<div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="product">' . "\n";
-		$html .= '	<article class="product-miniature js-product-miniature" data-id-product="{$product.id_product}" data-id-product-attribute="{$product.id_product_attribute}" itemscope itemtype="http://schema.org/Product">' . "\n";
+		$html = '<div class="product">' . "\n";
+		$html .= '	<article class="product-miniature js-product-miniature" data-id-product="{$product.id_product}" data-id-product-attribute="{$product.id_product_attribute}">' . "\n";
 		$html .= '		<div class="thumbnail-container thumbnail-container-class">' . "\n";
 		return $html;
 	}

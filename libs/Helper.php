@@ -136,14 +136,22 @@ class DeoHelper
 	{
 		static $page_name;
 		if (!$page_name) {
-			$page_name = Dispatcher::getInstance()->getController();
-			$page_name = (preg_match('/^[0-9]/', $page_name) ? 'page_'.$page_name : $page_name);
+			if (!empty(Context::getContext()->controller->page_name)) {
+				$page_name = Context::getContext()->controller->page_name;
+			} elseif (!empty(Context::getContext()->controller->php_self)) {
+				$page_name = Context::getContext()->controller->php_self;
+			} elseif (preg_match('#^'.preg_quote(Context::getContext()->shop->physical_uri, '#').'modules/([a-zA-Z0-9_-]+?)/(.*)$#', $_SERVER['REQUEST_URI'], $m)) {
+				$page_name = 'module-'.$m[1].'-'.str_replace(array('.php', '/'), array('', '-'), $m[2]);
+			} else {
+				$page_name = Dispatcher::getInstance()->getController();
+				$page_name = (preg_match('/^[0-9]/', $page_name) ? 'page_'.$page_name : $page_name);
+			}
 		}
 		
-		if ($page_name == 'home') {
+		if ($page_name == 'home' || $page_name == 'module-deotemplate-home') {
 			$page_name = 'index';
 		}
-		
+
 		return $page_name;
 	}
 

@@ -11,9 +11,9 @@
 		<div class="product-line-grid-body">
 			<span class="product-image">
 				{if $product.cover}
-					<img src="{$product.cover.bySize.cart_default.url}" alt="{$product.name|escape:'quotes'}">
+					<img class="img-fluid" src="{$product.images.0.bySize.cart_default.url}" alt="{$product.name|escape:'quotes'}">
 				{else}
-					<img src="{$urls.no_picture_image.bySize.cart_default.url}" />
+					<img class="img-fluid" src="{$urls.no_picture_image.bySize.cart_default.url}" alt="{$product.name|escape:'quotes'}"/>
 				{/if}
 			</span>
 			<div class="product-meta">

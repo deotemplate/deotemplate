@@ -724,7 +724,6 @@ class DeoTemplate extends Module implements WidgetInterface
 
 	public function hookHeader()
 	{	
-		
 		$id_shop = (int) $this->context->shop->id;
 		$id_lang = (int) $this->context->language->id;
 		$page_name = DeoHelper::getPageName();
@@ -787,7 +786,7 @@ class DeoTemplate extends Module implements WidgetInterface
 					$controller_key = $page_name;
 				}
 
-				if ($controller_key == 'module-deotemplate-order'){
+				if ($controller_key == 'module-deotemplate-order' || $page_name == 'checkout'){
 					$this->profile_param['fullwidth_other_hook']['displayHome'] = $this->profile_param['fullwidth_content_other_page']['order'];
 				}else{
 					if (isset($this->profile_param['fullwidth_content_other_page'][$controller_key])){
@@ -795,6 +794,11 @@ class DeoTemplate extends Module implements WidgetInterface
 					}
 				} 
 			}
+
+			// echo $controller_key;
+			// echo "<pre>";
+			// print_r($this->profile_param);
+			// echo "</pre>";
 
 			// assign varriable fullwidth_hook
 			if ($page_name == 'index' || $page_name == 'home') {
@@ -917,7 +921,7 @@ class DeoTemplate extends Module implements WidgetInterface
 			$uri = DeoHelper::getCssDir().'components/categories.css';
 			$this->context->controller->registerStylesheet(sha1($uri), $uri, array('media' => 'all', 'priority' => 800));
 		}
-		if ($page_name == 'order' || $page_name == 'orderconfirmation'){
+		if ($page_name == 'order' || $page_name == 'orderconfirmation' || $page_name == 'checkout'){
 			$uri = DeoHelper::getCssDir().'components/checkout.css';
 			$this->context->controller->registerStylesheet(sha1($uri), $uri, array('media' => 'all', 'priority' => 800));
 
@@ -1437,16 +1441,7 @@ class DeoTemplate extends Module implements WidgetInterface
 			}
 		} 
 
-		if (!empty($this->context->controller->page_name)) {
-			$page_name = $this->context->controller->page_name;
-		} elseif (!empty($this->context->controller->php_self)) {
-			$page_name = $this->context->controller->php_self;
-		} elseif (preg_match('#^'.preg_quote($this->context->shop->physical_uri, '#').'modules/([a-zA-Z0-9_-]+?)/(.*)$#', $_SERVER['REQUEST_URI'], $m)) {
-			$page_name = 'module-'.$m[1].'-'.str_replace(array('.php', '/'), array('', '-'), $m[2]);
-		} else {
-			$page_name = Dispatcher::getInstance()->getController();
-			$page_name = (preg_match('/^[0-9]/', $page_name) ? 'page_'.$page_name : $page_name);
-		}
+		$page_name = DeoHelper::getPageName();
 
 		// support module deo advancesearch
 		$deo_pages = array('module-deotemplate-advancedsearch');
@@ -2587,6 +2582,7 @@ class DeoTemplate extends Module implements WidgetInterface
 			$this->context->smarty->assign(array(
 				'wishlist_link' => $this->context->link->getModuleLink('deotemplate', 'mywishlist'),
 			));
+
 		}
 
 		return $this->display(__FILE__, 'feature/wishlist_link.tpl');

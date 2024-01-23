@@ -199,8 +199,8 @@
 				}
 			}
 			let fileType = data.files[0]["type"];
-			if (($.inArray(fileType, validImageTypes) == 0) || fileType == '') {
-				let text = "{l s=' file type not valid (PNG, JPG, GIF). '|sprintf:$max_files mod='deotemplate'}"
+			if ((validImageTypes.includes(fileType) == 0) || fileType == '') {
+				let text = "{l s=' file type not valid (*.jpeg, *.jpg, .gif, *.png, *.svg, *.webp). '|sprintf:$max_files mod='deotemplate'}"
 				showErrorMessage(data.files[0].name+text);
 				return;
 			}

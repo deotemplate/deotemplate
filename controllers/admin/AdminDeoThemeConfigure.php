@@ -267,6 +267,15 @@ class AdminDeoThemeConfigureController extends ModuleAdminController
             ),
             array(
                 'type' => 'switch',
+                'label' => $this->l('Delete account'),
+                'name' => DeoHelper::getConfigName('DELETE_ACCOUNT_LINK'),
+                'default' => 0,
+                'values' => DeoSetting::returnYesNo(),
+                'desc' => $this->l('Show link allow customer delete themseff account at my account page.'),
+                'form_group_class' => 'tab_general',
+            ),
+            array(
+                'type' => 'switch',
                 'label' => $this->l('Back to Top'),
                 'name' => DeoHelper::getConfigName('BACKTOP'),
                 'default' => 0,

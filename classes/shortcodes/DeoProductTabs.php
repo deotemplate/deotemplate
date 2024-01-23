@@ -199,9 +199,6 @@ class DeoProductTabs extends DeoShortCodeBase
 							array(
 								'id' => 'date_upd', 'name' => self::l('Date update')
 							),
-							array(
-								'id' => 'quantity', 'name' => self::l('Sales (only for Best Sales)')
-							),
 						),
 					'id' => 'id',
 					'name' => 'name'

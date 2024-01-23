@@ -571,7 +571,7 @@ $(document).ready(function(){
 
 								auth2.disconnect();
 							}
-						},300);
+						},500);
 					}, function(error) {
 					  console.log(error);
 					}
