@@ -45,7 +45,7 @@ $(document).ready(function() {
 		else
 			$('.'+id).hide();
 	});
-	$('.checkbox-group').trigger("change");
+	$('.checkbox-group:checked').trigger("change");
 
 
 	$(document).on("click", ".hook-top", function() {

@@ -17,6 +17,7 @@
           alt = "{if !empty($product.default_image.legend)}{$product.default_image.legend}{else}{$product.name}{/if}"
           data-full-size-image-url = "{$product.default_image.large.url}"
           data-image-type="{$deo_size}"
+          loading="lazy"
         >
       {else}
         <img
@@ -40,7 +41,8 @@
           class="img-fluid {if (isset($formAtts.lazyload) && $formAtts.lazyload) || !isset($formAtts)}lazyload{/if}"
           {if isset($formAtts.slick_lazyload) && $formAtts.slick_lazyload}data-lazy{else}data-src{/if} = "{$urls.no_picture_image.bySize[$deo_size].url}"
           src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-          alt = "{if !empty($product.default_image.legend)}{$product.default_image.legend}{else}{$product.name}{/if}"
+          alt = "{if !empty($product.default_image.legend)}{$product.default_image.legend}{else}{$product.name}{/if}" 
+          loading="lazy"
         >
       {else}
         <img

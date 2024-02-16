@@ -28,12 +28,6 @@ class DeoManufacturersCarousel extends DeoShortCodeBase
         $manufacturers = Manufacturer::getManufacturers(false, 0, true, false, false, false, true);
         // get image type
         $imagetype = ImageType::getImagesTypes('manufacturers');
-        $iselect = Tools::getValue('value_by_manufacture');
-        if ($iselect === '0') {
-            $script_update_select = '<script>$("#value_by_manufacture").attr("checked", "checked");</script>';
-        } else {
-            $script_update_select = '<script>$("#value_by_manufacture").removeAttr("checked");</script>';
-        }
 
         $inputs_head = array(
             array(
@@ -645,26 +639,16 @@ class DeoManufacturersCarousel extends DeoShortCodeBase
             array(
                 'type' => 'html',
                 'name' => 'default_html',
-                'html_content' => '<div class="alert alert-info">'.
-                $this->l('Step 1: Use latest manufacturers or select Manufacturers').'</div>'.$script_update_select,
+                'html_content' => '<div class="alert alert-info">'.$this->l('Step 1: Use latest manufacturers or select Manufacturers').'</div>',
             ),
             array(
-                'type' => 'checkbox',
-                'name' => 'value_by',
+                'type' => 'switch',
                 'label' => $this->l('Select manufacturers'),
-                'class' => 'checkbox-group',
-                'desc' => $this->l('Unchecked to show latest manufacturers'),
-                'values' => array(
-                    'query' => array(
-                        array(
-                            'id' => 'manufacture',
-                            'name' => $this->l('Select Manufacturers'),
-                            'val' => '1'
-                        )
-                    ),
-                    'id' => 'id',
-                    'name' => 'name'
-                )
+                'desc' => $this->l('Show selected manufacturers'),
+                'name' => 'value_by_manufacture',
+                'is_bool' => false,
+                'default' => '0',
+                'values' => DeoSetting::returnYesNo(),
             ),
             array(
                 'type' => 'select',
@@ -678,7 +662,7 @@ class DeoManufacturersCarousel extends DeoShortCodeBase
                 ),
                 'default' => 'all',
                 'desc' => $this->l('Press "Ctrl" and "Mouse Left Click" to choose many items'),
-                'form_group_class' => 'value_by_manufacture',
+                'form_group_class' => 'group-value_by_manufacture',
             ),
             array(
                 'type' => 'html',
@@ -716,7 +700,7 @@ class DeoManufacturersCarousel extends DeoShortCodeBase
                     'name' => 'name'
                 ),
                 'default' => 'all',
-                'form_group_class' => 'value_by_manufacture',
+                'form_group_class' => 'group-value_by_manufacture',
             ),
             array(
                 'type' => 'select',
@@ -729,7 +713,7 @@ class DeoManufacturersCarousel extends DeoShortCodeBase
                 ),
                 'form_group_class' => 'order_type_sub order_type-asc order_type-desc',
                 'default' => 'all',
-                'form_group_class' => 'value_by_manufacture',
+                'form_group_class' => 'group-value_by_manufacture',
             ),
             array(
                 'type' => 'text',
@@ -834,7 +818,7 @@ class DeoManufacturersCarousel extends DeoShortCodeBase
         //         return $assign;
         //     }
         // }
-        if (isset($assign['formAtts']['value_by_manufacture']) && $assign['formAtts']['value_by_manufacture'] == '0') {
+        if (isset($assign['formAtts']['value_by_manufacture']) && $assign['formAtts']['value_by_manufacture']) {
             $assign['manuselect'] = self::getManufacturersSelect($assign['formAtts']);
         } else {
             // validate module
@@ -945,7 +929,7 @@ class DeoManufacturersCarousel extends DeoShortCodeBase
         //         $assign['formAtts']['array_fake_item'] = $array_fake_item;
         //     }
         // }
-            
+
         // if ($assign['formAtts']['carousel_type'] == 'slickcarousel') {
             if (!DeoHelper::getLazyload()) {
                 $assign['formAtts']['slick_lazyload'] = 0;

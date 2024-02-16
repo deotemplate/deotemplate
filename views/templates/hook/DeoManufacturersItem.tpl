@@ -12,7 +12,7 @@
 					<span class="lazyload-icon"></span>
 				</span>
 				{* <img class="img-fluid {if isset($formAtts.carousel_type) && $formAtts.carousel_type == "owlcarousel"}lazyOwl{/if}" {if isset($formAtts.carousel_type) &&  $formAtts.carousel_type == "owlcarousel"}data-src{elseif isset($formAtts.carousel_type) && $formAtts.carousel_type == "slickcarousel"}data-lazy{/if}="{$img_manu_dir}{$manu.id_manufacturer|intval}-{$image_type}.jpg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="{$manu.name}" itemprop="image" /> *}
-				<img class="img-fluid" data-lazy="{$img_manu_dir}{$manu.id_manufacturer|intval}-{$image_type}.jpg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="{$manu.name}" itemprop="image" />
+				<img class="img-fluid" data-lazy="{$img_manu_dir}{$manu.id_manufacturer|intval}-{$image_type}.jpg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="{$manu.name}" itemprop="image" loading="lazy"/>
 			{else}
 				<img class="img-fluid" src="{$img_manu_dir}{$manu.id_manufacturer|intval}-{$image_type}.jpg" alt="{$manu.name}" itemprop="image" loading="lazy"/>
 			{/if}

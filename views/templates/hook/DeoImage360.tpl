@@ -51,7 +51,7 @@
 			mousewheel-step: 1;
 			hint:true;"{/strip}
 		>
-			<img src="{$formAtts.image}" class="img-fluild" alt="">
+			<img src="{$formAtts.image}" class="img-fluild" alt="" loading="lazy">
 		</a>
 	</div>
 </div>

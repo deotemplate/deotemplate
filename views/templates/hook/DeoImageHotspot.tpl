@@ -28,7 +28,7 @@
 						{if isset($formAtts.animation) && $formAtts.animation != 'none' && $formAtts.animation} data-animation="{$formAtts.animation}" {/if}
 						{if $formAtts.animation_delay != '' && $formAtts.animation_delay} data-animation-delay="{$formAtts.animation_delay}" {/if}
 						title="{((isset($formAtts.alt) && $formAtts.alt) ? $formAtts.alt : '')}"
-						alt="{((isset($formAtts.alt) && $formAtts.alt) ? $formAtts.alt : '')}"/>
+						alt="{((isset($formAtts.alt) && $formAtts.alt) ? $formAtts.alt : '')}" loading="lazy"/>
 				{else}
 					<img src="{$formAtts.image}" class="img-fluid {(isset($formAtts.animation) && $formAtts.animation != 'none' && $formAtts.animation) ? 'has-animation' : ''}"
 						{if isset($formAtts.animation) && $formAtts.animation != 'none' && $formAtts.animation} data-animation="{$formAtts.animation}" {/if}
@@ -68,7 +68,7 @@
 													<span class="lazyload-wrapper" style="padding-bottom: {$item.rate_image};">
 														<span class="lazyload-icon"></span>
 													</span>
-													<img data-src="{$item.image}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="{$item.title}" class="img-fluid lazyload"/>
+													<img data-src="{$item.image}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="{$item.title}" class="img-fluid lazyload" loading="lazy"/>
 												{else}
 													<img src="{$item.image}" alt="{$item.title}" class="img-fluid" loading="lazy"/>
 												{/if}

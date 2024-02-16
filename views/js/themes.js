@@ -1784,7 +1784,15 @@ $(window).load(function(){
 				let slide = $('.images-for-detail .product-images').get(0).slick;
 				fancyGallery.eq(slide.currentSlide).trigger('click'); 
 			}));
+		}else{
+			if ($("#content").data("zoom") == 'none'){
+				$('body').on("click", '.images-for-detail .product-images .image-container', (function(e) {
+					$('.product-cover .layer').trigger('click'); 
+				}));
+			}
 		}
+
+
 	}
 
 	function findPosition(slides){

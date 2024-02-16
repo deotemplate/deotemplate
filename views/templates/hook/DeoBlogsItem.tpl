@@ -66,7 +66,7 @@
 							src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="{$blog.title nofilter}" title="{$blog.title nofilter}" itemprop="image" 
 						/> *}
 						<img class="img-fluid" data-lazy="{$blog.image}" 
-							src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="{$blog.title nofilter}" title="{$blog.title nofilter}" itemprop="image" 
+							src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="{$blog.title nofilter}" title="{$blog.title nofilter}" itemprop="image" loading="lazy"
 						/>
 					{else}
 						<img class="img-fluid" src="{$blog.image}" alt="{$blog.title nofilter}" title="{$blog.title nofilter}" itemprop="image" loading="lazy"

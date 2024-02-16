@@ -1572,6 +1572,7 @@ function htmlentitiesDecode(str) {
 
 			toogle_product();
 			toogle_logo();
+			toogle_manufacture();
 			toogle_popup();
 			toogle_video();
 			toogle_image_360();
@@ -1619,6 +1620,7 @@ function htmlentitiesDecode(str) {
 			$('.checkbox-group').change(function () {
 				$globalthis.showOrHideCheckBox($(this));
 			});
+			$('.checkbox-group:checked').trigger("change");
 
 			$('.width-select').click(function () {
 				btnGroup = $(this).closest('.btn-group');
@@ -3050,6 +3052,10 @@ function toogle_product(){
 			$('.order_type_sub').removeClass('hide-config');
 		}
 	});
+}
+
+function toogle_manufacture(){
+	toogle_switch($('input[name="value_by_manufacture"]'),$('.group-value_by_manufacture'),400);
 }
 
 function toogle_logo(){

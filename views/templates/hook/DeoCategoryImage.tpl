@@ -18,7 +18,7 @@
 										<span class="lazyload-wrapper" style="padding-bottom: {$category.rate_image};">
 											<span class="lazyload-icon"></span>
 										</span>
-										<img class="img-fluid lazyload" data-src='{$category["image"]}' src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt='{$category["name"]}'/>
+										<img class="img-fluid lazyload" data-src='{$category["image"]}' src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt='{$category["name"]}' loading="lazy"/>
 									{else}
 										<img class="img-fluid" src='{$category["image"]}' alt='{$category["name"]}' loading="lazy"/>
 									{/if}
@@ -48,7 +48,7 @@
 										<span class="lazyload-wrapper" style="padding-bottom: {$category.rate_image};">
 											<span class="lazyload-icon"></span>
 										</span>
-										<img class="img-fluid lazyload" data-src='{$category["image"]}' src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt='{$category["name"]}'/>
+										<img class="img-fluid lazyload" data-src='{$category["image"]}' src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt='{$category["name"]}' loading="lazy"/>
 									{else}
 										<img class="img-fluid" src='{$category["image"]}' alt='{$category["name"]}' loading="lazy"/>
 									{/if}

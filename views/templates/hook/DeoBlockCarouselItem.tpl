@@ -15,7 +15,7 @@
 						<span class="lazyload-icon"></span>
 					</span>
 					{* <img class="img-fluid {if isset($formAtts.carousel_type) && $formAtts.carousel_type == "owlcarousel"}lazyOwl{/if}" {if isset($formAtts.carousel_type) &&  $formAtts.carousel_type == "owlcarousel"}data-src{elseif isset($formAtts.carousel_type) && $formAtts.carousel_type == "slickcarousel"}data-lazy{/if}="{$slider.image}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="{$slider.title nofilter}"/> *}
-					<img class="img-fluid" data-lazy="{$slider.image}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="{$slider.title nofilter}"/>
+					<img class="img-fluid" data-lazy="{$slider.image}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="{$slider.title nofilter}" loading="lazy"/>
 				{else}
 					<img class="img-fluid" src="{$slider.image}" alt="{$slider.title nofilter}" loading="lazy"/> 
 				{/if}
