@@ -10,6 +10,7 @@
 /* Generic exception class
  */
 // use library from prestashop
+if (!defined('_PS_VERSION_')) { exit; }
 
 if (!class_exists('OAuthException')) {
 

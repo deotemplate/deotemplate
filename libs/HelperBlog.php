@@ -5,10 +5,7 @@
  *  @license   http://deotemplate.com - prestashop template provider
  */
 
-if (!defined('_PS_VERSION_')) {
-    # module validation
-    exit;
-}
+if (!defined('_PS_VERSION_')) { exit; }
 
 require_once(_PS_MODULE_DIR_.'deotemplate/classes/Blog/DeoBlogComment.php');
 require_once(_PS_MODULE_DIR_.'deotemplate/classes/Blog/DeoBlogLink.php');

@@ -4,6 +4,7 @@
  *  @copyright by DeoTemplate
  *  @license   http://deotemplate.com - prestashop template provider
  */
+if (!defined('_PS_VERSION_')) { exit; }
 
 /**
  * The RSA-SHA1 signature method uses the RSASSA-PKCS1-v1_5 signature algorithm as defined in

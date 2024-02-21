@@ -4,6 +4,7 @@
  *  @copyright by DeoTemplate
  *  @license   http://deotemplate.com - prestashop template provider
  */
+if (!defined('_PS_VERSION_')) { exit; }
 
 /**
  * The PLAINTEXT method does not provide any security protection and SHOULD only be used

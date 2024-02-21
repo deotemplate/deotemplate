@@ -12,7 +12,7 @@
  *  @copyright 2007-2015 Leotheme
  *  @license   http://leotheme.com - prestashop template provider
  */
-
+if (!defined('_PS_VERSION_')) { exit; }
 
 class DeoWidgetCategory extends DeoWidgetBaseModel
 {

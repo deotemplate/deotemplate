@@ -5,6 +5,7 @@
  *  @license   http://deotemplate.com - prestashop template provider
  */
 
+if (!defined('_PS_VERSION_')) { exit; }
 
 include_once(_PS_MODULE_DIR_.'deotemplate/classes/DeoShortCodeBase.php');
 include_once(_PS_MODULE_DIR_.'deotemplate/classes/shortcodes/DeoProductList.php');

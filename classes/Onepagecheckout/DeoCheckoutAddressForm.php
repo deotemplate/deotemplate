@@ -4,7 +4,7 @@
  *  @copyright by DeoTemplate
  *  @license   http://deotemplate.com - prestashop template provider
  */
-
+if (!defined('_PS_VERSION_')) { exit; }
 use Symfony\Component\Translation\TranslatorInterface;
 
 class DeoCheckoutAddressForm extends AbstractForm

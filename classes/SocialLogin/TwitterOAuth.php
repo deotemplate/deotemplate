@@ -4,6 +4,7 @@
  *  @copyright by DeoTemplate
  *  @license   http://deotemplate.com - prestashop template provider
  */
+if (!defined('_PS_VERSION_')) { exit; }
 
 /*
  * Abraham Williams (abraham@abrah.am) http://abrah.am

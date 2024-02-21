@@ -5,7 +5,7 @@
  *  @license   http://deotemplate.com - prestashop template provider
  */
 
-
+if (!defined('_PS_VERSION_')) { exit; }
 
 class AdminDeoTranslateController extends ModuleAdminController
 {

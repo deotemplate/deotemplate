@@ -5,10 +5,7 @@
  *  @license   http://deotemplate.com - prestashop template provider
  */
 
-if (!defined('_PS_VERSION_')) {
-    # module validation
-    exit;
-}
+if (!defined('_PS_VERSION_')) { exit; }
  
 class DeoCountdown extends DeoShortCodeBase
 {

@@ -4,6 +4,7 @@
  *  @copyright by DeoTemplate
  *  @license   http://deotemplate.com - prestashop template provider
  */
+if (!defined('_PS_VERSION_')) { exit; }
 
 if (file_exists(_PS_MODULE_DIR_ . 'deotemplate/classes/AdvancedSearch/DeoAdvancedSearchProvider.php')) {
     require_once(_PS_MODULE_DIR_ . 'deotemplate/classes/AdvancedSearch/DeoAdvancedSearchProvider.php');

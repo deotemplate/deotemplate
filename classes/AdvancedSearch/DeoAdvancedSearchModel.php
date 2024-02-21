@@ -4,7 +4,7 @@
  *  @copyright by DeoTemplate
  *  @license   http://deotemplate.com - prestashop template provider
  */
-
+if (!defined('_PS_VERSION_')) { exit; }
 define('PS_SEARCH_MAX_WORD_LENGTH', 15);
 
 /* Copied from Drupal search module, except for \x{0}-\x{2f} that has been replaced by \x{0}-\x{2c}\x{2e}-\x{2f} in order to keep the char '-' */

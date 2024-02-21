@@ -4,7 +4,7 @@
  *  @copyright by DeoTemplate
  *  @license   http://deotemplate.com - prestashop template provider
  */
-
+if (!defined('_PS_VERSION_')) { exit; }
 
 use PrestaShop\PrestaShop\Core\Crypto\Hashing as Crypto;
 use Symfony\Component\Translation\TranslatorInterface;
