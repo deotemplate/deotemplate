@@ -500,7 +500,7 @@ class AdminDeoShortcodeController extends ModuleAdminControllerCore
                 if (!is_array($row)) {
                     $row = array('hook_name' => $key_hook, 'content' => '');
                 }
-                if ($key_hook == 'displayLeftColumn' || $key_hook == 'displayRightColumn') {
+                if ($key_hook == 'displayDeoTopLeftSidebar' || $key_hook == 'displayDeoBottomLeftSidebar' || $key_hook == 'displayDeoTopRightSidebar' || $key_hook == 'displayDeoBottomRightSidebar') {
                     $row['class'] = 'col-md-3';
                 } else {
                     $row['class'] = 'col-md-12';

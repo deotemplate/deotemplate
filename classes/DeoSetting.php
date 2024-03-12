@@ -19,9 +19,11 @@ class DeoSetting
 			'displayDeoFooterMobile',
 			'displayTop',
 			'displayNavFullWidth',
-			'displayLeftColumn',
+			'displayDeoTopLeftSidebar',
+			'displayDeoBottomLeftSidebar',
 			'displayHome',
-			'displayRightColumn',
+			'displayDeoTopRightSidebar',
+			'displayDeoBottomRightSidebar',
 			'displayFooter'
 		);
 	}
@@ -234,10 +236,17 @@ class DeoSetting
 				'displayNavFullWidth',
 			);
 		}
-		$hook_content_default = array(
+		$hook_content_manager_default = array(
 			'displayLeftColumn',
 			'displayHome',
 			'displayRightColumn',
+		);
+		$hook_content_default = array(
+			'displayDeoTopLeftSidebar',
+			'displayDeoBottomLeftSidebar',
+			'displayHome',
+			'displayDeoTopRightSidebar',
+			'displayDeoBottomRightSidebar',
 		);
 		$hook_footer_default = array(
 			'displayFooterBefore',
@@ -253,6 +262,8 @@ class DeoSetting
 		);
 		if ($type == 'all') {
 			$list_hook = array_merge($hook_mobile_default, $hook_header_default, $hook_content_default, $hook_footer_default, $hook_product_default);
+		}else if ($type == 'manager') {
+			$list_hook = array_merge($hook_mobile_default, $hook_header_default, $hook_content_manager_default, $hook_footer_default, $hook_product_default);
 		} else if ($type == 'mobile') {
 			$list_hook = $hook_mobile_default;
 		} else if ($type == 'header') {
@@ -1207,15 +1218,15 @@ class DeoSetting
 			'displayNav2',
 			'displayTop',
 			'displayNavFullWidth',
+			'displayDeoTopLeftSidebar',
+			'displayDeoBottomLeftSidebar',
 			'displayHome',
-			'displayLeftColumn',
-			'displayRightColumn',
+			'displayDeoTopRightSidebar',
+			'displayDeoBottomRightSidebar',
 			'displayFooterBefore',
 			'displayFooter',
 			'displayFooterAfter',
 			'displayFooterProduct',
-			'displayRightColumnProduct',
-			'displayLeftColumnProduct',
 		);
 
 		return $list_hook;

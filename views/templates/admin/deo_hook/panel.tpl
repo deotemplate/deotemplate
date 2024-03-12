@@ -96,7 +96,7 @@
 		
 		
 		<div id="deo-content" class="clearfix deo_top_25"  >
-			<div id="deo-left" class="deo-container" data-position="displayLeftColumn"><div class="pos">HOOK_LEFT</div>
+			<div id="deo-left" class="deo-container" data-position="displayLeftColumn"><div class="pos">HOOK_LEFTCOLUMN</div>
 				{if isset($hookModules['displayLeftColumn']) && $hookModules['displayLeftColumn']['module_count'] > 0}
 					{foreach $hookModules['displayLeftColumn']['modules'] as $position => $module} 
 						{if isset($module['instance'])}
@@ -130,7 +130,7 @@
 			</div>
 			
 			
-			<div id="deo-right" class="deo-container" data-position="displayRightColumn"><div class="pos">HOOK_RIGHT</div>
+			<div id="deo-right" class="deo-container" data-position="displayRightColumn"><div class="pos">HOOK_RIGHTCOLUMN</div>
 				{if isset($hookModules['displayRightColumn']) && $hookModules['displayRightColumn']['module_count'] > 0}
 					{foreach $hookModules['displayRightColumn']['modules'] as $position => $module}
 						{if isset($module['instance'])}

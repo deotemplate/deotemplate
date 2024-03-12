@@ -94,19 +94,20 @@ $(document).ready(function() {
 	});
 	$('.btn-form-toggle').click(function (e) {
 		e.preventDefault();
-		if ($('.displayLeftColumn').hasClass('col-md-3')) {
+		($key_hook == 'displayDeoTopLeftSidebar' || $key_hook == 'displayDeoBottomLeftSidebar' || $key_hook == 'displayTopRightSidebar' || $key_hook == 'displayDeoBottomRightSidebar')
+		if ($('.displayDeoTopLeftSidebar,.displayDeoBottomLeftSidebar').hasClass('col-md-3')) {
 			$('i', $(this)).attr('class', 'icon-resize-small');
 			$(".hook-content").hide();
 			$(".open-group i").attr('class', $(".open-group i").attr('class').replace('down', 'up'));
-			$('.displayLeftColumn').removeClass('col-md-3').addClass('col-md-12');
-			$('.displayRightColumn').removeClass('col-md-3').addClass('col-md-12');
+			$('.displayDeoTopLeftSidebar,.displayDeoBottomLeftSidebar').removeClass('col-md-3').addClass('col-md-12');
+			$('.displayDeoTopRightSidebar,.displayDeoBottomRightSidebar').removeClass('col-md-3').addClass('col-md-12');
 			$('.home-content-wrapper').removeClass('col-md-6').addClass('col-md-12');
 		} else {
 			$('i', $(this)).attr('class', 'icon-resize-full');
 			$(".hook-content").show();
 			$(".open-group i").attr('class', $(".open-group i").attr('class').replace('up', 'down'));
-			$('.displayLeftColumn').removeClass('col-md-12').addClass('col-md-3');
-			$('.displayRightColumn').removeClass('col-md-12').addClass('col-md-3');
+			$('.displayDeoTopLeftSidebar,.displayDeoBottomLeftSidebar').removeClass('col-md-12').addClass('col-md-3');
+			$('.displayDeoTopRightSidebar,.displayDeoBottomRightSidebar').removeClass('col-md-12').addClass('col-md-3');
 			$('.home-content-wrapper').removeClass('col-md-12').addClass('col-md-6');
 		}
 	});
@@ -122,9 +123,16 @@ $(document).ready(function() {
 
 		if ($('.left-sidebar').is(':checked')){
 			left_sidebar = true;
+			$('#position-content .position-area').addClass('active-left-sidebar');
+		}else{
+			$('#position-content .position-area').removeClass('active-left-sidebar');
 		}
+		
 		if ($('.right-sidebar').is(':checked')){
 			right_sidebar = true;
+			$('#position-content .position-area').addClass('active-right-sidebar');
+		}else{
+			$('#position-content .position-area').removeClass('active-right-sidebar');
 		}
 
 		// console.log(left_sidebar, right_sidebar);

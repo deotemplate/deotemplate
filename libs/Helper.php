@@ -529,7 +529,13 @@ class DeoHelper
 		$instance_module->registerHook('actionDispatcher');
 		$instance_module->registerHook('displayOrderConfirmation');
 		// $instance_module->registerHook('additionalCustomerFormFields');
-		
+
+		$instance_module->registerHook('displayDeoTopLeftSidebar');
+		$instance_module->registerHook('displayDeoBottomLeftSidebar');
+		$instance_module->registerHook('displayDeoTopRightSidebar');
+		$instance_module->registerHook('displayDeoBottomRightSidebar');
+
+		Configuration::updateValue(DeoHelper::getConfigName('LIST_CONTENT_HOOK'), implode(',', DeoSetting::getHook('content')));
 		Configuration::updateValue(DeoHelper::getConfigName('LIST_MOBILE_HOOK'), implode(',', DeoSetting::getHook('mobile')));
 
 		Configuration::updateValue(DeoHelper::getConfigName('SHORTCODE_WIDGETS_MODULES'), json_encode(array()));
@@ -661,6 +667,12 @@ class DeoHelper
 		// change class tabs
 		Db::getInstance()->execute('UPDATE `'._DB_PREFIX_.'deotemplate_lang` SET `params` = replace(`params`, "product-tabs-", "tabs-")');
 
+
+		// Rename hooks: 
+		// displayLeftColumn => displayDeoTopLeftSidebar
+		// displayRightColumn => displayDeoTopRightSidebar
+		Db::getInstance()->execute('UPDATE `'._DB_PREFIX_.'deotemplate` SET `hook_name` = replace(`hook_name`, "displayLeftColumn", "displayDeoTopLeftSidebar")');
+		Db::getInstance()->execute('UPDATE `'._DB_PREFIX_.'deotemplate` SET `hook_name` = replace(`hook_name`, "displayRightColumn", "displayDeoTopRightSidebar")');
 
 		// Update multiple store for review
 		$result_check = Db::getInstance()->executeS('SHOW TABLES LIKE "'._DB_PREFIX_.'deofeature_product_review_criterion_shop"');

@@ -4196,7 +4196,6 @@ class DeoTemplate extends Module implements WidgetInterface
 		
 
 		// blog
-		$res &= $this->registerHook('displayTop');
 		$res &= $this->registerHook('leftColumn');
 		$res &= $this->registerHook('rightColumn');
 		$res &= $this->registerHook('moduleRoutes');
@@ -4240,6 +4239,12 @@ class DeoTemplate extends Module implements WidgetInterface
 		$res &= $this->registerHook('actionDispatcher');
 		$res &= $this->registerHook('displayOrderConfirmation');
 		// $res &= $this->registerHook('additionalCustomerFormFields');
+
+		# Sidebar
+		$res &= $this->registerHook('displayDeoTopLeftSidebar');
+		$res &= $this->registerHook('displayDeoBottomLeftSidebar');
+		$res &= $this->registerHook('displayDeoTopRightSidebar');
+		$res &= $this->registerHook('displayDeoBottomRightSidebar');
 
 
 		foreach (DeoSetting::getHook('all') as $value) {
@@ -4289,7 +4294,6 @@ class DeoTemplate extends Module implements WidgetInterface
 		$res &= $this->unregisterHook('displayDeoProductAtribute');
 
 		// blog
-		$res &= $this->unregisterHook('displayTop');
 		$res &= $this->unregisterHook('leftColumn');
 		$res &= $this->unregisterHook('rightColumn');
 		$res &= $this->unregisterHook('moduleRoutes');
@@ -4332,6 +4336,13 @@ class DeoTemplate extends Module implements WidgetInterface
 		$res &= $this->unregisterHook('actionDispatcher');
 		$res &= $this->unregisterHook('displayOrderConfirmation');
 		// $res &= $this->unregisterHook('additionalCustomerFormFields');
+
+
+		# Sidebar
+		$res &= $this->unregisterHook('displayDeoTopLeftSidebar');
+		$res &= $this->unregisterHook('displayDeoBottomLeftSidebar');
+		$res &= $this->unregisterHook('displayDeoTopRightSidebar');
+		$res &= $this->unregisterHook('displayDeoBottomRightSidebar');
 
 		foreach (DeoSetting::getHook('all') as $value) {
 			$res &= $this->unregisterHook($value);

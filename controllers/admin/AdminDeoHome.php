@@ -768,6 +768,7 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 				$result_profile['data_shop'] = $profile_obj->data_shop;
 			}
 		}
+
 		if (isset($result_profile) && $result_profile && $result_profile['data_shop']['id_shop'] == $this->context->shop->id) {
 			$positions_dum = array();
 			// Get default config - data of current position
@@ -780,6 +781,11 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 			$positions = array();
 			$position_data_form = array();
 
+
+			// echo "<pre>";
+			// print_r($positions_dum);
+			// echo "</pre>";
+			// die();
 			foreach ($positions_dum as $key => $val) {
 				$temp = $val['content'];
 				$position_data_form[$key] = json_encode($val['dataForm']);
@@ -788,10 +794,10 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 						$row = array('hook_name' => $key_hook, 'content' => '');
 					}
 
-					if ($key_hook == 'displayLeftColumn' || $key_hook == 'displayRightColumn') {
-						if ($key_hook == 'displayLeftColumn' && $temp[$key_hook]['content'] != '') {
+					if ($key_hook == 'displayDeoTopLeftSidebar' || $key_hook == 'displayDeoBottomLeftSidebar' || $key_hook == 'displayDeoTopRightSidebar' || $key_hook == 'displayDeoBottomRightSidebar') {
+						if (($key_hook == 'displayDeoTopLeftSidebar' || $key_hook == 'displayDeoBottomLeftSidebar') && $temp[$key_hook]['content'] != '') {
 							$left_sidebar = true;
-						}else if ($key_hook == 'displayRightColumn' && $temp[$key_hook]['content'] != '') {
+						}else if (($key_hook == 'displayDeoTopRightSidebar' || $key_hook == 'displayDeoBottomRightSidebar') && $temp[$key_hook]['content'] != '') {
 							$right_sidebar = true;
 						}
 						$row['class'] = 'col-md-3';
@@ -801,12 +807,16 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 				}
 				if ($key == 'content'){
 					foreach ($temp as $key_hook => &$row) {
-						if ($key_hook == 'displayLeftColumn' || $key_hook == 'displayRightColumn') {
-							if ($key_hook == 'displayLeftColumn' && $left_sidebar){
+						if ($key_hook == 'displayDeoTopLeftSidebar' || $key_hook == 'displayDeoBottomLeftSidebar') {
+							if ($left_sidebar){
 								$row['class'] = 'col-md-3';
-							}else if ($key_hook == 'displayRightColumn' && $right_sidebar){
+							}else {
+								$row['class'] = 'col-md-3 hidden';
+							}
+						}else if ($key_hook == 'displayDeoTopRightSidebar' || $key_hook == 'displayDeoBottomRightSidebar') {
+							if ($right_sidebar){
 								$row['class'] = 'col-md-3';
-							}else if (!$left_sidebar && !$right_sidebar){
+							}else {
 								$row['class'] = 'col-md-3 hidden';
 							}
 						} else if ($key_hook == 'displayHome'){
@@ -852,10 +862,10 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 						$row = array('hook_name' => $key_hook, 'content' => '');
 					}
 					
-					if ($key_hook == 'displayLeftColumn' || $key_hook == 'displayRightColumn') {
-						if ($key_hook == 'displayLeftColumn' && $left_sidebar){
+					if ($key_hook == 'displayDeoTopLeftSidebar' || $key_hook == 'displayDeoBottomLeftSidebar' || $key_hook == 'displayDeoTopRightSidebar' || $key_hook == 'displayDeoBottomRightSidebar') {
+						if (($key_hook == 'displayDeoTopLeftSidebar' || $key_hook == 'displayDeoBottomLeftSidebar') && $left_sidebar){
 							$row['class'] = 'col-md-3';
-						}else if ($key_hook == 'displayRightColumn' && $right_sidebar){
+						}else if (($key_hook == 'displayDeoTopRightSidebar' || $key_hook == 'displayDeoBottomRightSidebar') && $right_sidebar){
 							$row['class'] = 'col-md-3';
 						} 
 						$row['class'] = 'col-md-3';
@@ -873,10 +883,10 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 				}
 				if ($key == 'content'){
 					foreach ($temp as $key_hook => &$row) {
-						if ($key_hook == 'displayLeftColumn' || $key_hook == 'displayRightColumn') {
-							if ($key_hook == 'displayLeftColumn' && $left_sidebar){
+						if ($key_hook == 'displayDeoTopLeftSidebar' || $key_hook == 'displayDeoBottomLeftSidebar' || $key_hook == 'displayDeoTopRightSidebar' || $key_hook == 'displayDeoBottomRightSidebar') {
+							if (($key_hook == 'displayDeoTopLeftSidebar' || $key_hook == 'displayDeoBottomLeftSidebar') && $left_sidebar){
 								$row['class'] = 'col-md-3';
-							}else if ($key_hook == 'displayRightColumn' && $right_sidebar){
+							}else if (($key_hook == 'displayDeoTopRightSidebar' || $key_hook == 'displayDeoBottomRightSidebar') && $right_sidebar){
 								$row['class'] = 'col-md-3';
 							}else if (!$left_sidebar && !$right_sidebar){
 								$row['class'] = 'col-md-3 hidden';
@@ -1291,10 +1301,10 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 			if (!is_array($row)) {
 				$row = array('hook_name' => $key_hook, 'content' => '');
 			}
-			if ($key_hook == 'displayLeftColumn' || $key_hook == 'displayRightColumn') {
-				if ($key_hook == 'displayLeftColumn' && $row['content'] != '') {
+			if ($key_hook == 'displayDeoTopLeftSidebar' || $key_hook == 'displayDeoBottomLeftSidebar' || $key_hook == 'displayDeoTopRightSidebar' || $key_hook == 'displayDeoBottomRightSidebar') {
+				if (($key_hook == 'displayDeoTopLeftSidebar' || $key_hook == 'displayDeoBottomLeftSidebar') && $row['content'] != '') {
 					$left_sidebar = true;
-				}else if ($key_hook == 'displayRightColumn' && $row['content'] != '') {
+				}else if (($key_hook == 'displayDeoTopRightSidebar' || $key_hook == 'displayDeoBottomRightSidebar') && $row['content'] != '') {
 					$right_sidebar = true;
 				}
 				$row['class'] = 'col-md-3';
@@ -1304,10 +1314,10 @@ class AdminDeoHomeController extends ModuleAdminControllerCore
 		}
 
 		foreach ($positions_dum['content'] as $key_hook => &$row) {
-			if ($key_hook == 'displayLeftColumn' || $key_hook == 'displayRightColumn') {
-				if ($key_hook == 'displayLeftColumn' && $left_sidebar){
+			if ($key_hook == 'displayDeoTopLeftSidebar' || $key_hook == 'displayDeoBottomLeftSidebar' || $key_hook == 'displayDeoTopRightSidebar' || $key_hook == 'displayDeoBottomRightSidebar') {
+				if (($key_hook == 'displayDeoTopLeftSidebar' || $key_hook == 'displayDeoBottomLeftSidebar') && $left_sidebar){
 					$row['class'] = 'col-md-3';
-				}else if ($key_hook == 'displayRightColumn' && $right_sidebar){
+				}else if (($key_hook == 'displayDeoTopRightSidebar' || $key_hook == 'displayDeoBottomRightSidebar') && $right_sidebar){
 					$row['class'] = 'col-md-3';
 				}else if (!$left_sidebar && !$right_sidebar){
 					$row['class'] = 'col-md-3 hidden';

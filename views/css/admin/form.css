@@ -307,7 +307,9 @@
         color: #000; }
 
 #home_wrapper {
-  margin: 0px auto 20px; }
+  margin: 0px auto 0px;
+  padding-top: 10px;
+  padding-bottom: 10px; }
 
 .admindeohome #main > #content {
   background: #FFFFFF; }
@@ -328,14 +330,11 @@
 .displayFooter {
   margin-top: 10px; }
 
-.displayLeftColumn {
+.displayDeoTopLeftSidebar, .displayDeoBottomLeftSidebar {
   min-height: 160px !important; }
 
-.displayRightColumn {
+.displayDeoTopRightSidebar, .displayDeoBottomRightSidebar {
   min-height: 160px !important; }
-
-.displayHome {
-  margin-bottom: 5px; }
 
 .hook-top {
   min-height: 50px;
@@ -428,6 +427,10 @@
 .hook-content-footer {
   margin-top: 30px;
   margin-bottom: 10px; }
+  .hook-content-footer span {
+    display: block;
+    font-size: 11px;
+    font-style: italic; }
 
 .column-row {
   min-height: 100px;

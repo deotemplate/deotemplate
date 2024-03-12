@@ -53,22 +53,21 @@
 		<ul class="checkbox-sidebar">
 			<li class="checkbox">
 				<label>
-					<input class="show-sidebar left-sidebar" data-value=".displayLeftColumn" name="left-sidebar" value="1" type="checkbox" {if $left_sidebar}checked="checked"{/if}> 
+					<input class="show-sidebar left-sidebar" data-value=".displayDeoTopLeftSidebar,.displayDeoBottomLeftSidebar" name="left-sidebar" value="1" type="checkbox" {if $left_sidebar}checked="checked"{/if}> 
 					{l s='Show left sidebar' mod='deotemplate'}
 				</label>
 			</li>
 			<li class="checkbox">
 				<label>
-					<input class="show-sidebar right-sidebar" data-value=".displayRightColumn" name="right-sidebar" value="1" type="checkbox" {if $right_sidebar}checked="checked"{/if}> 
+					<input class="show-sidebar right-sidebar" data-value=".displayDeoTopRightSidebar,.displayDeoBottomRightSidebar" name="right-sidebar" value="1" type="checkbox" {if $right_sidebar}checked="checked"{/if}> 
 					{l s='Show right sidebar' mod='deotemplate'}
 				</label>
 			</li>
 		</ul>
 	{/if}
 </div>
-<div class="position-area row">
+<div class="position-area{if $position == 'Content' || $position == 'content'}{if $left_sidebar} active-left-sidebar{/if}{if $right_sidebar} active-right-sidebar{/if}{/if} row">
 	{foreach from=$config key=hookKey item=hookData}
-
 		<div class="hook-wrapper {$hookKey|escape:'html':'UTF-8'} {$hookData.class|escape:'html':'UTF-8'}" data-hook="{$hookKey|escape:'html':'UTF-8'}">
 			<div class="hook-background">
 				<div class="hook-top">
@@ -87,6 +86,9 @@
 						<a href="javascript:void(0)" tabindex="0" class="btn-new-widget-group" title="{l s='Add New Column In Row' mod='deotemplate'}" data-container="body" data-toggle="popover" data-placement="top" data-trigger="focus">
 							<i class="icon-plus"></i> {l s='Add New Column In Row' mod='deotemplate'}
 						</a>
+						{if in_array($hookKey, array('displayDeoTopLeftSidebar','displayDeoBottomLeftSidebar','displayDeoTopRightSidebar','displayDeoBottomRightSidebar'))}
+							<span>{l s='(Only support Widgets. Not support Modules)' mod='deotemplate'}</span>
+						{/if}
 					</div>
 				</div>
 			</div>

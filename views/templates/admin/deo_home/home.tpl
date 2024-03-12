@@ -56,7 +56,7 @@
 			<a href="#position-header" data-toggle="tooltip" title="{l s='Scroll to Position Header' mod='deotemplate'}" class="label-tooltip nav-scroll">Header</a>
 			<a href="#position-content" data-toggle="tooltip" title="{l s='Scroll to Position Content' mod='deotemplate'}" class="label-tooltip nav-scroll">Content</a>
 			<a href="#position-footer" data-toggle="tooltip" title="{l s='Scroll to Position Footer' mod='deotemplate'}" class="label-tooltip nav-scroll">Footer</a>
-			<a href="#position-product" data-toggle="tooltip" title="{l s='Scroll to Position Product' mod='deotemplate'}" class="label-tooltip nav-scroll">Product</a>
+			{* <a href="#position-product" data-toggle="tooltip" title="{l s='Scroll to Position Product' mod='deotemplate'}" class="label-tooltip nav-scroll">Product</a> *}
 		</div>
 		{* <div class="control control-center">
 		</div> *}
@@ -104,9 +104,9 @@
 		<div class="position-cover clearfix" id="position-footer" data-position-name="footer" data-position-id={$currentPosition.footer.id}>
 		{include file='./position.tpl' position='Footer' config=$positions.footer listPositions=$listPositions.footer default=$currentPosition.footer}
 		</div>
-		<div class="position-cover clearfix" id="position-product" data-position-name="product" data-position-id={$currentPosition.product.id}>
+		{* <div class="position-cover clearfix" id="position-product" data-position-name="product" data-position-id={$currentPosition.product.id}>
 		{include file='./position.tpl' position='Product' config=$positions.product listPositions=$listPositions.product default=$currentPosition.product}
-		</div>
+		</div> *}
 		
 	</div>
 	{* <div id="bottom_wrapper">

@@ -63,7 +63,7 @@ class AdminDeoHookController extends ModuleAdminControllerCore
         //    'displayBottom',
         //    'displayMassBottom'
         // );
-        $this->hookspos = DeoSetting::getHook();
+        $this->hookspos = DeoSetting::getHook('manager');
         $this->theme_name = Context::getContext()->shop->theme_name;
     }
     
@@ -132,13 +132,13 @@ class AdminDeoHookController extends ModuleAdminControllerCore
                     $new_hook->name = pSQL($hook);
                     $new_hook->title = pSQL($hook);
                     $new_hook->add();
-//                    $id_hook = $new_hook->id;
+                    // $id_hook = $new_hook->id;
                 }
             }
 
-//            $sql = 'UPDATE `'._DB_PREFIX_.'hook` SET position=1, live_edit=1
-//                        WHERE name in ("'.implode('","', $hookspos).'")  ';
-//            Db::getInstance(_PS_USE_SQL_SLAVE_)->execute($sql);
+            // $sql = 'UPDATE `'._DB_PREFIX_.'hook` SET position=1, live_edit=1
+            //             WHERE name in ("'.implode('","', $hookspos).'")  ';
+            // Db::getInstance(_PS_USE_SQL_SLAVE_)->execute($sql);
 
             $modules = Module::getModulesInstalled(0);
             $assoc_modules_id = array();
@@ -153,6 +153,11 @@ class AdminDeoHookController extends ModuleAdminControllerCore
                 }
             }
             $hooks = Hook::getHooks(!(int)Tools::getValue('hook_position'));
+
+            // echo "<pre>";
+            // print_r($hooks);
+            // echo "</pre>";
+            // die();
 
             $hookModules = array();
 
