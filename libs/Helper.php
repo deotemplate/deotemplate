@@ -709,9 +709,11 @@ class DeoHelper
 			}
 		}
 
-		$result_check = Db::getInstance()->executeS('SHOW TABLES LIKE "'._DB_PREFIX_.'deoblog_comment_shop"');
-		if (count($result_check) == 0){
+		$result_check = Db::getInstance()->executeS('SHOW FIELDS FROM `'._DB_PREFIX_.'deoblog_comment` LIKE "id_shop"');
+		if (!empty($result_check)){
+			$results = Db::getInstance()->execute('ALTER TABLE `'._DB_PREFIX_.'deoblog_comment` DROP PRIMARY KEY, ADD PRIMARY KEY (id_deoblog_comment)');
 			DeoFrameworkHelper::DeoRemoveColumn('deoblog_comment', 'id_shop');
+
 			Db::getInstance()->execute('CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'deoblog_comment_shop` (
 				`id_deoblog_comment` int(10) UNSIGNED NOT NULL,
 				`id_shop` int(10) UNSIGNED NOT NULL,
