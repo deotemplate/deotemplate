@@ -550,7 +550,7 @@
 				fade = (typeof data.fade != 'undefined') ? data.fade : false;
 				focusonselect = ((typeof data.focusonselect != 'undefined') && data.focusonselect) ? data.focusonselect : false;
 				asnavfor = ((typeof data.asnavfor != 'undefined') && data.asnavfor) ? data.asnavfor : false;
-				initialslide = (typeof data.initialslide != 'undefined') ? data.initialslide : 0;
+				initialslide = (typeof data.initialslide != 'undefined') ? data.initialslide : false;
 
 				if (data.lazyload){
 					lazyload = data.lazyloadtype;
@@ -843,7 +843,7 @@
 			$(document).on("mouseover",".deo-more-product-img .image-hover", function(){
 				let slider = $(this).closest('.deo-more-product-img');
 				let url_large_img = $(this).find('img').attr("rel");
-				let img = $(this).closest('.thumbnail-container').find('.product-thumbnail > img').first();
+				let img = $(this).closest('.thumbnail-container').find('.product-thumbnail img').first();
 
 				url_large_img = (img.data("image-type")) ? url_large_img.replace('home_default',img.data("image-type")) : url_large_img;
 				img.stop().animate({opacity: 0}, {duration: 800, easing: "easeInOutQuad"});
